@@ -1,0 +1,17 @@
+{
+  "name": "busqueservico",
+  "version": "1.0.0",
+  "description": "app mean stack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Artur Tomasi",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "express-load": "^1.1.15"
+  }
+}
