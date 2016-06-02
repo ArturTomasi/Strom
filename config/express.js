@@ -1,5 +1,7 @@
 var express = require( 'express' );
 
+var load = require( 'express-load' );
+
 var home = require( '../app/routes/home.js' );
 
 module.exports = function()
