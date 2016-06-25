@@ -1,17 +1,20 @@
 {
-  "name": "busqueservico",
+  "name": "Strom",
   "version": "1.0.0",
-  "description": "app mean stack",
+  "description": "App MEAN Stack",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "author": "Artur Tomasi",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
-    "express-load": "^1.1.15"
+    "express-load": "^1.1.15",
+    "method-override": "^2.3.6",
+    "nodemailer": "^2.4.2"
   }
 }

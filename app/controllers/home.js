@@ -4,9 +4,8 @@ module.exports = function()
 
 	controller.index = function( req, res )
 	{
-		res.render( 'index.ejs', {nome:'Artur Tomasi'} );
+		res.render( 'index.ejs', {nome:'Lucas Tomasi'} );
 	};
 
 	return controller;
 }
-

@@ -1,0 +1,18 @@
+{
+  "name": "Strom",
+  "description": "App MEAN Stack",
+  "main": "server.js",
+  "authors": [
+    "Artur Tomasi"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "dependencies": {
+    "angular": "^1.5.6",
+    "angular-route": "^1.5.6",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
+    "bootstrap": "^3.3.6",
+    "jquery": "2.2.4",
+    "angular-resource": "^1.5.7"
+  }
+}
