@@ -1,47 +1,45 @@
-angular.module("Strom").controller("UserController", function ($scope, $resource )
+angular.module("Strom").controller( "UserController", function ($scope, UserService )
 {
-    var UserController = $resource( 'users/:id' );
-    
     $scope.userSelected;
     $scope.users;
-
-    $scope.addUser = function (user)
-    {
-        user._id = $scope.users.length + 1;
-
-        $scope.users.push(angular.copy(user));
-
-        delete $scope.user;
-    };
 
     $scope.selectUser = function (user)
     {
         $scope.userSelected = user;
     };
     
-    $scope.editUser = function (user)
+    $scope.storeUser = function(user)
     {
-        $scope.userSelected = user;
-    };
-
-    $scope.deleteUser = function (user) 
-    {
-        UserController.delete( { id: user._id }, loadUsers, function (error){ console.log(error);} );
+        console.log( user );
         
-    };
-    
-    function loadUsers()
-    {
-        UserController.query( function( users )
+        UserService.storeUser( user, function( data )
         {
-            $scope.users = users;  
-        }, function (error){ console.log(error);} );
+            loadUsers();
+            $scope.selectUser( data );
+        } );
     };
     
-    $scope.init = function()
+    $scope.deleteUser = function(user)
+    {
+        UserService.deleteUser( user, function( data )
+        {
+            loadUsers();
+            $scope.selectUser( data );
+        } );
+    };
+    
+    loadUsers = function()
+    {
+        UserService.getUsers( function( data )
+        {
+            $scope.users = data;
+        } );
+    };
+    
+    init = function()
     {
         loadUsers();
     };
 
-    $scope.init();
+    init();
 } );

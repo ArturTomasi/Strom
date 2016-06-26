@@ -5,38 +5,55 @@ module.exports = function ( app )
 
     var controller = {};
    
-    var users = [ { _id: 1, name: "Artur Tomasi", login: "art",  password: "admin" },
-                         { _id: 2, name: "Lucas Tomasi", login: "lcs",  password: "admin" },
-                         { _id: 3, name: "Jack",         login: "jack", password: "admin"} ];
+    var users = [ { _id: 1, name: "Artur Tomasi", login: "art",  password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' },
+                  { _id: 2, name: "Lucas Tomasi", login: "lcs",  password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' },
+                  { _id: 3, name: "Jack",         login: "jack", password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' } ];
               
 
     controller.getUsers = function( req, res )
     {
-        console.log( 'buscando ');
-        console.log( users );
         res.json( users );
     };
 
-    controller.getUser = function( req, res ) 
+    controller.getUser = function( req, res )
     {
-        if( user === findUser( req.params.id ) )
-        {
-            res.json( user );
-        }
-        else
-        {
-            res.status(400).send('user not found');
-        }
+        res.json( users );
     };
 
     controller.addUser = function( req , res )
     {
+        var user = req.body;
         
+        if ( user )
+        {
+            var count = users.length;
+            
+            user._id = ++count;
+            
+            users.push( user ); 
+            
+            res.json( user );
+        }
     };
    
     controller.editUser = function( req , res )
     {
+        var user = req.body;
         
+        if ( user )
+        {
+            users = users.map( function(u)
+            {
+                if( u._id === user._id )
+                {
+                   u = user;
+                }
+                
+                return u;
+            } );
+             
+            res.json( user );
+        }
     };
 
     controller.deleteUser = function( req , res )
@@ -50,8 +67,6 @@ module.exports = function ( app )
                 return user._id != id;
             } );
             
-            console.log( 'deletando ');
-            console.log( users );
             res.status( 204 ).end();
         }
         
