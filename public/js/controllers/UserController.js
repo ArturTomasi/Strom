@@ -1,4 +1,6 @@
-angular.module("Strom").controller( "UserController", function ($scope, UserService )
+/* global angular */
+
+angular.module("Strom").controller( "UserController",['$scope','UserService', function ($scope, UserService )
 {
     $scope.userSelected;
     $scope.users;
@@ -8,23 +10,32 @@ angular.module("Strom").controller( "UserController", function ($scope, UserServ
         $scope.userSelected = user;
     };
     
+    $scope.getUserForm = function ( user )
+    {
+        if( user )
+        {
+            return angular.copy( user );
+        }
+        
+        return {};
+    };
+    
     $scope.storeUser = function(user)
     {
-        console.log( user );
-        
         UserService.storeUser( user, function( data )
         {
-            loadUsers();
+            $( '#store' ).modal( 'hide' );
+            
             $scope.selectUser( data );
+            loadUsers();
         } );
     };
     
     $scope.deleteUser = function(user)
     {
-        UserService.deleteUser( user, function( data )
+        UserService.deleteUser( user, function()
         {
             loadUsers();
-            $scope.selectUser( data );
         } );
     };
     
@@ -42,4 +53,4 @@ angular.module("Strom").controller( "UserController", function ($scope, UserServ
     };
 
     init();
-} );
+} ]);

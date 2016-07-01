@@ -1,3 +1,5 @@
+/* global BootstrapDialog */
+
 angular.module( 'Strom' ).factory( 'UserService', function( $http ) 
 {
     var UserService = {};
@@ -34,8 +36,6 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
     
     UserService.storeUser = function( user, callback )
     {
-        console.log( user );
-        
         if ( ! user._id )
         {
             $http.post( '/users/' , user )
@@ -47,7 +47,7 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
             
             .error( function (error) 
             {
-                console.log(error);
+              Prompts.alert( error.errors );
             } );  
         }
         
@@ -62,7 +62,7 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
             
             .error( function (error) 
             {
-                console.log(error);
+                Prompts.alert( error.errors );
             } );
             
         }
@@ -81,7 +81,7 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
 
             .error( function (error) 
             {
-                console.log(error);
+                
             } );
         }
     };

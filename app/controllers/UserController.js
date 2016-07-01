@@ -1,76 +1,111 @@
 module.exports = function ( app ) 
 {
-       
-    var user = app.models.User;
-
+    var User = app.models.User;
+    
+    /**
+     * @type type
+     */
     var controller = {};
-   
-    var users = [ { _id: 1, name: "Artur Tomasi", login: "art",  password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' },
-                  { _id: 2, name: "Lucas Tomasi", login: "lcs",  password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' },
-                  { _id: 3, name: "Jack",         login: "jack", password: "admin", state: true, mail: 'art@interact.com.br', phone: '93097799' } ];
-              
-
+    
+   /**
+    * 
+    * @param {type} req
+    * @param {type} res
+    * @returns {undefined}
+    */
     controller.getUsers = function( req, res )
     {
-        res.json( users );
+       User.find().exec( function ( error , users )
+        {
+            if ( error )
+            {
+                res.status( 500 ).json( error );
+            }
+            
+            res.json( users );
+        } );
     };
-
+    
+    /**
+     * 
+     * @param {type} req
+     * @param {type} res
+     * @returns {undefined}
+     */
     controller.getUser = function( req, res )
     {
-        res.json( users );
-    };
+        User.findById( { _id : req.params.id } ).exec( function ( error, user )
+        {
+            if ( error )
+            {
+                res.status( 400 ).json( error );
+            }
 
+            res.json( user );
+        } );
+    };
+    
+    /**
+     * 
+     * @param {type} req
+     * @param {type} res
+     * @returns {undefined}
+     */
     controller.addUser = function( req , res )
     {
-        var user = req.body;
-        
-        if ( user )
+        User.create( req.body, function( error, user )
         {
-            var count = users.length;
-            
-            user._id = ++count;
-            
-            users.push( user ); 
+            if ( error )
+            {
+                res.status( 500 ).json( error );
+            }
             
             res.json( user );
-        }
+            
+        } );
     };
-   
+    
+    /**
+     * 
+     * @param {type} req
+     * @param {type} res
+     * @returns {undefined}
+     */
     controller.editUser = function( req , res )
     {
-        var user = req.body;
-        
-        if ( user )
+        User.findOneAndUpdate( { _id : req.body._id }, req.body, { new : true } ).exec( function ( error, user )
         {
-            users = users.map( function(u)
+            if ( error )
             {
-                if( u._id === user._id )
-                {
-                   u = user;
-                }
-                
-                return u;
-            } );
-             
-            res.json( user );
-        }
-    };
+                res.status( 500 ).json( error );
+            }
 
+            res.status( 200 ).json( user );
+        } );
+    };
+    
+    /**
+     * 
+     * @param {type} req
+     * @param {type} res
+     * @returns {undefined}
+     */
     controller.deleteUser = function( req , res )
     {
-        var id = req.params.id;
-     
-        if( id )
+        if ( req.params.id )
         {
-            users = users.filter( function ( user ) 
-            {
-                return user._id != id;
-            } );
-            
-            res.status( 204 ).end();
-        }
+            var _id = req.params.id;
         
-        res.status( 404 ).end();
+            User.remove( { _id : _id } ).exec( function ( error, user )
+            {
+                if ( error )
+                {
+                    res.status( 500 ).json( error );
+                }
+                
+                res.status( 200 ).json( user );
+            } );
+        }
     };
 
     return controller;
