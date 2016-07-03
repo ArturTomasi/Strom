@@ -1,9 +1,14 @@
-/* global BootstrapDialog */
+/* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'UserService', function( $http ) 
+angular.module( 'Strom' ).factory( 'UserService', [ '$http', function( $http ) 
 {
     var UserService = {};
     
+    /**
+     * 
+     * @param {type} callback
+     * @returns {undefined}
+     */
     UserService.getUsers = function( callback )
     {
         $http.get( '/users' )
@@ -15,10 +20,16 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
         
         .error( function (error) 
         {
-            console.log(error);
+            Message.error( error );
         } );
     };
     
+    /**
+     * 
+     * @param {type} id
+     * @param {type} callback
+     * @returns {undefined}
+     */
     UserService.getUser = function( id, callback )
     {
         $http.get( '/users/' + id )
@@ -30,10 +41,16 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
         
         .error( function (error) 
         {
-            console.log(error);
+            Message.error( error );
         } );
     };
     
+    /**
+     * 
+     * @param {type} user
+     * @param {type} callback
+     * @returns {undefined}
+     */
     UserService.storeUser = function( user, callback )
     {
         if ( ! user._id )
@@ -47,7 +64,7 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
             
             .error( function (error) 
             {
-              Prompts.alert( error.errors );
+              Message.alert( error );
             } );  
         }
         
@@ -62,12 +79,17 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
             
             .error( function (error) 
             {
-                Prompts.alert( error.errors );
+                Message.alert( error );
             } );
-            
         }
     };
     
+    /**
+     * 
+     * @param {type} user
+     * @param {type} callback
+     * @returns {undefined}
+     */
     UserService.deleteUser = function( user, callback )
     {
         if( user )
@@ -81,12 +103,12 @@ angular.module( 'Strom' ).factory( 'UserService', function( $http )
 
             .error( function (error) 
             {
-                
+                Message.error( error );
             } );
         }
     };
     
     return UserService;
-} );
+} ] );
     
 

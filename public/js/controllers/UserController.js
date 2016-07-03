@@ -1,9 +1,15 @@
-/* global angular */
+/* global angular, Message */
 
 angular.module("Strom").controller( "UserController",['$scope','UserService', function ($scope, UserService )
 {
     $scope.userSelected;
     $scope.users;
+
+    $scope.sort = function( keyname )
+    {
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    };
 
     $scope.selectUser = function (user)
     {
@@ -33,9 +39,12 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
     
     $scope.deleteUser = function(user)
     {
-        UserService.deleteUser( user, function()
+        Message.confirm( 'Você deseja realmente excluir o usuário ' + $scope.userSelected.name, function () 
         {
-            loadUsers();
+            UserService.deleteUser( user, function()
+            {
+                loadUsers();
+            } );
         } );
     };
     
@@ -47,10 +56,5 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
         } );
     };
     
-    init = function()
-    {
-        loadUsers();
-    };
-
-    init();
+    loadUsers();
 } ]);

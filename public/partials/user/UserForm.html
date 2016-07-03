@@ -1,0 +1,76 @@
+<div class="modal fade" data-backdrop="static" id="store" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">{{!user._id ? 'Adicionar' : 'Editar' }} Usuário</h3>
+            </div>
+            <div class="modal-body">
+                <form name="UserForm" ng-submit="storeUser(user)">
+
+                    <div class="form-group has-feedback" 
+                         data-ng-class="{ 'has-success' : UserForm.name.$valid, 'has-error' : UserForm.name.$invalid }" >
+                        <label for="nameField">Nome</label>
+                        <label class="text-danger" data-ng-show="UserForm.name.$invalid">Obrigatório</label>
+                        <div class="form-group">
+                            <input ng-required="true" 
+                                   ng-model="user.name" 
+                                   name="name" 
+                                   title="Nome é obrigatório"
+                                   type="text"
+                                   class="form-control" 
+                                   id="nameField" 
+                                   placeholder="Nome">
+                        </div>
+                    </div>
+                        <div class="form-group has-feedback" data-ng-class="{ 'has-error' : UserForm.email.$invalid, 'has-success' : UserForm.email.$valid}" >
+                            <label for="emailField">Email</label>
+                            <span class="text-danger" data-ng-show="UserForm.email.$invalid">Obrigatório</span>
+                            <div class="form-group">
+                                <input ng-required="true" ng-model="user.email" name="email" type="email" class="form-control" id="emailField" placeholder="email@exmple.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.phone.$invalid, 'has-success' : UserForm.phone.$valid}">
+                            <label for="phoneField">Telefone</label>
+                            <span class="text-danger" data-ng-show="UserForm.phone.$invalid">Obrigatório</span>
+                            <div class="form-group">
+                                <input ng-model="user.phone" name="phone" type="text" class="form-control" id="phoneField" placeholder="(51) 9999-8888" required>    
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.login.$invalid, 'has-success' : UserForm.login.$valid}">
+                            <label for="loginField" >Login</label>
+                            <span class="text-danger" data-ng-show="UserForm.login.$invalid">Obrigatório</span>
+                            <div class="form-group">
+                                <input ng-required="true" ng-model="user.login" name="login" type="text" class="form-control" id="loginField" placeholder="Login" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.password.$invalid, 'has-success' : UserForm.password.$valid}">
+                            <label for="passwordField">Senha</label>
+                            <span class="text-danger" data-ng-show="UserForm.password.$invalid">Obrigatório</span>
+                            <div class="form-group">
+                                <input ng-required="true" ng-model="user.password" name="password" type="password" class="form-control" id="passwordField" placeholder="Senha" required>
+                            </div>
+                        </div>
+
+                    <div class="form-group has-feedback" data-ng-class="{'has-error' : !user.state, 'has-success' : user.state}">
+                        <label for="stateField">Situação</label>
+                        <span class="text-danger" data-ng-show="!user.state">Obrigatório</span>
+                        <div class="form-group">
+                            <select ng-required="true" name="state" class="form-control" id="stateField"ng-model="user.state">
+                                <option value="">Selecione</option>
+                                <option ng-selected="user.state === 1" value="1">Inativo</option>
+                                <option ng-selected="user.state === 0" value="0">Ativo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                        <input type="submit" value="Salvar" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>

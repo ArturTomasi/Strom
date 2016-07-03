@@ -6,113 +6,49 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
-                        <th style="text-align: center; width: 10%">ID</th>
-                        <th style="text-align: center; width: 60%">Nome</th>
-                        <th style="text-align: center; width: 30%">Login</th>
+                        <th style="width: 30%" data-ng-click="sort( 'name' );">
+                            Nome
+                            <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                        <th style="width: 30%" data-ng-click="sort( 'email' );">
+                            Email
+                            <i data-ng-show="sortKey === 'email'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                        <th style="width: 25%" data-ng-click="sort( 'phone' );">
+                            Telefone
+                            <i data-ng-show="sortKey === 'phone'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                        <th style="width: 15%" data-ng-click="sort( 'state' );">
+                            Situação
+                            <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
                     </tr>
                 </thead>
             </table>
         </div>
         <div class="panel-body">
-            <input ng-model="filter" type="search" class="form-control" placeholder="Filtro" />
+            <input data-ng-model="filter" type="search" class="form-control" placeholder="Filtro" />
             <table class="table table-condensed">
                 <tbody>
-                    <tr class="tr" ng-class="{trselected: userSelected._id === user._id }" ng-click="selectUser(user)" ng-repeat="user in users| filter: filter">
-                        <td style="width: 10%">{{user._id}}</td>
-                        <td style="width: 60%">{{user.name}}</td>
-                        <td style="width: 30%">{{user.login}}</td>
+                    <tr class="tr" data-ng-class="{trselected: userSelected._id === user._id }" 
+                                   data-ng-click="selectUser(user)" 
+                                   dir-paginate="user in users | filter : $or : [ { name: filter } , { email: filter} ] | orderBy: sortKey: reverse | itemsPerPage: 10">
+                        
+                        <td style="width: 30%">{{user.name}}</td>
+                        <td style="width: 30%">{{user.email}}</td>
+                        <td style="width: 30%">{{user.phone}}</td>
+                        <td style="width: 10%">{{user.state === 0 ? 'Ativo' : 'Inativo' }}</td>
                     </tr>
                 </tbody>
             </table>
+            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
         </div>
     </div>
 </div>
 <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-    <button ng-click="user = getUserForm()" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Novo</button>
-    <button ng-disabled="!userSelected" ng-click="user = getUserForm(userSelected)" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Editar</button>
-    <button ng-disabled="!userSelected" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#delete">Excluir</button>
-
-    <div class="modal fade" data-backdrop="static" id="store" role="dialog">
-        <div class="modal-dialog" style="width: 85%" >
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title">Editor de Usuário</h6>
-                    <h4 class="modal-title">{{!user._id ? 'Adicionar' : 'Editar' }} Usuário</h4>
-                </div>
-                <div class="modal-body">
-                    <form name="UserForm">
-                        <div class="form-group has-feedback" data-ng-class="{ 'has-success' : UserForm.name.$valid, 'has-error' : UserForm.name.$invalid }" >
-                            <label for="nameField">Nome</label>
-                            <span class="text-danger" data-ng-show="UserForm.name.$invalid">Obrigatório</span>
-                            <div class="form-group">
-                                <input ng-model="user.name" name="name" type="text" class="form-control" id="nameField" placeholder="Nome" required autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" data-ng-class="{ 'has-error' : UserForm.email.$invalid, 'has-success' : UserForm.email.$valid}" >
-                            <label for="emailField">Email</label>
-                            <span class="text-danger" data-ng-show="UserForm.email.$invalid">Obrigatório</span>
-                            <div class="form-group">
-                                <input ng-model="user.email" name="email" type="email" class="form-control" id="emailField" placeholder="email@exmple.com" required>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.phone.$invalid, 'has-success' : UserForm.phone.$valid}">
-                            <label for="phoneField">Telefone</label>
-                            <span class="text-danger" data-ng-show="UserForm.phone.$invalid">Obrigatório</span>
-                            <div class="form-group">
-                                <input ng-model="user.phone" name="phone" type="text" class="form-control" id="phoneField" placeholder="(51) 9999-8888" required>    
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.login.$invalid, 'has-success' : UserForm.login.$valid}">
-                            <label for="loginField" >Login</label>
-                            <span class="text-danger" data-ng-show="UserForm.login.$invalid">Obrigatório</span>
-                            <div class="form-group">
-                                <input ng-model="user.login" name="login" type="text" class="form-control" id="loginField" placeholder="Login" required>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.password.$invalid, 'has-success' : UserForm.password.$valid}">
-                            <label for="passwordField">Senha</label>
-                            <span class="text-danger" data-ng-show="UserForm.password.$invalid">Obrigatório</span>
-                            <div class="form-group">
-                                <input ng-model="user.password" name="password" type="password" class="form-control" id="passwordField" placeholder="Senha" required>
-                            </div>
-                        </div>
-                        <div class="form-group has-feedback" data-ng-class="{'has-error' : !user.state, 'has-success' : user.state}">
-                            <label for="stateField">Situação</label>
-                            <span class="text-danger" data-ng-show="! user.state">Obrigatório</span>
-                            <div class="form-group">
-                                <select name="state" class="form-control" id="stateField"ng-model="user.state">
-                                    <option value="">Selecione</option>
-                                    <option ng-selected="user.state === 1" value="1">Inativo</option>
-                                    <option ng-selected="user.state === 0" value="0">Ativo</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    <button ng-click="storeUser(user)" class="btn btn-success">Salvar</button>
-                </div>
-            </div>  
-        </div>
-    </div>
-
-    <div class="modal fade" data-backdrop="static" id="delete" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title"> {{ 'Exculir Usuário'}} </h6>
-                </div>
-                <div class="modal-body">
-                    <label>{{'Você realmente deseja excluir o usuário ' + userSelected.name}}</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button ng-click="deleteUser(userSelected)" class="btn btn-danger" data-dismiss="modal">Excluir</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <button data-ng-click="user = getUserForm()" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Novo</button>
+    <button data-ng-disabled="!userSelected" data-ng-click="user = getUserForm(userSelected)" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Editar</button>
+    <button data-ng-disabled="!userSelected" data-ng-click="deleteUser( userSelected )"       type="button" class="btn btn-primary btn-block" >Excluir</button>
+    
+    <div ng-include="'partials/user/UserForm.html'"></div>
 </div>

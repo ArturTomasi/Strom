@@ -39,3 +39,11 @@
 .btn{
     text-align: center;
 }
+.modal .fade .modal-dialog {
+    width: 80% !important;
+    height: 80%;
+}
+
+.modal-body{
+    padding-bottom: 0px !important;
+}

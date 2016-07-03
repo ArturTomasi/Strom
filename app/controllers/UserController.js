@@ -1,3 +1,5 @@
+/* global module */
+
 module.exports = function ( app ) 
 {
     var User = app.models.User;
@@ -19,7 +21,7 @@ module.exports = function ( app )
         {
             if ( error )
             {
-                res.status( 500 ).json( error );
+                res.status( 500 ).json( composeError( error ) );
             }
             
             res.json( users );
@@ -38,7 +40,7 @@ module.exports = function ( app )
         {
             if ( error )
             {
-                res.status( 400 ).json( error );
+                res.status( 500 ).json( composeError( error ) );
             }
 
             res.json( user );
@@ -57,7 +59,7 @@ module.exports = function ( app )
         {
             if ( error )
             {
-                res.status( 500 ).json( error );
+                res.status( 500 ).json( composeError( error ) );
             }
             
             res.json( user );
@@ -77,7 +79,7 @@ module.exports = function ( app )
         {
             if ( error )
             {
-                res.status( 500 ).json( error );
+                res.status( 500 ).json( composeError( error ) );
             }
 
             res.status( 200 ).json( user );
@@ -100,14 +102,46 @@ module.exports = function ( app )
             {
                 if ( error )
                 {
-                    res.status( 500 ).json( error );
+                    res.status( 500 ).json( composeError( error ) );
                 }
                 
                 res.status( 200 ).json( user );
             } );
         }
     };
-
+    
+    /**
+     * 
+     * @param {type} errors
+     * @returns {unresolved}
+     */
+    function composeError( errors )
+    {
+        var msg = '';
+        
+        for ( var e in errors.errors )
+        {
+            var error =  errors.errors[e];
+            
+            switch ( error.path )
+            {
+                case 'name':
+                    msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
+                break;
+                
+                case 'email':
+                    msg +=  '<br>' + 'Email (' + error.value + ') ' +  error.message;
+                break;
+                
+                case 'login':
+                    msg +=  '<br>' + 'Login (' + error.value + ') ' +  error.message;
+                break;
+            }
+        }
+        
+        return msg;
+    };
+    
     return controller;
 };
 

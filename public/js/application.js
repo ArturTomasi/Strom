@@ -2,34 +2,25 @@
 
 ( function(){
 	
-	'use strict';
+    'use strict';
 
-	angular.module( 'Strom' , ['ngRoute', 'ngResource' ] );
+    angular.module( 'Strom' , ['ngRoute', 'ngResource', 'angularUtils.directives.dirPagination' ] );
 
-	angular.module( 'Strom').config( [ '$routeProvider' , function ( $routeProvider ) 
-	{
-		$routeProvider.when('/user', 
-                {
-                    templateUrl: 'partials/user/user.html',
-                    controller: 'UserController'
-		} )
-                .when('/login', 
-                {
-                    templateUrl: '/partials/login.html',
-                    controller: 'ApplicationController'
-		});
-
-		$routeProvider.otherwise( { redirectTo: '/login' } );
-	}]);
-    
-        angular.module( "Strom" ).controller( "ApplicationController", function ( $scope )
+    angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
+    {
+        $httpProvider.interceptors.push( 'InterceptorService' );
+        
+        $routeProvider.when('/user', 
         {
-            $scope.app = "Strom";
-            $scope.currentUser = "Artur Tomasi";
-            
-            $scope.signIn = function( user )
-            {
-                window.location = '#/user';
-            };
-        } );
+            templateUrl: 'partials/user/user.html',
+            controller: 'UserController'
+        } )
+        .when('/login', 
+        {
+            templateUrl: '/partials/login.html',
+            controller: 'ApplicationController'
+        });
+
+        $routeProvider.otherwise( { redirectTo: '/user' } );
+    } ] );
 })();
