@@ -1,2 +1,2 @@
-# busqueservico
+# Strom
 Applicação em MEAN stack
