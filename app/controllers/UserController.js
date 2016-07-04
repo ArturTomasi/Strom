@@ -3,6 +3,7 @@
 module.exports = function ( app ) 
 {
     var User = app.models.User;
+    var sanitize = require( 'mongo-sanitize' );
     
     /**
      * @type type
@@ -36,7 +37,9 @@ module.exports = function ( app )
      */
     controller.getUser = function( req, res )
     {
-        User.findById( { _id : req.params.id } ).exec( function ( error, user )
+        var id = sanitize( req.params.id );
+
+        User.findById( { _id : id } ).exec( function ( error, user )
         {
             if ( error )
             {
@@ -75,7 +78,9 @@ module.exports = function ( app )
      */
     controller.editUser = function( req , res )
     {
-        User.findOneAndUpdate( { _id : req.body._id }, req.body, { new : true } ).exec( function ( error, user )
+        var id = sanitize( req.body._id );
+
+        User.findOneAndUpdate( { _id : _id }, req.body, { new : true } ).exec( function ( error, user )
         {
             if ( error )
             {
@@ -96,7 +101,7 @@ module.exports = function ( app )
     {
         if ( req.params.id )
         {
-            var _id = req.params.id;
+            var _id = sanitize( req.params.id );
         
             User.remove( { _id : _id } ).exec( function ( error, user )
             {

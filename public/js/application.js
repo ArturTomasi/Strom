@@ -17,10 +17,9 @@
         } )
         .when('/login', 
         {
-            templateUrl: '/partials/login.html',
-            controller: 'ApplicationController'
-        });
-
-        $routeProvider.otherwise( { redirectTo: '/user' } );
+            templateUrl: '/partials/login.html'
+        })
+        
+        $routeProvider.otherwise( { redirectTo: '/' } );
     } ] );
 })();
