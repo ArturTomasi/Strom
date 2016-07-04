@@ -1,7 +1,7 @@
 .tmp
 .DS_Store
 .DS_Store?
-node_modules/
-public/vendor/
-dist/
-scripts/
+node_modules/**/*
+public/vendor/**/
+dist/**/*
+scripts/*/**
