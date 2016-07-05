@@ -36,8 +36,7 @@ module.exports = function()
 
      app.get( '/*', function( req, res )
      {
-     	console.log('artuadasdasds');
-     	res.status( 404 ).render( '404' );
+     	res.render( '404' );
 
      } );
 

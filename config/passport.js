@@ -28,7 +28,7 @@ module.exports = function()
                     return done( error );
                 }
 
-                if ( ! user && user.password !== password )
+                if ( ! user || user.password !== password )
                 { 
                     return done( null, false, { message: 'Incorrect username or password.' } );
                 }
