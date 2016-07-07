@@ -14,6 +14,9 @@
   font-weight: bold;
   font-size: 14px;
 }
+.form-group {
+  margin-bottom: 2px;
+}
 .trselected {
   background-color: #607D8B !important;
   color: #ECEFF1;
@@ -125,7 +128,7 @@
   width: 98%;
 }
 .sub-items {
-  margin-left: 10%;
+  margin-left: 1  0%;
   width: 88%;
   display: none;
 }
@@ -133,7 +136,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 30px;
   background-color: #607D8B;
 }
 body {

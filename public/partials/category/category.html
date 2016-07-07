@@ -1,0 +1,54 @@
+<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th style="width: 5%" data-ng-click="sort( 'state' );">
+                            #
+                            <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                        <th style="width: 30%" data-ng-click="sort( 'name' );">
+                            Nome
+                            <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                        <th style="width: 30%" data-ng-click="sort( 'type' );">
+                            Tipo
+                            <i data-ng-show="sortKey === 'type'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr class="tr" data-ng-class="{trselected: categorySelected._id === category._id }" 
+                                   data-ng-click="selectCategory(category)" 
+                                   dir-paginate="category in categories | orderBy: sortKey: reverse | itemsPerPage: 10">
+                        <td style="width: 5%"><img data-ng-src="icons/{{category.state == 1 ? 'delete.png' : 'finish.png'}}" class="btn-icon"></img></td>
+                        <td style="width: 30%">{{category.name}}</td>
+                        <td style="width: 30%">{{category.type}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+        </div>
+    </div>
+</div>
+<div class="panel-left col-xs-1 col-sm-1 col-md-1 col-lg-1">
+    <button data-ng-click="category = getCategoryForm()" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+        <img src="icons/new.png" class="btn-icon"></img>
+        Novo
+    </button>
+    <button data-ng-disabled="!categorySelected" data-ng-click="category = getCategoryForm(categorySelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+        <img src="icons/edit.png" class="btn-icon"></img>
+        Editar
+    </button>
+    <button data-ng-disabled="!categorySelected" data-ng-click="deleteCategory( categorySelected )" type="button" class="btn btn-strom btn-block" >
+        <img src="icons/delete.png" class="btn-icon"></img>
+        Excluir
+    </button>
+    
+    <div ng-include="'partials/category/CategoryForm.html'"></div>
+</div>

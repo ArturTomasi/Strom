@@ -9,7 +9,7 @@ angular.module( "Strom" ).controller( "EntriesController", [ '$scope', '$locatio
 	 		break;
 
 	 		case 1:
-		 		$location.path( '/user' );
+		 		$location.path( '/category' );
 	 		break;
 			
 	 		case 2:
@@ -17,7 +17,7 @@ angular.module( "Strom" ).controller( "EntriesController", [ '$scope', '$locatio
 	 		break;
 
 	 		case 3:
-		 		$location.path( '/user' );
+		 		$location.path( '/category' );
 	 		break;
 	 	}	 
 	};

@@ -4,6 +4,10 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
+                        <th style="width: 5%" data-ng-click="sort( 'state' );">
+                            #
+                            <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        </th>
                         <th style="width: 30%" data-ng-click="sort( 'name' );">
                             Nome
                             <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
@@ -12,13 +16,13 @@
                             Email
                             <i data-ng-show="sortKey === 'email'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                         </th>
-                        <th style="width: 25%" data-ng-click="sort( 'phone' );">
+                        <th style="width: 20%" data-ng-click="sort( 'phone' );">
                             Telefone
                             <i data-ng-show="sortKey === 'phone'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                         </th>
-                        <th style="width: 15%" data-ng-click="sort( 'state' );">
-                            Situação
-                            <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                        <th style="width: 15%" data-ng-click="sort( 'role' );">
+                            Categoria
+                            <i data-ng-show="sortKey === 'role'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                         </th>
                     </tr>
                 </thead>
@@ -30,11 +34,11 @@
                     <tr class="tr" data-ng-class="{trselected: userSelected._id === user._id }" 
                                    data-ng-click="selectUser(user)" 
                                    dir-paginate="user in users | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
-                        
+                        <td style="width: 5%"><img data-ng-src="icons/{{user.state == 1 ? 'delete.png' : 'finish.png'}}" class="btn-icon"></img></td>
                         <td style="width: 30%">{{user.name}}</td>
                         <td style="width: 30%">{{user.email}}</td>
-                        <td style="width: 30%">{{user.phone | tel}}</td>
-                        <td style="width: 10%">{{user.state === 0 ? 'Ativo' : 'Inativo' }}</td>
+                        <td style="width: 20%">{{user.phone | tel}}</td>
+                        <td style="width: 15%">{{user.role}}</td>
                     </tr>
                 </tbody>
             </table>

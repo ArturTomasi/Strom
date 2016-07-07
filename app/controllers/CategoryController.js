@@ -39,7 +39,7 @@ module.exports = function ( app )
     {
         var id = sanitize( req.params.id );
 
-        User.findById( { _id : id } ).exec( function ( error, category )
+        Category.findById( { _id : id } ).exec( function ( error, category )
         {
             if ( error )
             {
@@ -58,7 +58,7 @@ module.exports = function ( app )
      */
     controller.addCategory = function( req , res )
     {
-        User.create( req.body, function( error, category )
+        Category.create( req.body, function( error, category )
         {
             if ( error )
             {
@@ -80,7 +80,7 @@ module.exports = function ( app )
     {
         var _id = sanitize( req.body._id );
 
-        User.findOneAndUpdate( { _id : _id }, req.body, 
+        Category.findOneAndUpdate( { _id : _id }, req.body, 
                                { new : true, runValidators: true, context: 'query' } ).exec( function ( error, category )
         {
             if ( error )
@@ -107,7 +107,7 @@ module.exports = function ( app )
             //User.remove( { _id : _id } ).exec( function ( error, user )
         
 
-            User.findOneAndUpdate( { _id : _id }, { state: 1 }, 
+            Category.findOneAndUpdate( { _id : _id }, { state: 1 }, 
                                    { new : true, runValidators: true, context: 'query' } ).exec( function ( error, category )
             {
                 if ( error )
