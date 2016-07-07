@@ -25,16 +25,15 @@
             </table>
         </div>
         <div class="panel-body">
-            <input data-ng-model="filter" type="search" class="form-control" placeholder="Filtro" />
             <table class="table table-condensed">
                 <tbody>
                     <tr class="tr" data-ng-class="{trselected: userSelected._id === user._id }" 
                                    data-ng-click="selectUser(user)" 
-                                   dir-paginate="user in users | filter : $or : [ { name: filter } , { email: filter} ] | orderBy: sortKey: reverse | itemsPerPage: 10">
+                                   dir-paginate="user in users | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
                         
                         <td style="width: 30%">{{user.name}}</td>
                         <td style="width: 30%">{{user.email}}</td>
-                        <td style="width: 30%">{{user.phone}}</td>
+                        <td style="width: 30%">{{user.phone | tel}}</td>
                         <td style="width: 10%">{{user.state === 0 ? 'Ativo' : 'Inativo' }}</td>
                     </tr>
                 </tbody>
@@ -43,10 +42,19 @@
         </div>
     </div>
 </div>
-<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-    <button data-ng-click="user = getUserForm()" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Novo</button>
-    <button data-ng-disabled="!userSelected" data-ng-click="user = getUserForm(userSelected)" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#store">Editar</button>
-    <button data-ng-disabled="!userSelected" data-ng-click="deleteUser( userSelected )"       type="button" class="btn btn-primary btn-block" >Excluir</button>
+<div class="panel-left col-xs-1 col-sm-1 col-md-1 col-lg-1">
+    <button data-ng-click="user = getUserForm()" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+        <img src="icons/new.png" class="btn-icon"></img>
+        Novo
+    </button>
+    <button data-ng-disabled="!userSelected" data-ng-click="user = getUserForm(userSelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+        <img src="icons/edit.png" class="btn-icon"></img>
+        Editar
+    </button>
+    <button data-ng-disabled="!userSelected" data-ng-click="deleteUser( userSelected )" type="button" class="btn btn-strom btn-block" >
+        <img src="icons/delete.png" class="btn-icon"></img>
+        Excluir
+    </button>
     
     <div ng-include="'partials/user/UserForm.html'"></div>
 </div>

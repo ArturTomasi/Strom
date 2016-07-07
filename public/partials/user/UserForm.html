@@ -35,7 +35,7 @@
                             <label for="phoneField">Telefone</label>
                             <span class="text-danger" data-ng-show="UserForm.phone.$invalid">Obrigatório</span>
                             <div class="form-group">
-                                <input ng-model="user.phone" name="phone" type="text" class="form-control" id="phoneField" placeholder="(51) 9999-8888" required>    
+                                <input ng-model="user.phone" name="phone" type="text" class="form-control" id="phoneField" placeholder="(51) 9999-8888" required phone-filter>
                             </div>
                         </div>
                         <div class="form-group has-feedback" data-ng-class="{'has-error' : UserForm.login.$invalid, 'has-success' : UserForm.login.$valid}">

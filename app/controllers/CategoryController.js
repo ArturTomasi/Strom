@@ -2,7 +2,7 @@
 
 module.exports = function ( app ) 
 {
-    var User = app.models.User;
+    var Category = app.models.Category;
     var sanitize = require( 'mongo-sanitize' );
     
     /**
@@ -16,16 +16,16 @@ module.exports = function ( app )
     * @param {type} res
     * @returns {undefined}
     */
-    controller.getUsers = function( req, res )
+    controller.getCategories = function( req, res )
     {
-       User.find().exec( function ( error , users )
+        Category.find().exec( function ( error , categories )
         {
             if ( error )
             {
                 res.status( 500 ).json( composeError( error ) );
             }
             
-            res.json( users );
+            res.json( categories );
         } );
     };
     
@@ -35,18 +35,18 @@ module.exports = function ( app )
      * @param {type} res
      * @returns {undefined}
      */
-    controller.getUser = function( req, res )
+    controller.getCategory = function( req, res )
     {
         var id = sanitize( req.params.id );
 
-        User.findById( { _id : id } ).exec( function ( error, user )
+        User.findById( { _id : id } ).exec( function ( error, category )
         {
             if ( error )
             {
                 res.status( 500 ).json( composeError( error ) );
             }
 
-            res.json( user );
+            res.json( category );
         } );
     };
     
@@ -56,16 +56,16 @@ module.exports = function ( app )
      * @param {type} res
      * @returns {undefined}
      */
-    controller.addUser = function( req , res )
+    controller.addCategory = function( req , res )
     {
-        User.create( req.body, function( error, user )
+        User.create( req.body, function( error, category )
         {
             if ( error )
             {
                 res.status( 500 ).json( composeError( error ) );
             }
             
-            res.json( user );
+            res.json( category );
             
         } );
     };
@@ -76,19 +76,19 @@ module.exports = function ( app )
      * @param {type} res
      * @returns {undefined}
      */
-    controller.editUser = function( req , res )
+    controller.editCategory = function( req , res )
     {
         var _id = sanitize( req.body._id );
 
         User.findOneAndUpdate( { _id : _id }, req.body, 
-                               { new : true, runValidators: true, context: 'query' } ).exec( function ( error, user )
+                               { new : true, runValidators: true, context: 'query' } ).exec( function ( error, category )
         {
             if ( error )
             {
                 res.status( 500 ).json( composeError( error ) );
             }
 
-            res.status( 200 ).json( user );
+            res.status( 200 ).json( category );
         } );
     };
     
@@ -98,7 +98,7 @@ module.exports = function ( app )
      * @param {type} res
      * @returns {undefined}
      */
-    controller.deleteUser = function( req , res )
+    controller.deleteCategory = function( req , res )
     {
         if ( req.params.id )
         {
@@ -108,14 +108,14 @@ module.exports = function ( app )
         
 
             User.findOneAndUpdate( { _id : _id }, { state: 1 }, 
-                                   { new : true, runValidators: true, context: 'query' } ).exec( function ( error, user )
+                                   { new : true, runValidators: true, context: 'query' } ).exec( function ( error, category )
             {
                 if ( error )
                 {
                     res.status( 500 ).json( composeError( error ) );
                 }
                 
-                res.status( 200 ).json( user );
+                res.status( 200 ).json( category );
             } );
         }
     };
@@ -139,16 +139,8 @@ module.exports = function ( app )
                     msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
                 break;
                 
-                case 'email':
-                    msg +=  '<br>' + 'Email (' + error.value + ') ' +  error.message;
-                break;
-                
-                case 'login':
-                    msg +=  '<br>' + 'Login (' + error.value + ') ' +  error.message;
-                break;
-
-                case 'phone':
-                    msg +=  '<br>' + 'Telefone (' + error.value + ') ' +  error.message;
+                case 'type':
+                    msg +=  '<br>' + 'Tipo (' + error.value + ') ' +  error.message;
                 break;
             }
         }

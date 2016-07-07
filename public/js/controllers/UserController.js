@@ -31,9 +31,9 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
         UserService.storeUser( user, function( data )
         {
             $( '#store' ).modal( 'hide' );
-            
-            $scope.selectUser( data );
-            loadUsers();
+                
+                $scope.selectUser( data );
+                loadUsers();
         } );
     };
     
@@ -47,7 +47,7 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
             } );
         } );
     };
-    
+      
     loadUsers = function()
     {
         UserService.getUsers( function( data )

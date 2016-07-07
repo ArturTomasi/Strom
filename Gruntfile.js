@@ -33,10 +33,7 @@ module.exports = function ( grunt )
 				root: 'dist/public',
 				dest: 'dist/public'
 			},
-			html:
-			{
-				html: 'dist/app/views/**/*.ejs'		
-			}
+			html: 'dist/app/views/**/*.ejs'		
 		},
 
 		ngAnnotate:
@@ -49,16 +46,16 @@ module.exports = function ( grunt )
 		}
 	});
 
-	grunt.registerTask( 'default', [ 'dist' ] );
+	grunt.registerTask( 'default', [ 'dist', 'minifica' ] );
 	grunt.registerTask( 'dist', [ 'clean', 'copy' ] );
-	grunt.registerTask( 'minifica', [ 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'ng-annotate' ] );
+	grunt.registerTask( 'minifica', [ 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin', 'ngAnnotate' ] );
 
 
 	grunt.loadNpmTasks( 'grunt-contrib-copy' );
 	grunt.loadNpmTasks( 'grunt-contrib-clean' );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
-	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
+	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-usemin' );
 	grunt.loadNpmTasks( 'grunt-ng-annotate' );
 	

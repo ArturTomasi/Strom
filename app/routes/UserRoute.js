@@ -20,7 +20,7 @@ module.exports = function( app )
 
     app.get('/users', checkAuthenticated, controller.getUsers );
     
-    app.get('/users:id', checkAuthenticated, controller.getUsers );
+    app.get('/users:id', checkAuthenticated, controller.getUser );
         
     app.post('/users/', checkAuthenticated, controller.addUser );
 	
