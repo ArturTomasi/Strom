@@ -2,6 +2,8 @@
 @main-color: #607D8B;
 @back-color: #ECEFF1;
 @main-color-black: #455a64; 
+@main-color-light: #b0bec5;
+@main-color-light2: #cfd8dc
 
 .jumbotron 
 {
@@ -46,6 +48,44 @@
 .navbar-brand
 {
   color: @back-color !important ;
+}
+
+.tab-content
+{
+  margin-top: 15px;  
+}
+
+.nav-tabs,
+.nav-tabs:hover
+{
+   cursor: pointer;  
+   border-bottom: 1px solid @main-color;
+}
+
+.nav-tabs>li>a:hover 
+{
+    border-color: transparent;
+}
+
+.nav>li>a:focus, .nav>li>a:hover
+{
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-tabs>li>a 
+{
+  color: @main-color !important; 
+}
+
+.nav-tabs>li.active>a 
+{
+    color: @main-color !important;
+    cursor: pointer;
+    background-color: @back-color !important;
+    border: 1px solid @main-color !important;
+    border-bottom-color: transparent !important;
+    font-weight: bold;
 }
 
 .form-control 
@@ -104,6 +144,12 @@
 .menu-icon
 {
     width: 60px;
+}
+
+.modal-content
+{
+  background-color: @back-color;
+  color: @main-color;
 }
 
 .modal .fade .modal-dialog 
@@ -198,7 +244,7 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 30px;
+  height: 60px;
   background-color:  @main-color;
 }
 

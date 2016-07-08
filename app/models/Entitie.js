@@ -9,16 +9,15 @@ module.exports = function ()
     var schema = mongoose.Schema
     ( {
         name :    { type: String, required: [true, 'não pode estar vazio'], index:{ unique : true } },
-        login:    { type: String, required: [true, 'não pode estar vazio'], index:{ unique : true } },
-        password: { type: String, required: [true, 'não pode estar vazio'] },
+        companny: { type: String },
+        cnpj:     { type: String, required: [true, 'não pode estar vazio'] },
         state:    { type: Number, required: [true, 'não pode estar vazio'], default: 0 },
         email:    { type: String, required: [true, 'não pode estar vazio'], index:{ unique : true } },
-        role:     { type: String, required: [true, 'não pode estar vazio'], enum: [ 'Administrador', 'Operador' ] },
         phone:    { type: String, minlength: [10, 'não está válido' ], maxlength: [11, 'não está válido' ] },
-        createAt: { type: Date,   default: Date.now } 
+        createAt: { type: Date,   default: Date.now }  
     } );
     
-    schema.plugin( uniqueValidator, { message: " está adicionado em outro usuário." } );
+    schema.plugin( uniqueValidator, { message: " está adicionado em outro entidade." } );
     
-    return mongoose.model( 'User', schema );
+    return mongoose.model( 'Entitie', schema );
 };

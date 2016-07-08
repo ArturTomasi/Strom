@@ -11,7 +11,8 @@ module.exports = function ()
         name : { type: String, required: [true, 'não pode estar vazio'], index:{ unique : true } },
         info:  { type: String },
         state: { type: Number, required: [true, 'não pode estar vazio'], default: 0 },
-        type : { type: String, required: [true, 'não pode estar vazio'], enum: [ 'Receita', 'Despesas' ] }
+        type : { type: String, required: [true, 'não pode estar vazio'], enum: [ 'Receita', 'Despesas' ] },
+        createAt: { type: Date,   default: Date.now } 
     } );
     
     schema.plugin( uniqueValidator, { message: " está adicionado em outro usuário." } );
