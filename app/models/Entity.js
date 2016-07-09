@@ -19,5 +19,5 @@ module.exports = function ()
     
     schema.plugin( uniqueValidator, { message: " está adicionado em outro entidade." } );
     
-    return mongoose.model( 'Entitie', schema );
+    return mongoose.model( 'Entity', schema );
 };

@@ -9,11 +9,11 @@ angular.module( "Strom" ).controller( "EntriesController", [ '$scope', '$locatio
 	 		break;
 
 	 		case 1:
-		 		$location.path( '/category' );
+		 		$location.path( '/entity' );
 	 		break;
 			
 	 		case 2:
-		 		$location.path( '/user' );
+		 		$location.path( '/completionType' );
 	 		break;
 
 	 		case 3:

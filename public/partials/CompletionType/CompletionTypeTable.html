@@ -1,0 +1,36 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th style="width: 5%" data-ng-click="sort( 'state' );">
+                        #
+                        <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    <th style="width: 30%" data-ng-click="sort( 'name' );">
+                        Nome
+                        <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    <th style="width: 30%" data-ng-click="sort( 'type' );">
+                        Tipo
+                        <i data-ng-show="sortKey === 'type'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="panel-body">
+        <table class="table table-condensed">
+            <tbody>
+                <tr class="tr" data-ng-class="{trselected: completionTypeSelected._id === completionType._id }" 
+                               data-ng-click="selectCompletionType(completionType)" 
+                               dir-paginate="completionType in completionTypes | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
+                    <td style="width: 5%"><img data-ng-src="icons/{{completionType.state == 1 ? 'delete.png' : 'finish.png'}}" class="btn-icon"></img></td>
+                    <td style="width: 30%">{{completionType.name}}</td>
+                    <td style="width: 30%">{{completionType.type}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+    </div>
+</div>
