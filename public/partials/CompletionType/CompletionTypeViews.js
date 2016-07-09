@@ -13,7 +13,7 @@ angular.module( 'Strom' )
 {
 	var CompletionTypeActions = {};
 	
-	CompletionTypeActions.templateUrl = 'partials/CompletionType/completionTypeActions.html';
+	CompletionTypeActions.templateUrl = 'partials/CompletionType/CompletionTypeActions.html';
 
 	return CompletionTypeActions;
 }])

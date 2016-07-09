@@ -22,7 +22,7 @@ angular.module( 'Strom' )
 {
 	var UserForm = {};
 	
-	UserForm.templateUrl = 'partials/User/CategoryForm.html';
+	UserForm.templateUrl = 'partials/User/UserForm.html';
 
-	return CompletionTypeForm;
+	return UserForm;
 }]);

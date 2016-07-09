@@ -24,5 +24,5 @@ angular.module( 'Strom' )
 	
 	CategoryForm.templateUrl = 'partials/Category/CategoryForm.html';
 
-	return CompletionTypeForm;
+	return CategoryForm;
 }]);

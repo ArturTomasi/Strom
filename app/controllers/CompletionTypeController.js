@@ -138,18 +138,11 @@ module.exports = function ( app )
                 case 'name':
                     msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
                 break;
-                
-                case 'email':
-                    msg +=  '<br>' + 'Email (' + error.value + ') ' +  error.message;
-                break;
-                
-                case 'login':
-                    msg +=  '<br>' + 'Login (' + error.value + ') ' +  error.message;
-                break;
 
-                case 'phone':
-                    msg +=  '<br>' + 'Telefone (' + error.value + ') ' +  error.message;
+                case 'type':
+                    msg +=  '<br>' + 'Tipo (' + error.value + ') ' +  error.message;
                 break;
+               
             }
         }
         

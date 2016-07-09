@@ -143,12 +143,12 @@ module.exports = function ( app )
                     msg +=  '<br>' + 'Email (' + error.value + ') ' +  error.message;
                 break;
                 
-                case 'login':
-                    msg +=  '<br>' + 'Login (' + error.value + ') ' +  error.message;
-                break;
-
                 case 'phone':
                     msg +=  '<br>' + 'Telefone (' + error.value + ') ' +  error.message;
+                break;
+            
+                case 'cnpj':
+                    msg +=  '<br>' + 'CNPJ (' + error.value + ') ' +  error.message;
                 break;
             }
         }

@@ -15,7 +15,7 @@ myApp.directive('phoneFilter', function($filter, $browser) {
 
             // This runs when we update the text field
             ngModelCtrl.$parsers.push(function(viewValue) {
-                return viewValue.replace(/[^0-9]/g, '').slice(0,10);
+                return viewValue.replace(/[^0-9]/g, '').slice(0,11);
             });
 
             // This runs when the model gets updated on the scope directly and keeps our view in sync
@@ -67,7 +67,7 @@ myApp.filter('tel', function () {
 
         if(number){
             if(number.length>4){
-                number = number.slice(0, 4) + '-' + number.slice(4,8);
+                number = number.slice(0, 4) + '-' + number.slice(4,9);
             }
             else{
                 number = number;
