@@ -2,18 +2,33 @@ angular.module("Strom").controller( "CategoryController",['$scope','CategoryServ
 {
     $scope.categorySelected;
     $scope.categories;
-
+    
+    /**
+     * [sort description]
+     * @param  {[type]} keyname [description]
+     * @return {[type]}         [description]
+     */
     $scope.sort = function( keyname )
     {
         $scope.sortKey = keyname;
         $scope.reverse = !$scope.reverse;
     };
 
+    /**
+     * [selectCategory description]
+     * @param  {[type]} category [description]
+     * @return {[type]}          [description]
+     */
     $scope.selectCategory = function (category)
     {
         $scope.categorySelected = category;
     };
-    
+
+    /**
+     * [getCategoryForm description]
+     * @param  {[type]} category [description]
+     * @return {[type]}          [description]
+     */
     $scope.getCategoryForm = function ( category )
     {
         if( category )
@@ -24,6 +39,11 @@ angular.module("Strom").controller( "CategoryController",['$scope','CategoryServ
         return {};
     };
     
+    /**
+     * [storeCategory description]
+     * @param  {[type]} category [description]
+     * @return {[type]}          [description]
+     */
     $scope.storeCategory = function(category)
     {
         CategoryService.storeCategory( category, function( data )
@@ -34,18 +54,28 @@ angular.module("Strom").controller( "CategoryController",['$scope','CategoryServ
                 loadCategories();
         } );
     };
-    
+
+    /**
+     * [deleteCategory description]
+     * @param  {[type]} category [description]
+     * @return {[type]}          [description]
+     */
     $scope.deleteCategory = function(category)
     {
         Message.confirm( 'Você deseja realmente excluir o usuário ' + $scope.categorySelected.name, function () 
         {
-            CategoryService.deleteCategory( category, function()
+            CategoryService.deleteCategory( category, function( data )
             {
                 loadCategories();
+                $scope.selectCategory( data );
             } );
         } );
     };
-      
+
+    /**
+     * [loadCategories description]
+     * @return {[type]} [description]
+     */
     loadCategories = function()
     {
         CategoryService.getCategories( function( data )

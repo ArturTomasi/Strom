@@ -96,9 +96,9 @@ angular.module( 'Strom' ).factory( 'EntityService', [ '$http', function( $http )
         {
             $http.delete( '/entities/' + entity._id )
 
-            .success( function()
+            .success( function( data )
             {
-                eval( callback() );
+                eval( callback( data ) );
             } )
 
             .error( function (error) 

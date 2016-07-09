@@ -96,9 +96,9 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$http', function( $http )
         {
             $http.delete( '/users/' + user._id )
 
-            .success( function()
+            .success( function( user )
             {
-                eval( callback() );
+                eval( callback( user ) );
             } )
 
             .error( function (error) 

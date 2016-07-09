@@ -1,12 +1,24 @@
-<button data-ng-click="entity = getEntityForm()" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+<button data-ng-show="isVisible('entrie')" data-ng-click="entity = getEntityForm()" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
     <img src="icons/new.png" class="btn-icon"></img>
     Novo
 </button>
-<button data-ng-disabled="!entitySelected" data-ng-click="entity = getEntityForm(entitySelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!entitySelected" data-ng-click="entity = getEntityForm(entitySelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
     <img src="icons/edit.png" class="btn-icon"></img>
     Editar
 </button>
-<button data-ng-disabled="!entitySelected" data-ng-click="deleteEntity( entitySelected )" type="button" class="btn btn-strom btn-block" >
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!entitySelected" data-ng-click="deleteEntity( entitySelected )" type="button" class="btn btn-strom btn-block" >
     <img src="icons/delete.png" class="btn-icon"></img>
     Excluir
+</button>
+
+<button data-ng-show="isVisible('report')"  data-ng-click="print()" type="button" class="btn btn-strom btn-block">
+    <img src="icons/pdf.png" class="btn-icon"></img>
+    Filtro
+</button>
+
+<button data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#filter">
+    <img src="icons/search.png" class="btn-icon"></img>
+    Imprimir
 </button>

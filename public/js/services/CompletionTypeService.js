@@ -96,9 +96,9 @@ angular.module( 'Strom' ).factory( 'CompletionTypeService', [ '$http', function(
         {
             $http.delete( '/completionTypes/' + completionType._id )
 
-            .success( function()
+            .success( function( data )
             {
-                eval( callback() );
+                eval( callback( data ) );
             } )
 
             .error( function (error) 

@@ -96,9 +96,9 @@ angular.module( 'Strom' ).factory( 'CategoryService', [ '$http', function( $http
         {
             $http.delete( '/categories/' + category._id )
 
-            .success( function()
+            .success( function( data )
             {
-                eval( callback() );
+                eval( callback( data ) );
             } )
 
             .error( function (error) 

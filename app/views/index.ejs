@@ -22,16 +22,6 @@
         </nav>
         <div ng-include="'partials/Menu/MenuPane.html'"></div>
         <data-ng-view></data-ng-view>
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Strom</a>
-                </div>
-                <div class="nav navbar-nav navbar-right">
-                    <a class="navbar-brand" href="/logout"><%=currentUser %></a>
-                </div>
-            </div>
-        </footer>
     </body>
     <!-- build:js js/index.min.js -->
     <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
@@ -46,6 +36,7 @@
     <script type="text/javascript" src="/js/application.js"></script>
 
     <script type="text/javascript" src="/js/controllers/EntriesController.js"></script>
+    <script type="text/javascript" src="/js/controllers/ReportController.js"></script>
 
     <script type="text/javascript" src="/js/controllers/CategoryController.js"></script>
     <script type="text/javascript" src="/js/services/CategoryService.js"></script>
@@ -62,7 +53,7 @@
     <script type="text/javascript" src="/js/controllers/EntityController.js"></script>
     <script type="text/javascript" src="/js/services/EntityService.js"></script>
     <script type="text/javascript" src="/partials/Entity/EntityViews.js"></script>
-    
+
     <script type="text/javascript" src="/js/services/InterceptorService.js"></script>
     <script type="text/javascript" src="/directives/PhoneFilter.js"></script>
     <script type="text/javascript" src="/directives/CnpjFilter.js"></script>

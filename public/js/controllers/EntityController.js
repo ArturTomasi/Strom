@@ -65,9 +65,10 @@ angular.module( "Strom" ).controller( "EntityController", [ '$scope', 'EntitySer
     {
         Message.confirm( 'Você deseja realmente excluir o Tipo de Finalização ' + $scope.entitySelected.name, function () 
         {
-            EntityService.deleteEntity( entity, function()
+            EntityService.deleteEntity( entity, function( data )
             {
                 loadEntity();
+                $scope.selectEntity( data );
             } );
         } );
     };

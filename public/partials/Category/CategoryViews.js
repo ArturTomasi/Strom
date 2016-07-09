@@ -4,6 +4,8 @@ angular.module( 'Strom' )
 {
 	var CategoryTable = {};
 	
+	CategoryTable.restrict = "E";
+
 	CategoryTable.templateUrl = 'partials/Category/CategoryTable.html';
 
 	return CategoryTable;
@@ -13,7 +15,17 @@ angular.module( 'Strom' )
 {
 	var CategoryActions = {};
 	
+	CategoryActions.restrict = "E";
+
 	CategoryActions.templateUrl = 'partials/Category/CategoryActions.html';
+
+	CategoryActions.link =  function( $scope, $element, $attrs, ngModelCtrl )
+	{
+		$scope.isVisible = function ( mode )
+		{
+			return $element.attr( 'mode' ) === mode;	
+		};
+	};
 
 	return CategoryActions;
 }])
@@ -22,6 +34,8 @@ angular.module( 'Strom' )
 {
 	var CategoryForm = {};
 	
+	CategoryForm.restrict = "E";
+
 	CategoryForm.templateUrl = 'partials/Category/CategoryForm.html';
 
 	return CategoryForm;

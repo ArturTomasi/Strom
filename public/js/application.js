@@ -39,11 +39,48 @@
             controller: 'CompletionTypeController'
         } )
         
+        .when('/reports', 
+        {
+            templateUrl: '/partials/Lists/ReportList.html',
+            controller: 'ReportController'
+        } )
+        
         .when('/entries', 
         {
             templateUrl: '/partials/Lists/EntrieList.html',
             controller: 'EntriesController'
+        } )
+
+        .when('/reportPosting', 
+        {
+            templateUrl: '/partials/Reports/ReportPosting.html',
+            controller: 'PostingController'
+        } )
+
+        .when('/reportUser', 
+        {
+            templateUrl: '/partials/Reports/ReportUser.html',
+            controller: 'UserController'
+        } )
+
+        .when('/reportEntity', 
+        {
+            templateUrl: '/partials/Reports/ReportEntity.html',
+            controller: 'EntityController'
+        } ) 
+
+        .when('/reportCompletionType', 
+        {
+            templateUrl: '/partials/Reports/ReportCompletionType.html',
+            controller: 'CompletionTypeController'
+        } )     
+        
+        .when('/reportCategory', 
+        {
+            templateUrl: '/partials/Reports/ReportCategory.html',
+            controller: 'CategoryController'
         } );
+            
         
         $routeProvider.otherwise( { redirectTo: '/' } );
     } ] );

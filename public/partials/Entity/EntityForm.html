@@ -54,14 +54,14 @@
                             <label class="col-sm-2" for="cnpjField">CNPJ</label>
                             <div class="form-group row col-sm-10">
                                 <input ng-required="true" 
-                                       ng-model="initializedCnpj" 
+                                       ng-model="entity.cnpj" 
                                        name="cnpj" 
                                        type="text"
                                        class="form-control" 
                                        id="cnpjField" 
                                        placeholder="88.888.888/8888-88"
-                                       ui-br-cnpj-mask >
-                            </div>
+                                       cnpj-filter>
+                              </div>
                         </div>
 
                         <div class="form-group row has-feedback" data-ng-class="{'has-error' : entity.state == undefined, 'has-success' : entity.state != undefined }">

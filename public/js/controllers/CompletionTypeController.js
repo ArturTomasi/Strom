@@ -65,9 +65,10 @@ angular.module( "Strom" ).controller( "CompletionTypeController", [ '$scope', 'C
     {
         Message.confirm( 'Você deseja realmente excluir o Tipo de Finalização ' + $scope.completionTypeSelected.name, function () 
         {
-            CompletionTypeService.deleteCompletionType( completionType, function()
+            CompletionTypeService.deleteCompletionType( completionType, function( data )
             {
                 loadCompletionTypes();
+                $scope.selectCompletionType( data );
             } );
         } );
     };

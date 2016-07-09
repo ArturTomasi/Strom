@@ -41,9 +41,10 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
     {
         Message.confirm( 'Você deseja realmente excluir o usuário ' + $scope.userSelected.name, function () 
         {
-            UserService.deleteUser( user, function()
+            UserService.deleteUser( user, function( data )
             {
                 loadUsers();
+                $scope.selectUser( data );
             } );
         } );
     };
