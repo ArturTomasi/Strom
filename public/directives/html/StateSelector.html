@@ -1,0 +1,15 @@
+<div class="form-group row has-feedback" data-ng-class="{'has-error' : state == undefined, 'has-success' : state != undefined }">
+	<label class="col-sm-{{12-( size || 11 )}}" for="stateField">Situação</label>
+	<div class="form-group row col-sm-{{size || 11}}">
+		<select ng-required="true" name="state" class="form-control" id="stateField" ng-model="state">
+		  <option value="">Selecione</option>
+		  <option data-ng-if="!isPosting" ng-selected="state === 1" value="1">Inativo</option>
+		  <option data-ng-if="!isPosting" ng-selected="state === 0" value="0">Ativo</option>
+
+		  <option data-ng-if="isPosting"  ng-selected="state === 0" value="0">Cadastrado</option>
+		  <option data-ng-if="isPosting"  ng-selected="state === 1" value="1">Em Andamento</option>
+		  <option data-ng-if="isPosting"  ng-selected="state === 2" value="2">Finalizado</option>
+		  <option data-ng-if="isPosting"  ng-selected="state === 3" value="3">Excluido</option>
+		</select>
+	</div>
+</div>

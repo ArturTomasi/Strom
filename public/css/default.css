@@ -61,9 +61,27 @@
 .form-control {
   margin-bottom: 5px;
 }
+.panel {
+  height: 100%;
+  background: #ECEFF1;
+}
 .panel-body {
   padding: 0px;
   background-color: #ECEFF1;
+}
+.panel-footer {
+  background-color: #ECEFF1;
+  border: none;
+  bottom: 0px;
+  position: fixed;
+}
+.panel-lengend {
+  background-color: #ECEFF1;
+  border: none;
+  color: #607D8B;
+  font-weight: bold;
+  font-size: 12px;
+  margin-right: 25px;
 }
 .panel-heading {
   padding: 0px;
@@ -93,6 +111,9 @@
 }
 .btn-icon {
   width: 20px;
+}
+.lengend-icon {
+  width: 15px;
 }
 .menu-icon {
   width: 60px;

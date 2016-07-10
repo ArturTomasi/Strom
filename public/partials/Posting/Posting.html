@@ -12,20 +12,32 @@
                         <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                     </th>
                     <th style="width: 20%" data-ng-click="sort( 'companny' );">
-                        Razão Social
+                        Responsavel
                         <i data-ng-show="sortKey === 'companny'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                     </th>
+                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
+                        Data Estimada
+                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
+                        Data Real
+                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
+                        Valor Real
+                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                   <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
+                        Valor Estimado
+                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
                     <th style="width: 20%" data-ng-click="sort( 'email' );">
-                        Email
+                        Categoria
                         <i data-ng-show="sortKey === 'email'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                     </th>
                     <th style="width: 20%" data-ng-click="sort( 'phone' );">
-                        Telefone
+                        Entidade
                         <i data-ng-show="sortKey === 'phone'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
-                        CNPJ
-                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                     </th>
                 </tr>
             </thead>
@@ -38,11 +50,7 @@
                                data-ng-click="selectEntity(entity)" 
                                dir-paginate="entity in entities | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
                     <td style="width: 5%"><img data-ng-src="icons/{{entity.state == 1 ? 'delete.png' : 'finish.png'}}" class="btn-icon"></img></td>
-                    <td style="width: 20%">{{entity.name}}</td>
-                    <td style="width: 20%">{{entity.companny}}</td>
-                    <td style="width: 20%">{{entity.email}}</td>
-                    <td style="width: 20%">{{entity.phone | tel }}</td>
-                    <td style="width: 15%">{{entity.cnpj | cnpj}}</td>
+                   
                 </tr>
             </tbody>
         </table>

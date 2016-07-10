@@ -15,6 +15,18 @@
         
         $routeProvider
         
+        .when('/home', 
+        {
+            templateUrl: '/partials/Home/Home.html',
+            controller: 'HomeCtrl'
+        } )
+
+        .when('/analysis',
+        {
+            templateUrl: 'partials/Analysis/Analysis.html',
+            controller: 'AnalysisCtrl'
+        } )
+
         .when('/user', 
         {
             templateUrl: '/partials/User/User.html',
@@ -37,6 +49,12 @@
         {
             templateUrl: '/partials/CompletionType/CompletionType.html',
             controller: 'CompletionTypeController'
+        } )
+
+        .when('/posting', 
+        {
+            templateUrl: '/partials/Posting/Posting.html',
+            controller: 'PostingController'
         } )
         
         .when('/reports', 
@@ -82,6 +100,6 @@
         } );
             
         
-        $routeProvider.otherwise( { redirectTo: '/' } );
+        $routeProvider.otherwise( { redirectTo: '/home' } );
     } ] );
 })();
