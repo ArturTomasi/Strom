@@ -107,7 +107,7 @@
   height: auto;
 }
 .btn:focus {
-  outline: none !important    ;
+  outline: none !important;
 }
 .btn-icon {
   width: 20px;
@@ -187,6 +187,26 @@
   margin-left: 10%;
   width: 88%;
   display: none;
+}
+.item-selector {
+  width: 100%;
+}
+.item-selector-label {
+  width: 100%;
+  border: 1px solid #607D8B;
+  margin: 0;
+  border-radius: 7px;
+  padding: 2 15;
+  height: 25px;
+  color: #607D8B;
+}
+.item-selector-btn {
+  height: 32px;
+  padding: 0px;
+}
+.item-selector-list {
+  overflow: auto;
+  height: 65%;
 }
 body {
   background-color: #ECEFF1;

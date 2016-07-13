@@ -58,8 +58,14 @@ module.exports = function ( app )
      */
     controller.addCategory = function( req , res )
     {
+        console.log('body');
+        console.log( req.body );
+
         Category.create( req.body, function( error, category )
         {
+            console.log( 'category' );
+            console.log( category );
+
             if ( error )
             {
                 res.status( 500 ).json( composeError( error ) );
@@ -127,6 +133,8 @@ module.exports = function ( app )
      */
     function composeError( errors )
     {
+        console.log( errors );
+
         var msg = '';
         
         for ( var e in errors.errors )

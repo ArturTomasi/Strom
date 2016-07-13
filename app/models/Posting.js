@@ -30,16 +30,18 @@ module.exports = function ()
         portionTotal:       { type: Number, required: [ true, 'não pode estar vazio'], default: 1 },
         flRepet:            { type: Boolean,required: [ true, 'não pode estar vazio'], default: false },
         state:              { type: Number, required: [ true, 'não pode estar vazio'], default: 0 },
-        refPostingCategory: { type: Number, required: [ true, 'não pode estar vazio'] },
-        ref_user:           { type: Number, required: [ true, 'não pode estar vazio'] },
-        ref_completion_type:{ type: Number  },
-        ref_entity:         { type: Number, required: [ true, 'não pode estar vazio'] },
-        ref_posting:        { type: Number  },
+        category:           { type: mongoose.Schema.Types.ObjectId, ref: 'Categories',  required: [ true, 'não pode estar vazio'] },
+        user:               { type: mongoose.Schema.Types.ObjectId, ref: 'Users',       required: [ true, 'não pode estar vazio'] },
+        completionType:     { type: mongoose.Schema.Types.ObjectId, ref: 'CompletionTypes' },
+        entity:             { type: mongoose.Schema.Types.ObjectId, ref: 'Entities',    required: [ true, 'não pode estar vazio'] },
+        posting:            { type: mongoose.Schema.Types.ObjectId, ref: 'Postigns' },
         attachments:        [ schemaAttachment ],
-        createAt: { type: Date,   default: Date.now } 
+        createAt:           { type: Date,   default: Date.now }
     } );
     
     schema.plugin( uniqueValidator, { message: " está adicionado em outro lançamento." } );
     
     return mongoose.model( 'Postings', schema );
 };
+
+

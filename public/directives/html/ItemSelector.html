@@ -1,10 +1,38 @@
 <table>
 	<tr>
+		<td>
+			<label class="item-selector-label">{{name}}</label>
+		</td>
 		<td class="item-selector">
-			<label class="item-selector-label">Artur Tomasi</label>
+			<label class="item-selector-label">{{itemSelected || name}}</label>
 		</td>
 		<td>
-			<img class="btn item-selector-btn" src="icons/choice.png"/>
+			<img data-toggle="modal" data-target="#choice" class="btn item-selector-btn" src="icons/choice.png"/>
 		</td>	
+		<td>
+			<img data-ng-click="clearItem()" style="height: 28px;" class="btn item-selector-btn" src="icons/clear.png"/>
+		</td
 	</tr>
 </table>
+
+<div class="modal fade" data-backdrop="static" id="choice" role="dialog">
+	<div  style="width: 80%" class="modal-dialog">
+	    <div style="height: 90%" class="modal-content">
+	        <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal">&times;</button>
+	            <h3 class="modal-title">{{title}}</h3>
+	        </div>
+	        <div class="modal-body">
+    			<input data-ng-model="search" type="search" class="form-control"/>
+	            <ul class="item-selector-list list-group">
+	            	<li class="tr list-group-item" 
+	            		data-ng-class="{trselected: itemSelected === item }" 
+                       	data-ng-click="selectItem( item )" 
+                        dir-paginate="item in items | filter: search | orderBy: item | itemsPerPage: 10  track by $index">
+	            		{{item.name || item}}
+	            	</li>
+	            </ul>
+	        </div>
+	    </div>  
+	</div>
+</div>
