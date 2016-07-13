@@ -1,0 +1,59 @@
+<div class="modal fade" data-backdrop="static" id="store" role="dialog">
+    <div  style="width: 80%" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">{{!category._id ? 'Adicionar' : 'Editar' }} Lançamentos</h3>
+            </div>
+            <div class="modal-body">
+                <form name="CategoryForm" ng-submit="storeCategory(category)">
+                    <ul data-ng-model="tabActive" data-ng-init="tabActive = 'generalTab'" class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" data-ng-click="tabActive = 'generalTab'">Geral</a></li>
+                        <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Informações</a></li>
+                        <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Valores</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="generalTab" class="tab-pane active" data-ng-show="tabActive == 'generalTab'">
+                            <div class="form-group row has-feedback" 
+                                 data-ng-class="{ 'has-success' : CategoryForm.name.$valid, 'has-error' : CategoryForm.name.$invalid }" >
+                                <label class="col-sm-1" for="nameField">Nome</label>
+                                <div class="form-group row col-sm-11">
+                                    <input ng-required="true" 
+                                           ng-model="category.name" 
+                                           name="name" 
+                                           title="Nome é obrigatório"
+                                           type="text"
+                                           class="form-control" 
+                                           id="nameField" 
+                                           placeholder="Nome">
+                                </div>
+                            </div>
+
+                            <div class="form-group row has-feedback" data-ng-class="{'has-error' : category.type == undefined, 'has-success' : category.type != undefined }">
+                                <label class="col-sm-1" for="typeField">Tipo</label>
+                                <div class="form-group row col-sm-11">
+                                    <select ng-required="true" name="type" class="form-control" id="typeField"ng-model="category.type">
+                                        <option value="">Selecione</option>
+                                        <option value="Receita">Receita</option>
+                                        <option value="Despesa">Despesa</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                             <state-selector ng-model="category.state"></state-selector>
+
+                        </div>
+
+                        <div id="infoTab" class="tab-pane active" data-ng-show="tabActive == 'infoTab'">
+                            <textarea data-ng-model="category.info" class="form-control" rows="6"></textarea>
+                        </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                        <input type="submit" value="Salvar" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>  
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<button data-ng-show="isVisible('entrie')" data-ng-click="posting = getPostingForm()" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+    <img src="icons/new.png" class="btn-icon"></img>
+    Novo
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="posting = getPostingForm(postingSelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+    <img src="icons/edit.png" class="btn-icon"></img>
+    Editar
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="deleteposting( postingSelected )" type="button" class="btn btn-strom btn-block" >
+    <img src="icons/delete.png" class="btn-icon"></img>
+    Excluir
+</button>
+
+
+<!--  actions for report -->
+
+
+<button data-ng-show="isVisible('report')"  data-ng-click="print()" type="button" class="btn btn-strom btn-block">
+    <img src="icons/pdf.png" class="btn-icon"></img>
+    Filtro
+</button>
+
+<button data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#filter">
+    <img src="icons/search.png" class="btn-icon"></img>
+    Imprimir
+</button>
