@@ -8,7 +8,7 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
 	
 	ItemSelector.scope = 
 	{ 
-		items: '@',
+		items: '=',
 		title: '@',
 		name:  '@',
 		size:  '@'

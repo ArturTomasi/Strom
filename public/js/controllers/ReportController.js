@@ -1,5 +1,10 @@
 angular.module( "Strom" ).controller( "ReportController", [ '$scope', '$location', function( $scope, $location )
 {
+	/**
+	 * [show description]
+	 * @param  {[type]} code [description]
+	 * @return {[type]}      [description]
+	 */
 	$scope.show = function ( code ) 
 	{
 		switch ( code ) 
@@ -26,6 +31,10 @@ angular.module( "Strom" ).controller( "ReportController", [ '$scope', '$location
 	 	}	 
 	};
 
+	/**
+	 * [printMonthly description]
+	 * @return {[type]} [description]
+	 */
 	$scope.printMonthly = function()
 	{
 		Message.info( 'Compre sua licença para este report' );

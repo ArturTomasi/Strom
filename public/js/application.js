@@ -7,8 +7,7 @@
     angular.module( 'Strom' , [ 'ngRoute', 
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
-                                'ui.utils.masks',
-                                'ui.bootstrap' ] );
+                                'ui.utils.masks'] );
 
     angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
     {

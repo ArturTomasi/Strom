@@ -1,10 +1,10 @@
 <div class="form-group row has-feedback" data-ng-class="{'has-error' : state == undefined, 'has-success' : state != undefined }">
-	<label class="col-sm-{{12-( size || 11 )}}" for="{{name}} Field">{{title}}</label>
+	<label class="col-sm-2-form col-sm-{{12-( size || 11 )}}" for="{{name}} Field">{{title}}</label>
 	<div class="form-group row col-sm-{{size || 11}}">
 		<table>
 			<tr>
 				<td class="item-selector">
-					<label class="item-selector-label">{{itemSelected}}</label>
+					<label class="item-selector-label">{{itemSelected.name || itemSelected}}</label>
 				</td>
 				<td>
 					<img data-toggle="modal" data-target="#choice{{name}}" class="btn item-selector-btn" src="icons/choice.png"/>

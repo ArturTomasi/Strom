@@ -24,7 +24,7 @@
                             
                             <div class="form-group row has-feedback" 
                                  data-ng-class="{ 'has-success' : PostingForm.name.$valid, 'has-error' : PostingForm.name.$invalid }" >
-                                <label class="col-sm-2" for="nameField">Nome</label>
+                                <label class="col-sm-2 col-sm-2-form" for="nameField">Nome</label>
                                 <div class="form-group row col-sm-10">
                                     <input ng-required="true" 
                                            ng-model="posting.name" 
@@ -40,8 +40,8 @@
                             <div class="form-group row">
                                 <div class="has-feedback" 
                                      data-ng-class="{ 'has-success' : PostingForm.estimateDate.$valid, 'has-error' : PostingForm.estimateDate.$invalid }" >
-                                    <label class="col-sm-2" for="estimateDateField">Data Estimada</label>
-                                    <div class="form-group col-sm-4">
+                                    <label class="col-sm-2 col-sm-2-form" for="estimateDateField">Data Estimada</label>
+                                    <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-required="true" 
                                            ng-model="posting.estimateDate" 
                                            name="estimateDate" 
@@ -49,12 +49,13 @@
                                            type="text"
                                            class="form-control" 
                                            id="estimateDateField" 
-                                           placeholder="dd/MM/yyyy">
+                                           placeholder="dd/MM/yyyy"
+                                           ui-date-mask >
                                     </div>
                                 </div>
                                 <div class="" >
-                                    <label class="col-sm-2" for="realDateField">Data Realizada</label>
-                                    <div class="form-group col-sm-4">
+                                    <label class="col-sm-2 col-sm-2-form" for="realDateField">Data Realizada</label>
+                                    <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-model="posting.realDate" 
                                            name="realDate" 
                                            type="text"
@@ -69,8 +70,8 @@
                             <div class="form-group row">
                                 <div class="has-feedback" 
                                      data-ng-class="{ 'has-success' : PostingForm.estimateValue.$valid, 'has-error' : PostingForm.estimateValue.$invalid }" >
-                                    <label class="col-sm-2" for="estimateValueField">Valor Estimada</label>
-                                    <div class="form-group col-sm-4">
+                                    <label class="col-sm-2 col-sm-2-form" for="estimateValueField">Valor Estimada</label>
+                                    <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-required="true" 
                                            ng-model="posting.estimateValue" 
                                            name="estimateValue" 
@@ -82,8 +83,8 @@
                                     </div>
                                 </div>
                                 <div class="" >
-                                    <label class="col-sm-2" for="realValueField">Valor Realizada</label>
-                                    <div class="form-group col-sm-4">
+                                    <label class="col-sm-2 col-sm-2-form" for="realValueField">Valor Realizada</label>
+                                    <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-model="posting.realValue" 
                                            name="realValue" 
                                            type="text"
@@ -107,10 +108,9 @@
                                                ng-model="posting.repeat" 
                                                name="repeat" 
                                                type="checkbox"
-                                               class="form-control" 
                                                id="repeatField">
                                     </div>
-                                    <label class="col-sm-2" for="repeatField">Repete</label>
+                                    <label class="col-sm-2 col-sm-2-form" for="repeatField">Repete</label>
                                 </div>  
                                 <div class="" >
                                     <div class="form-group col-sm-1">
@@ -118,20 +118,21 @@
                                                ng-model="posting.completionAuto" 
                                                name="completionAuto" 
                                                type="checkbox"
-                                               class="form-control" 
                                                id="completionAutoField">
                                     </div>
                                     <label class="col-sm-3" for="completionAutoField">Finaliza Automaticamente</label>
                                 </div> 
                                 <div class="" >
-                                    <label class="col-sm-2" for="portionTotalField">Parcelas</label>
+                                    <label class="col-sm-2 col-sm-2-form" for="portionTotalField">Parcelas</label>
                                     <div class="form-group row col-sm-3">
-                                        <input ng-required="true" 
-                                               ng-model="posting.portionTotal" 
+                                        <input ng-model="posting.portionTotal" 
                                                name="portionTotal" 
                                                type="number"
                                                class="form-control" 
-                                               id="portionTotalField">
+                                               id="portionTotalField"
+                                               ui-number-mask
+                                               min="2"
+                                               max="12" >
                                     </div>
                                 </div> 
                             </div>
@@ -145,7 +146,7 @@
                         <!-- BEGIN INFO PANE -->                        
 
                         <div id="infoTab" class="tab-pane active" data-ng-show="tabActive == 'infoTab'">
-                            <textarea data-ng-model="category.info" class="form-control" rows="6"></textarea>
+                            <textarea data-ng-model="category.info" class="form-control" rows="12"></textarea>
                         </div>
 
                         <!-- END INFO PANE -->
