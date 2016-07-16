@@ -3,23 +3,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">{{!category._id ? 'Adicionar' : 'Editar' }} Lançamentos</h3>
+                <h3 class="modal-title">{{!posting._id ? 'Adicionar' : 'Editar' }} Lançamentos</h3>
             </div>
             <div class="modal-body">
-                <form name="CategoryForm" ng-submit="storeCategory(category)">
+                <form name="PostingForm" ng-submit="storePosting(posting)">
+
+                    <!-- BEGIN TABS -->
                     <ul data-ng-model="tabActive" data-ng-init="tabActive = 'generalTab'" class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" data-ng-click="tabActive = 'generalTab'">Geral</a></li>
+                        <li><a data-toggle="tab" data-ng-show="posting.repeat" data-ng-click="tabActive = 'valueTab'">Valores</a></li>
                         <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Informações</a></li>
-                        <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Valores</a></li>
+                        <li><a data-toggle="tab" data-ng-click="tabActive = 'attachmentTab'">Anexos</a></li>
                     </ul>
+                    <!-- END TABS -->
+
+                    <!-- BEGIN GENERAL PANE -->
+
                     <div class="tab-content">
                         <div id="generalTab" class="tab-pane active" data-ng-show="tabActive == 'generalTab'">
+                            
                             <div class="form-group row has-feedback" 
-                                 data-ng-class="{ 'has-success' : CategoryForm.name.$valid, 'has-error' : CategoryForm.name.$invalid }" >
-                                <label class="col-sm-1" for="nameField">Nome</label>
-                                <div class="form-group row col-sm-11">
+                                 data-ng-class="{ 'has-success' : PostingForm.name.$valid, 'has-error' : PostingForm.name.$invalid }" >
+                                <label class="col-sm-2" for="nameField">Nome</label>
+                                <div class="form-group row col-sm-10">
                                     <input ng-required="true" 
-                                           ng-model="category.name" 
+                                           ng-model="posting.name" 
                                            name="name" 
                                            title="Nome é obrigatório"
                                            type="text"
@@ -29,29 +37,138 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row has-feedback" data-ng-class="{'has-error' : category.type == undefined, 'has-success' : category.type != undefined }">
-                                <label class="col-sm-1" for="typeField">Tipo</label>
-                                <div class="form-group row col-sm-11">
-                                    <select ng-required="true" name="type" class="form-control" id="typeField"ng-model="category.type">
-                                        <option value="">Selecione</option>
-                                        <option value="Receita">Receita</option>
-                                        <option value="Despesa">Despesa</option>
-                                    </select>
+                            <div class="form-group row">
+                                <div class="has-feedback" 
+                                     data-ng-class="{ 'has-success' : PostingForm.estimateDate.$valid, 'has-error' : PostingForm.estimateDate.$invalid }" >
+                                    <label class="col-sm-2" for="estimateDateField">Data Estimada</label>
+                                    <div class="form-group col-sm-4">
+                                    <input ng-required="true" 
+                                           ng-model="posting.estimateDate" 
+                                           name="estimateDate" 
+                                           title="Data é obrigatório"
+                                           type="text"
+                                           class="form-control" 
+                                           id="estimateDateField" 
+                                           placeholder="dd/MM/yyyy">
+                                    </div>
+                                </div>
+                                <div class="" >
+                                    <label class="col-sm-2" for="realDateField">Data Realizada</label>
+                                    <div class="form-group col-sm-4">
+                                    <input ng-model="posting.realDate" 
+                                           name="realDate" 
+                                           type="text"
+                                           class="form-control" 
+                                           id="estimateDateField" 
+                                           placeholder="dd/MM/yyyy"
+                                           ui-date-mask >
+                                    </div>
                                 </div>
                             </div>
 
-                             <state-selector ng-model="category.state"></state-selector>
+                            <div class="form-group row">
+                                <div class="has-feedback" 
+                                     data-ng-class="{ 'has-success' : PostingForm.estimateValue.$valid, 'has-error' : PostingForm.estimateValue.$invalid }" >
+                                    <label class="col-sm-2" for="estimateValueField">Valor Estimada</label>
+                                    <div class="form-group col-sm-4">
+                                    <input ng-required="true" 
+                                           ng-model="posting.estimateValue" 
+                                           name="estimateValue" 
+                                           title="Valor é obrigatório"
+                                           type="text"
+                                           class="form-control" 
+                                           id="estimateDateField" 
+                                           ui-money-mask  >
+                                    </div>
+                                </div>
+                                <div class="" >
+                                    <label class="col-sm-2" for="realValueField">Valor Realizada</label>
+                                    <div class="form-group col-sm-4">
+                                    <input ng-model="posting.realValue" 
+                                           name="realValue" 
+                                           type="text"
+                                           class="form-control" 
+                                           id="realValueField" 
+                                           ui-money-mask  >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <item-selector data-ng-model="posting.entity" items="entities"size="10" name="Entity" title="Entidade"></item-selector>
+                        
+                            <item-selector data-ng-model="posting.category" items="categories" size="10" name="Category" title="Categoria"></item-selector>
+                        
+                            <item-selector data-ng-model="posting.user" size="10" items="users" name="User" title="Respons´avel"></item-selector>
+                            
+                            <div class="form-group row">
+                                 <div class="" >
+                                    <div class="form-group col-sm-1">
+                                        <input ng-required="true" 
+                                               ng-model="posting.repeat" 
+                                               name="repeat" 
+                                               type="checkbox"
+                                               class="form-control" 
+                                               id="repeatField">
+                                    </div>
+                                    <label class="col-sm-2" for="repeatField">Repete</label>
+                                </div>  
+                                <div class="" >
+                                    <div class="form-group col-sm-1">
+                                        <input ng-required="true" 
+                                               ng-model="posting.completionAuto" 
+                                               name="completionAuto" 
+                                               type="checkbox"
+                                               class="form-control" 
+                                               id="completionAutoField">
+                                    </div>
+                                    <label class="col-sm-3" for="completionAutoField">Finaliza Automaticamente</label>
+                                </div> 
+                                <div class="" >
+                                    <label class="col-sm-2" for="portionTotalField">Parcelas</label>
+                                    <div class="form-group row col-sm-3">
+                                        <input ng-required="true" 
+                                               ng-model="posting.portionTotal" 
+                                               name="portionTotal" 
+                                               type="number"
+                                               class="form-control" 
+                                               id="portionTotalField">
+                                    </div>
+                                </div> 
+                            </div>
+
+                            <item-selector data-ng-model="posting.completionType" items="completionTypes" size="10" name="CompletionType" title="Tipo Finalizaç~ao"></item-selector>
 
                         </div>
+
+                        <!-- END GENERAL PANE -->
+
+                        <!-- BEGIN INFO PANE -->                        
 
                         <div id="infoTab" class="tab-pane active" data-ng-show="tabActive == 'infoTab'">
                             <textarea data-ng-model="category.info" class="form-control" rows="6"></textarea>
                         </div>
 
+                        <!-- END INFO PANE -->
+
+                        
+                        <!-- BEGIN VALUES PANE -->                        
+
+                        
+                        <!-- END VALUES PANE -->                        
+
+
+                        <!-- BEGIN ATTACHMENT PANE -->                        
+
+                        
+                        <!-- END ATTACHMENT PANE -->                        
+                   
+
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
                         <input type="submit" value="Salvar" class="btn btn-success">
                     </div>
+
                 </form>
             </div>
         </div>  

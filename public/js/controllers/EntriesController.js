@@ -1,5 +1,10 @@
 angular.module( "Strom" ).controller( "EntriesController", [ '$scope', '$location', function( $scope, $location )
 {
+	/**
+	 * [show description]
+	 * @param  {[type]} code [description]
+	 * @return {[type]}      [description]
+	 */
 	$scope.show = function ( code ) 
 	{
 		switch ( code ) 

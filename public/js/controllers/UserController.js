@@ -5,17 +5,32 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
     $scope.userSelected;
     $scope.users;
 
+    /**
+     * [sort description]
+     * @param  {[type]} keyname [description]
+     * @return {[type]}         [description]
+     */
     $scope.sort = function( keyname )
     {
         $scope.sortKey = keyname;
         $scope.reverse = !$scope.reverse;
     };
 
+    /**
+     * [selectUser description]
+     * @param  {[type]} user [description]
+     * @return {[type]}      [description]
+     */
     $scope.selectUser = function (user)
     {
         $scope.userSelected = user;
     };
     
+    /**
+     * [getUserForm description]
+     * @param  {[type]} user [description]
+     * @return {[type]}      [description]
+     */
     $scope.getUserForm = function ( user )
     {
         if( user )
@@ -26,6 +41,11 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
         return {};
     };
     
+    /**
+     * [storeUser description]
+     * @param  {[type]} user [description]
+     * @return {[type]}      [description]
+     */
     $scope.storeUser = function(user)
     {
         UserService.storeUser( user, function( data )
@@ -36,7 +56,12 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
                 loadUsers();
         } );
     };
-    
+
+    /**
+     * [deleteUser description]
+     * @param  {[type]} user [description]
+     * @return {[type]}      [description]
+     */
     $scope.deleteUser = function(user)
     {
         Message.confirm( 'Você deseja realmente excluir o usuário ' + $scope.userSelected.name, function () 
@@ -49,6 +74,10 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
         } );
     };
       
+    /**
+     * [loadUsers description]
+     * @return {[type]} [description]
+     */
     loadUsers = function()
     {
         UserService.getUsers( function( data )

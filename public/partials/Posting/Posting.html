@@ -1,69 +1,13 @@
-<!-- div class="panel panel-primary">
-    <div class="panel-heading">
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th style="width: 5%" data-ng-click="sort( 'state' );">
-                        #
-                        <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 20%" data-ng-click="sort( 'name' );">
-                        Nome
-                        <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 20%" data-ng-click="sort( 'companny' );">
-                        Responsavel
-                        <i data-ng-show="sortKey === 'companny'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
-                        Data Estimada
-                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
-                        Data Real
-                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
-                        Valor Real
-                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                   <th style="width: 15%" data-ng-click="sort( 'cnpj' );">
-                        Valor Estimado
-                        <i data-ng-show="sortKey === 'cnpj'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 20%" data-ng-click="sort( 'email' );">
-                        Categoria
-                        <i data-ng-show="sortKey === 'email'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                    <th style="width: 20%" data-ng-click="sort( 'phone' );">
-                        Entidade
-                        <i data-ng-show="sortKey === 'phone'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div class="panel-body">
-        <table class="table table-condensed">
-            <tbody>
-                <tr class="tr" data-ng-class="{trselected: entitySelected._id === entity._id }" 
-                               data-ng-click="selectEntity(entity)" 
-                               dir-paginate="entity in entities | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
-                    <td style="width: 5%"><img data-ng-src="icons/{{entity.state == 1 ? 'delete.png' : 'finish.png'}}" class="btn-icon"></img></td>
-                   
-                </tr>
-            </tbody>
-        </table>
-        <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
-    </div>
-    <data-ng-include src="'partials/Util/LegendPane.html'"></data-ng-include>
-
-</div> -->
-
 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-    <item-selector 
-        data-ng-model="itemSelected"
-        title="Seletor de Usuarios",
-        name="Usuarios" >
-    </item-selector>  
+
+    <posting-table></posting-table>
+
+</div>
+
+<div class="panel-left col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+    <posting-actions mode="entrie"></posting-actions>
+
+    <posting-form></posting-form>
+
 </div>

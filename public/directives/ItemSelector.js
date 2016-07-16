@@ -10,7 +10,8 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
 	{ 
 		items: '@',
 		title: '@',
-		name:  '@'
+		name:  '@',
+		size:  '@'
 	};
 
 	ItemSelector.templateUrl = 'directives/html/ItemSelector.html';
@@ -25,12 +26,17 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
 		{
 			 $scope.itemSelected = item;
 
-			 $( '#choice' ).modal( 'hide' );
+			 $scope.close();
 		};
 
 		$scope.clearItem = function () 
 		{
 			 $scope.itemSelected = undefined;
+		};
+
+		$scope.close = function () 
+		{
+			 $( '#choice' + $scope.name ).modal( 'hide' );
 		};
 
 		$element.bind('change', function()

@@ -3,11 +3,12 @@
 ( function(){
 	
     'use strict';
-
+    
     angular.module( 'Strom' , [ 'ngRoute', 
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
-                                'ui.utils.masks' ] );
+                                'ui.utils.masks',
+                                'ui.bootstrap' ] );
 
     angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
     {
