@@ -1,0 +1,15 @@
+<div class="form-group has-feedback" data-ng-class="{ 'has-success' : !form[name].$invalid , 'has-error' : form[name].$invalid }" >
+    
+    <label class="col-sm-2 control-label">{{ label }}</label>
+    
+    <div class="col-sm-7">
+        
+        <select id="{{name}}" style="width:100%;" class="form-control" data-ng-model="model" ></select>
+        
+        <input name="{{name}}" type="hidden"  data-ng-model="model" data-ng-required="required">
+    
+        <span class="text-danger" data-ng-show="form[name].$error.required">{{ label }} is required</span>
+    
+    </div>
+
+</div>

@@ -1,0 +1,53 @@
+<div style="width: 250px;">
+
+	<p><input data-ng-model="filter" type="text" class="form-control" placeholder="search"></p>	
+
+</div>
+
+<table class="table table-hover  table-condensed">
+	
+		<tr>
+
+			<th data-ng-repeat="column in columns" data-ng-click="sort( column.key )" data-ng-class="{ 'center' : column.type === 'check' , 'bs-table-id' : column.type === 'code' , 'bs-table-actions' : column.type === 'btn-delete'}">
+
+				{{ column.title }}
+				<i data-ng-show="sortkey === column.key && column.type != 'btn-delete' " data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+
+			</th>
+
+		</tr>
+	
+		<tr dir-paginate="item in items | filter : filter | orderBy: sortKey: reverse | itemsPerPage: 5"> 
+			
+			<td data-ng-repeat="column in columns" data-ng-if="column.type === 'code'" class="bs-table-id" >{{ item[column.key] }}</td>
+
+			<td data-ng-repeat="column in columns" data-ng-if="column.type === 'link'">
+				<a data-ng-href="{{linkform + item[column.id]}}">
+					<div style="height:100%;width:100%">{{ item[column.key] }}</div>
+				</a>
+			</td>
+
+			<td ng-repeat="column in columns" data-ng-if="column.type === 'check'" class="center" >
+
+				<input type="checkbox" ng-checked="item[column.key]" readonly disabled >
+
+			</td>
+				
+			<td ng-repeat="column in columns" data-ng-if="column.type === 'btn-delete'" class="bs-table-actions">
+
+				<button class="btn" data-ng-click="onDelete( item );" ><i class="fa fa-trash-o red" ></i></button>
+				<button class="btn text-red" data-ng-click="funcdel( {id : item[column.id]} )" ng-show="item.onDelete">Yes</button>
+
+			</td>
+
+			<td ng-repeat="column in columns" data-ng-if="column.type === '' ">{{ item[column.key] }}</td>
+
+		</tr>
+	
+</table>
+
+<div style='text-align:center'>
+
+	<dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+
+</div>

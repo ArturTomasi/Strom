@@ -102,29 +102,16 @@
                             <item-selector data-ng-model="posting.user" size="10" items="users" name="User" title="Respons´avel"></item-selector>
                             
                             <div class="form-group row">
-                                 <div class="" >
-                                    <div class="form-group col-sm-1">
-                                        <input ng-required="true" 
-                                               ng-model="posting.repeat" 
-                                               name="repeat" 
-                                               type="checkbox"
-                                               id="repeatField">
-                                    </div>
-                                    <label class="col-sm-2 col-sm-2-form" for="repeatField">Repete</label>
+                                 <div class="form-group col-sm-4" >
+                                    <mycheckbox ng-required="true" model="posting.repeat" name="repeat" size="70" label="Repete"></mycheckbox>
                                 </div>  
-                                <div class="" >
-                                    <div class="form-group col-sm-1">
-                                        <input ng-required="true" 
-                                               ng-model="posting.completionAuto" 
-                                               name="completionAuto" 
-                                               type="checkbox"
-                                               id="completionAutoField">
-                                    </div>
-                                    <label class="col-sm-3" for="completionAutoField">Finaliza Automaticamente</label>
+                                <div class="form-group col-sm-4">
+                                  <mycheckbox ng-required="true" model="posting.completionAuto" name="completionAuto" size="150" label="Finaliza Automaticamente"></mycheckbox>
                                 </div> 
+
                                 <div class="" >
                                     <label class="col-sm-2 col-sm-2-form" for="portionTotalField">Parcelas</label>
-                                    <div class="form-group row col-sm-3">
+                                    <div class="form-group col-sm-2">
                                         <input ng-model="posting.portionTotal" 
                                                name="portionTotal" 
                                                type="number"
@@ -146,7 +133,7 @@
                         <!-- BEGIN INFO PANE -->                        
 
                         <div id="infoTab" class="tab-pane active" data-ng-show="tabActive == 'infoTab'">
-                            <textarea data-ng-model="category.info" class="form-control" rows="12"></textarea>
+                            <textarea data-ng-model="category.info" class="form-control" rows="16"></textarea>
                         </div>
 
                         <!-- END INFO PANE -->
@@ -160,7 +147,11 @@
 
                         <!-- BEGIN ATTACHMENT PANE -->                        
 
-                        
+                        <div id="attachmentTab" class="tab-pane active" data-ng-show="tabActive == 'attachmentTab'">
+                            <myfile model="posting.attachment" name="Anexos"></myfile>
+                            {{posting.attachment}}
+                        </div>
+
                         <!-- END ATTACHMENT PANE -->                        
                    
 
@@ -171,6 +162,53 @@
                     </div>
 
                 </form>
+            </div>
+        </div>  
+    </div>
+</div>
+
+<!-- ATTAACHMENT FORM -->
+
+<div class="modal fade" data-backdrop="static" id="addAttachment" role="dialog">
+    <div  style="width: 40%" class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Adicionar Anexo</h3>
+            </div>
+            <div class="modal-body">
+                
+                <form name="AttachmentForm" data-ng-submit="sssss" novalidate>
+                
+                  <input class="form-group btn btn-strom" fileread="posting.attachments" type="file">
+
+                  <div class="form-group row has-feedback" 
+                       data-ng-class="{ 'has-success' : AttachmentForm.name.$valid, 'has-error' : AttachmentForm.name.$invalid }" >
+                      <label class="col-sm-2 col-sm-2-form" for="attachmentNameField">Nome</label>
+                      <div class="form-group row col-sm-10">
+                          <input ng-required="true" 
+                                 ng-model="attachement.name" 
+                                 name="name" 
+                                 title="Nome é obrigatório"
+                                 type="text"
+                                 class="form-control" 
+                                 id="attachmentNameField" 
+                                 placeholder="Nome">
+                      </div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label class="col-sm-2 col-sm-2-form" for="attachmentInfoField">Informaç~oes</label>
+                      <textarea id="attachmentInfoField" data-ng-model="attachment.info" class="form-control" rows="8"></textarea>
+                  </div>
+  
+
+                </form>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <input type="submit" value="Salvar" class="btn btn-success">
+                </div>
             </div>
         </div>  
     </div>

@@ -1,0 +1,24 @@
+<div class="form-group has-feedback" data-ng-class="{ 'has-success' : !form[name].$invalid , 'has-error' : form[name].$invalid }" >
+   
+    <label class="col-sm-2 control-label">{{ label }}</label>
+   
+    <div class="col-sm-7">
+
+        <input type="text" 
+               data-ng-model="model" 
+        	   name="{{name}}" 
+        	   class="form-control" 
+        	   placeholder="{{label}}"
+        	   data-ng-minlength="minlength"
+        	   data-ng-required="required"
+        	   data-ng-maxlength="maxlength"
+        	   data-ng-pattern="pattern" >
+
+        <span class="glyphicon form-control-feedback" data-ng-class="{ 'glyphicon-ok' : !form[name].$invalid , 'glyphicon-remove' : form[name].$invalid }" aria-hidden="true"></span>
+        
+        <span class="text-danger" data-ng-show="form[name].$error.required">{{ label }} is required</span>
+        <span class="text-danger" data-ng-show="form[name].$error.minlength">Minimum {{minlength}} characters</span>
+        <span class="text-danger" data-ng-show="form[name].$error.minlength">Maximum {{maxlength}} characters</span>
+   
+    </div>
+</div>

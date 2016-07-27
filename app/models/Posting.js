@@ -13,9 +13,11 @@ module.exports = function ()
 
     var schemaAttachment = 
     {
-        name: { type: String, required: [ true, 'não pode estar vazio'] },
-        info: { type: String  },
-        url:  { type: String, required: [ true, 'não pode estar vazio'] }
+        name:   { type: String, required: [ true, 'não pode estar vazio' ] },
+        base64: { type: String, required: [ true, 'não pode estar vazio' ] },
+        type:   { type: String, required: [ true, 'não pode estar vazio' ] },
+        info:   { type: String },
+        url:    { type: String, required: [ true, 'não pode estar vazio' ] }
     };
 
     var schema = mongoose.Schema
