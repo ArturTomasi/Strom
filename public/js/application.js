@@ -5,7 +5,7 @@
     'use strict';
     
     angular.module( 'Strom' , [ 'frapontillo.bootstrap-switch',
-                             'ngRoute', 
+                                'ngRoute', 
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
                                 'ui.utils.masks'] );

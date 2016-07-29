@@ -1,0 +1,18 @@
+<div>
+    <label class="col-sm-2 col-sm-2-form">{{ label }}</label>
+
+    <div class="col-sm-4 col-sm-4-form">     
+
+        <ng-datepicker data-ng-model="model" 
+                       ng-disabled="true"
+                       name="{{name}}"
+        	           locale="pt-br" 
+                       format="{{mask}}" 
+                       view-format="{{mask}}"
+                       placeholder="{{mask}}"
+                       editable="false"
+                       data-ng-required="required">
+        </ng-datepicker>        
+
+    </div>
+</div>

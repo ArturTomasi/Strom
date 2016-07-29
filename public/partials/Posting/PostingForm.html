@@ -53,17 +53,12 @@
                                            ui-date-mask >
                                     </div>
                                 </div>
-                                <div class="" >
-                                    <label class="col-sm-2 col-sm-2-form" for="realDateField">Data Realizada</label>
-                                    <div class="form-group col-sm-4 col-sm-4-form">
-                                    <input ng-model="posting.realDate" 
-                                           name="realDate" 
-                                           type="text"
-                                           class="form-control" 
-                                           id="estimateDateField" 
-                                           placeholder="dd/MM/yyyy"
-                                           ui-date-mask >
-                                    </div>
+                                <div class="">
+                                    <mydate label="Data Realizada" 
+                                            name="realDate" 
+                                            mask="DD/MM/YYYY" 
+                                            model="posting.realDate">
+                                    </mydate>
                                 </div>
                             </div>
 
@@ -148,8 +143,13 @@
                         <!-- BEGIN ATTACHMENT PANE -->                        
 
                         <div id="attachmentTab" class="tab-pane active" data-ng-show="tabActive == 'attachmentTab'">
-                            <myfile model="posting.attachment" name="Anexos"></myfile>
-                            {{posting.attachment}}
+                            <input class="form-group btn btn-strom" fileread="posting.attachments" type="file">
+                            <ul style="height: 100px;">
+                              <li>
+
+                              </li>
+                            </ul>
+                            {{posting.attachments}}
                         </div>
 
                         <!-- END ATTACHMENT PANE -->                        
