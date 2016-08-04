@@ -76,6 +76,18 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
             } );
         } );
     };
+
+    $scope.showCompletionType = function ( posting ) 
+    {
+        if( posting )
+        {
+            return  posting.realDate ||
+                    posting.realValue ||
+                    posting.completionType;
+        }
+
+        return false;
+    };
       
     /**
      * [loadPostings description]

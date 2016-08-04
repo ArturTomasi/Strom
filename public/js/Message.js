@@ -104,16 +104,16 @@
         dialog.open();   
     };
 
-    Message.error = function ( message ) {
+    Message.error = function ( title, message ) {
 
-        var mess = ( message )? message : 'Error' ;
+        var mess = ( message ) ? message : title ? title : 'Error Inesperado' ;
 
         var dialog = new BootstrapDialog( 
         {
             message: function( dialogRef )
             {
                 var $body = $('<div></div>');
-                var $title = $('<div style="font-size: 20px; font-weight: bold;">Information</div>');
+                var $title = $('<div style="font-size: 20px; font-weight: bold;">' + title + ' </div>');
                 
                 var $message = $('<div  style="font-size: 15px;"> ' + mess + '</div>' );
 

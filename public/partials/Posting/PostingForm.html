@@ -40,18 +40,13 @@
                             <div class="form-group row">
                                 <div class="has-feedback" 
                                      data-ng-class="{ 'has-success' : PostingForm.estimateDate.$valid, 'has-error' : PostingForm.estimateDate.$invalid }" >
-                                    <label class="col-sm-2 col-sm-2-form" for="estimateDateField">Data Estimada</label>
-                                    <div class="form-group col-sm-4 col-sm-4-form">
-                                    <input ng-required="true" 
-                                           ng-model="posting.estimateDate" 
-                                           name="estimateDate" 
-                                           title="Data é obrigatório"
-                                           type="text"
-                                           class="form-control" 
-                                           id="estimateDateField" 
-                                           placeholder="dd/MM/yyyy"
-                                           ui-date-mask >
-                                    </div>
+                                    <mydate label="Data Estimada" 
+                                            name="estimateDate" 
+                                            mask="DD/MM/YYYY" 
+                                            model="posting.estimateDate"
+                                            required="true">
+                                    </mydate>
+
                                 </div>
                                 <div class="">
                                     <mydate label="Data Realizada" 
@@ -94,7 +89,7 @@
                         
                             <item-selector data-ng-model="posting.category" items="categories" size="10" name="Category" title="Categoria"></item-selector>
                         
-                            <item-selector data-ng-model="posting.user" size="10" items="users" name="User" title="Respons´avel"></item-selector>
+                            <item-selector data-ng-model="posting.user" size="10" items="users" name="User" title="Responsável"></item-selector>
                             
                             <div class="form-group row">
                                  <div class="form-group col-sm-4" >
@@ -112,14 +107,18 @@
                                                type="number"
                                                class="form-control" 
                                                id="portionTotalField"
-                                               ui-number-mask
-                                               min="2"
-                                               max="12" >
+                                               min="2" max="12" >
                                     </div>
                                 </div> 
                             </div>
 
-                            <item-selector data-ng-model="posting.completionType" items="completionTypes" size="10" name="CompletionType" title="Tipo Finalizaç~ao"></item-selector>
+                            <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto" 
+                                           data-ng-model="posting.completionType"
+                                           items="completionTypes"
+                                           size="10" 
+                                           name="CompletionType" 
+                                           title="Tipo Finalização">
+                            </item-selector>
 
                         </div>
 
@@ -128,7 +127,7 @@
                         <!-- BEGIN INFO PANE -->                        
 
                         <div id="infoTab" class="tab-pane active" data-ng-show="tabActive == 'infoTab'">
-                            <textarea data-ng-model="category.info" class="form-control" rows="16"></textarea>
+                            <textarea data-ng-model="posting.info" class="form-control" rows="16"></textarea>
                         </div>
 
                         <!-- END INFO PANE -->
@@ -136,21 +135,25 @@
                         
                         <!-- BEGIN VALUES PANE -->                        
 
-                        
+                        <div id="valuesTab" class="tab-pane active" data-ng-show="tabActive == 'valueTab'">
+                            <ul>
+                              <li data-ng-repeat="value in values">
+                                <input type="text" name="">
+                                <input type="text" name="">
+                              </li>
+
+                            </ul>
+                        </div>
+
                         <!-- END VALUES PANE -->                        
 
 
                         <!-- BEGIN ATTACHMENT PANE -->                        
 
                         <div id="attachmentTab" class="tab-pane active" data-ng-show="tabActive == 'attachmentTab'">
-                            <input class="form-group btn btn-strom" fileread="posting.attachments" type="file">
-                            <ul style="height: 100px;">
-                              <li>
-
-                              </li>
-                            </ul>
-                            {{posting.attachments}}
+                            <myfile model="posting.attachments" name="attachments" label="Anexos"></myfile> 
                         </div>
+
 
                         <!-- END ATTACHMENT PANE -->                        
                    
@@ -198,7 +201,7 @@
                   </div>
                   
                   <div class="form-group">
-                      <label class="col-sm-2 col-sm-2-form" for="attachmentInfoField">Informaç~oes</label>
+                      <label class="col-sm-2 col-sm-2-form" for="attachmentInfoField">Informações</label>
                       <textarea id="attachmentInfoField" data-ng-model="attachment.info" class="form-control" rows="8"></textarea>
                   </div>
   

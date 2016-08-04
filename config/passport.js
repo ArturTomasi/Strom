@@ -21,6 +21,8 @@ module.exports = function()
          */
         function( login, password, done ) 
         {
+            console.log( done.req );
+
             User.findOne( { login: login }, function ( error, user )
             {
                 if ( error ) 
@@ -30,7 +32,7 @@ module.exports = function()
 
                 if ( ! user || user.password !== password )
                 { 
-                    return done( null, false, { message: 'Incorrect username or password.' } );
+                    return done( 'Confirme o Login e/ou Senha', false);
                 }
 
                 return done( null, user );

@@ -5,27 +5,12 @@
         <link rel="stylesheet"  type="text/css" href="/vendor/bootstrap3-dialog/dist/css/bootstrap-dialog.min.css">
         <link rel="stylesheet"  type="text/css" href="/vendor/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet"  type="text/css" href="/vendor/components-font-awesome/css/font-awesome.min.css">
-         <link rel="stylesheet"  type="text/css" href="/vendor/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+        <link rel="stylesheet"  type="text/css" href="/vendor/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
         <!-- build:css css/index.min.css -->
         <link rel="stylesheet"  type="text/css" href="/css/datepicker.css">
         <link rel="stylesheet"  type="text/css" href="/css/default.css">
         <!-- endbuild -->
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Strom</a>
-                </div>
-                <div class="nav navbar-nav navbar-right">
-                    <a class="navbar-brand" href="/logout"><%=currentUser %></a>
-                </div>
-            </div>
-        </nav>
-        <div ng-include="'partials/Menu/MenuPane.html'"></div>
-        <data-ng-view></data-ng-view>
-    </body>
-    <!-- build:js js/index.min.js -->
+         <!-- build:js js/index.min.js -->
     <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/vendor/angular/angular.min.js"></script>
@@ -43,6 +28,7 @@
 
     <script type="text/javascript" src="/js/controllers/EntriesController.js"></script>
     <script type="text/javascript" src="/js/controllers/ReportController.js"></script>
+    <script type="text/javascript" src="/js/controllers/AuthController.js"></script>
 
     <script type="text/javascript" src="/js/controllers/CategoryController.js"></script>
     <script type="text/javascript" src="/js/services/CategoryService.js"></script>
@@ -84,5 +70,35 @@
     <script type="text/javascript" src="/directives/myfile.js"></script>
     <script type="text/javascript" src="/directives/myDate.js"></script>
     <script type="text/javascript" src="/directives/DatePicker.js"></script>
-        <!-- endbuild -->
+    <!-- endbuild -->
+    </head>
+    <body>
+        <%if( ! currentUser ) { %>
+        <div class="container" style="width: 500px; margin: auto">
+            <form class="form-signin" data-ng-controller="AuthController">
+                <h2 class="form-signin-heading">Strom</h2>
+                <label for="inputLogin" class="sr-only">Login</label>
+                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus>
+                <label for="inputPassword" class="sr-only">Senha</label>
+                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha">
+
+                <button class="btn btn-lg btn-primary btn-block" type="button" data-ng-click="login( user )"> Sign in</button>
+            </form>
+        </div>
+
+        <%} else { %>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Strom</a>
+                </div>
+                <div class="nav navbar-nav navbar-right">
+                    <a class="navbar-brand" href="/logout"><%=currentUser.name %></a>
+                </div>
+            </div>
+        </nav>
+        <div ng-include="'partials/Menu/MenuPane.html'"></div>
+        <data-ng-view></data-ng-view>
+        <%}%>
+    </body>
 </html>

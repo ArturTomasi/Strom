@@ -3,7 +3,7 @@
 @back-color: #ECEFF1;
 @main-color-black: #455a64; 
 @main-color-light: #b0bec5;
-@main-color-light2: #cfd8dc
+@main-color-light2: #cfd8dc;
 
 .jumbotron 
 {
@@ -326,3 +326,44 @@ ul
   padding: 0px;
 }
 
+.icon-upload 
+{
+  margin: 10px 5px 0 0;
+  font-size: 30px;
+  color: @main-color !important
+}
+
+.icon-loading
+{
+    font-size: 45px;
+    color: @main-color !important;
+    margin: 36px;  
+}
+
+.upload
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0px;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.file-list
+{
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-left: -20px;
+    border: none;  
+}
+
+.file-list-selected
+{
+  border: 3px solid @main-color;
+}

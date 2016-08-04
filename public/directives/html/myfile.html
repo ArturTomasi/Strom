@@ -1,46 +1,23 @@
-<div class="form-group has-feedback" data-ng-class="{ 'has-success' : !form[name].$invalid , 'has-error' : form[name].$invalid }" >
-   
-    <label class="col-sm-2 control-label">{{ label }}</label>
-   
-    <div class="col-sm-7">
-        
-        <input class="btn form-control" style="color: transparent;" title="browse..." type="file" id="files" name="files[]" multiple />
-
-        <output id="myfileslist"></output>
-
-        <input name="{{name}}" 
-               id="myfilesvalues" 
-               class="form-control" 
-               type="text"
-               data-ng-required="required" 
-               data-ng-model="model"
-               style="display:none;">
-
-        <span class="glyphicon form-control-feedback" data-ng-class="{ 'glyphicon-ok' : !form[name].$invalid , 'glyphicon-remove' : form[name].$invalid }" aria-hidden="true"></span>
-        
-        <span class="text-danger" data-ng-show="form[name].$error.required">{{ label }} is required</span>
-        <span class="text-danger" data-ng-show="form[name].$error.minlength">Minimum {{minlength}} characters</span>
-        <span class="text-danger" data-ng-show="form[name].$error.minlength">Maximum {{maxlength}} characters</span>
-   
+<div class="col-sm-12">
+    <div class="col-sm-10">
+        <ul id="myfilelist">
+        </ul>        
     </div>
-    <style type="text/css">
+    <div id="action-postings" class="col-sm-2">
+        <button type="button" class="btn btn-strom btn-block">
+            <img src="icons/new.png" class="btn-icon"></img>
+            Novo
+            <input class="upload col-sm-2" title="Escolha seus anexos..." type="file" id="files" name="files[]" multiple />
+        </button>
 
-    .btn::-webkit-file-upload-button {
-        padding: 2px 12px 2px 12px;
-        font-size: 12px;
-        font-weight: normal;
-        cursor: pointer;
-        border: 1px solid transparent;
-        border-radius: 4px;
-    }
+        <button type="button" class="btn btn-strom btn-block" >
+            <img src="icons/delete.png" class="btn-icon"></img>
+            Excluir
+        </button>
 
-    .icon-upload {
-        margin: 10px 5px 0 0;
-        font-size:30px;
-        color: #459c50 !important
-    }
-
-
-
-    </style>
+        <button type="button" class="btn btn-strom btn-block" >
+            <img src="icons/save.png" class="btn-icon"></img>
+            Salvar
+        </button>
+    </div>
 </div>

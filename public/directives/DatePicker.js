@@ -138,7 +138,7 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 
 		},
 		template: 
-		'<div><input type="text" ng-blur="validDate()" ng-focus="showCalendar()" ng-keydown="{{editable}}" ng-value="viewValue" class="ng-datepicker-input" placeholder="{{ placeholder }}"></div>' +
+		'<div><input type="text" ng-focus="showCalendar()" onkeydown="return false;" ng-value="viewValue" class="ng-datepicker-input" placeholder="{{ placeholder }}"></div>' +
 		'<div class="ng-datepicker" ng-show="calendarOpened">' +
 		'  <div class="controls">' +
 		'    <div class="left">' +

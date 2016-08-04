@@ -2,143 +2,144 @@
 
 	'use strict';
 
- 	angular.module('Strom').directive( 'myfile', [function () {
+ 	angular.module('Strom').directive( 'myfile', [ function () 
+ 	{
 	
-		return {
-			restrict: 'E',
-			require: '^form',
-			replace: true,
-			templateUrl: '/directives/html/myfile.html' ,
-			scope : {
-				label: '@',
-				name: '@',
-				model: '=',
-				required: '@'
-			},
-			link: function ( scope, element, attributes, form ) {
+ 		var MyFile = {};
 
-				scope.form = form;
+ 		MyFile.restrict = 'E';
 
+ 		MyFile.require = '^form';
 
-				function removeElement (argument) {
+ 		MyFile.replace = true;
 
-					var file = $(argument.toElement);
+ 		MyFile.templateUrl = '/directives/html/myfile.html';
 
-					scope.model = scope.model.filter(function (el) {
-                     	return el.name !== file.attr('id');
-                 	});
+ 		MyFile.scope = {};
 
-					if( scope.model.length == 0 )
-					{
-						scope.model = null;
-					}
+ 		MyFile.scope.label = '@';
+ 		MyFile.scope.name = '@';
+ 		MyFile.scope.required = '@';
+ 		MyFile.scope.model = '=';
 
-					scope.$apply();
-                 	file.remove(); 
+ 		MyFile.link = function ( scope, element, attributes, form )
+ 		{
+			scope.form = form;
+			scope.selecetd;
+
+			function removeElement (argument) 
+			{
+				var file = $(argument.toElement);
+
+				scope.model = scope.model.filter(function (el) 
+				{
+	             	return el.name !== file.attr('id');
+	         	} );
+
+				if( scope.model.length == 0 )
+				{
+					scope.model = null;
 				}
 
-				function handleFileSelect(evt) {
+				scope.$apply();
+	         	file.remove(); 
+			};
 
-					$('#myfileslist').html('');
-				    scope.model = null;
-				    scope.$apply();
-					
-				    var files = evt.target.files;
-				    for (var i = 0, f; f = files[i]; i++) 
-				    {
-				    	scope.model = [];
-				      	var reader = new FileReader();
+			function addFileList( file )
+			{
+				var li = document.createElement( 'li' );
+				
+				li.setAttribute( 'id', file.name );
+				li.setAttribute( 'class', 'file-list' );
 
-				        reader.addEventListener("loadend"  , loadEnd);
-				        reader.addEventListener("loadstart", loadStart);
+				li.innerHTML =  '<div data-ng-class"file-list-selected : selected === " ' + file + ' data-ng-model="' + file + '" data-ng-click="selected=' + file + '">' +
+									'<i class="' + getIcon( file.type ) + '"></i>' +
+									'<span>' + file.name + '</span>' +
+               					'</div>';
 
-						function loadEnd(e) {
-						  $('#loadstart').remove();
-						}
+				document.getElementById( 'myfilelist' ).insertBefore( li, null );
+			};
 
-						function loadStart(e) {
-				  			var span = document.createElement('span');
-			          		span.innerHTML = ['<i id="loadstart" class="fa fa-spinner fa-pulse fa-3x fa-fw icon-upload" ></i><span class="sr-only">Loading...</span>'].join('');
-			          		document.getElementById('myfileslist').insertBefore(span, null);		
-						}
+			function getIcon( type )
+			{
+				var extension = 'fa-file-o';
 
-				      	reader.onload = (function(theFile) {
-				        	
-				        	return function(e) {
+				if ( type.match( 'images.*' ) ) 		extension = 'fa-file-image-o';
+      		
+	          	if( type.match( 'application/pdf' ) ) 	extension = 'fa-file-pdf-o';
+	          	
+	          	if( type.match( 'application/zip' ) ) 	extension = 'fa-file-zip-o';
+	          	
+	          	if( type.match('video.*' ) ) 	  		extension = 'fa-file-video-o';
 
-				          		if( theFile.type.match('image.*') )
-				          		{
-				          			var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-image-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);
-					          	}
-					          	else if(theFile.type.match('application/pdf') )
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-pdf-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);
-								}	                    	
-					          	else if(theFile.type.match('application/zip') )
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-pdf-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);
-					          	}	                    	
-					          	else if(theFile.type.indexOf('sheet')  >= 0 )
-					          	{	
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-excel-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);
-					          	}	                    	
-					          	else if(theFile.type.indexOf('document')   >= 0 )
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-word-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);
-					          	}	                    	
-					          	else if(theFile.type.indexOf('text/plain') >= 0  )
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-text-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);	
-					          	}
-					          	else if( theFile.type.match('video.*') )
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-video-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);		
-					          	}
-					          	else
-					          	{
-					          		var span = document.createElement('span');
-					          		span.innerHTML = ['<i class="fa fa-file-o icon-upload"  title="'+theFile.name+'" id="'+ theFile.name +'"></i>' ].join('');
-					          		document.getElementById('myfileslist').insertBefore(span, null);		
-					          	}
+	          	if( type.indexOf( 'sheet')  >= 0 ) 		extension = 'fa-file-excel-o';
 
-					          	document.getElementById(theFile.name).addEventListener('click', removeElement, false);
-			                        
-		                        scope.model.push({
-                                    base64: e.target.result,
-		                            name  : theFile.name,
-                                    type  : theFile.type
-		                        });
+	          	if( type.indexOf( 'document' )  >= 0 )  extension = 'fa-file-word-o';
+	          	
+	          	if( type.indexOf( 'ext/plain' )  >= 0 ) extension = 'fa-file-text-o';
+	          					
+				return 'fa ' + extension + ' icon-upload';
+			};
+
+			function handleFileSelect( evt ) 
+			{
+			    var file = evt.target.files[0];
+			    
+			    var attachment = {};
+
+			    if ( file && file.name )
+			   	{
+					$('#uploadFile').val( file.name );
+
+			   		attachment.name = file.name;
+			   		attachment.type = file.type;
+
+			   		addFileList( attachment );
+			   	}
+				
+		      	var reader = new FileReader();
+
+		        reader.addEventListener( "loadend"  , loadEnd);
+		        reader.addEventListener( "loadstart", loadStart);
+
+				function loadEnd( e )
+				{
+				  $('#loadstart').remove();
+				};
+
+				function loadStart( e )
+				{
+		  			var span = document.createElement('span');
+	          		span.innerHTML = '<i id="loadstart" class="fa fa-spinner fa-pulse fa-3x fa-fw icon-loading" ></i>';
+
+	          		document.getElementById('action-postings').insertBefore(span, null);		
+				};
+
+		      	reader.onload = ( function( theFile )
+		      	{
+		        	return function( e ) 
+		        	{
+ 		
+			          	attachment.base64 = e.target.result;
+
+                        if ( ! scope.model )
+                        {
+                            scope.model = [];    
+                        }
 
 
-				      			if( i == files.length )
-				      			{
-				      				scope.$apply();
-				      			}
+                        scope.model.push( attachment );
+		        	};
 
-				        	};
+		      	} )( file );
 
-				      	})(f);
+		      	reader.readAsDataURL( file );
+			};
+			
+			document.getElementById('files').addEventListener('change', handleFileSelect, false);
+		};
 
-				      	reader.readAsDataURL(f);
-				    }
-				}
+		return MyFile;
+	} ] );
 
-				document.getElementById('files').addEventListener('change', handleFileSelect, false);
-			}
-		}
-	}]);
-})();
+} ) ();
