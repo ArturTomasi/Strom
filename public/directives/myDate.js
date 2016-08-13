@@ -23,4 +23,14 @@
 	
 	}]);
 
+	angular.module('Strom').filter( 'date', function () 
+	{
+    	return function ( date ) 
+    	{	
+    		moment.locale( 'pt-br' );
+    		
+    		return moment( date ).format( 'L' );
+    	};
+    } );
+
 })();

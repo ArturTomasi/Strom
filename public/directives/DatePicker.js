@@ -13,7 +13,8 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 	return {
 		restrict: 'EA',
 		require: '?ngModel',
-		scope: {},
+		scope: {
+		},
 		link: function (scope, element, attrs, ngModel) {
 			setScopeValues(scope, attrs);
 
@@ -100,6 +101,11 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 				scope.closeCalendar();
 			};
 
+			scope.clearDate = function () {
+				ngModel.$setViewValue(null);
+				scope.viewValue = null;
+			};
+
 			// if clicked outside of calendar
 			var classList = ['ng-datepicker', 'ng-datepicker-input'];
             if (attrs.id !== undefined) classList.push(attrs.id);
@@ -130,15 +136,17 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 
 			ngModel.$render = function () {
 				var newValue = ngModel.$viewValue;
-				if (newValue !== undefined) {
+				if ( newValue ) {
 					scope.viewValue = moment(newValue).format(attrs.viewFormat);
 					scope.dateValue = newValue;
 				}
 			};
-
 		},
 		template: 
-		'<div><input type="text" ng-focus="showCalendar()" onkeydown="return false;" ng-value="viewValue" class="ng-datepicker-input" placeholder="{{ placeholder }}"></div>' +
+		'<div style="width: 100%;">' +
+		'  	<input type="text" ng-focus="showCalendar()" onkeydown="return false;" ng-model="viewValue" class="col-sm-11 ng-datepicker-input form-group" placeholder="{{ placeholder }}">' +
+		'	<i data-ng-click="clearDate()" class="fa fa-times ng-datepicker-clear" aria-hidden="true"></i>' +
+		'</div>' +
 		'<div class="ng-datepicker" ng-show="calendarOpened">' +
 		'  <div class="controls">' +
 		'    <div class="left">' +

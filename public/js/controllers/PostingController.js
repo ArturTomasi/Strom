@@ -38,7 +38,13 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     {
         if( posting )
         {
-            return angular.copy( posting );
+            var _posting = angular.copy( posting );
+
+            _posting.user     = $scope.getUser( _posting.user );
+            _posting.entity   = $scope.getEntity( _posting.entity );
+            _posting.category = $scope.getCategory( _posting.category );
+
+            return _posting;
         }
         
         return {};
@@ -77,6 +83,96 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         } );
     };
 
+    /**
+     * [getIcon description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.getIcon = function( posting )
+    {
+        switch( posting.state )
+        {
+            case 0: return 'new.png';
+            case 1: return 'play.png';
+            case 2: return 'finish.png';
+            case 3: return 'delete.png';
+        }
+    };
+
+    /**
+     * [getUserName description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getUserName = function( id )
+    {
+        return $scope.getUser( id ).name;
+    };
+
+    /**
+     * [getUser description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getUser = function( id )
+    {
+        return $scope.users.filter( function ( user ) 
+        {
+            return user._id === id;
+        } )[0];
+    };
+
+    /**
+     * [getCategoryName description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getCategoryName = function( id )
+    {
+        return $scope.getCategory( id ).name;
+    };
+
+    /**
+     * [getCategory description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getCategory = function( id )
+    {
+        return $scope.categories.filter( function ( category ) 
+        {
+            return category._id === id;
+        } )[0];
+    };
+
+    /**
+     * [getEntityName description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getEntityName = function( id )
+    {
+        return $scope.getEntity( id ).name;
+    };
+
+    /**
+     * [getEntity description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getEntity = function( id )
+    {
+        return $scope.entities.filter( function ( entity ) 
+        {
+            return entity._id === id;
+        } )[0];
+    };
+
+    /**
+     * [showCompletionType description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
     $scope.showCompletionType = function ( posting ) 
     {
         if( posting )

@@ -1,0 +1,75 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <table style="width: 2000px" class="table table-condensed">
+            <thead>
+                <tr>
+                    <th style="width: 15px" data-ng-click="sort( 'state' );">
+                        #
+                        <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    
+                    <th style="width: 250px" data-ng-click="sort( 'name' );">
+                        Nome
+                        <i data-ng-show="sortKey === 'name'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    
+                    <th style="width: 250px" data-ng-click="sort( 'estimateDate' );">
+                        Data Estimada
+                        <i data-ng-show="sortKey === 'estimateDate'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                    
+                    <th style="width: 250px" data-ng-click="sort( 'realDate' );">
+                        Data Real
+                        <i data-ng-show="sortKey === 'realDate'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+
+                    <th style="width: 250px" data-ng-click="sort( 'realValue' );">
+                        Valor Real
+                        <i data-ng-show="sortKey === 'realValue'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+
+                    <th style="width: 250px" data-ng-click="sort( 'estimateValue' );">
+                        Valor Estimado
+                        <i data-ng-show="sortKey === 'estimateValue'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+
+                    <th style="width: 250px" data-ng-click="sort( 'user' );">
+                        Responsável
+                        <i data-ng-show="sortKey === 'user'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+
+                    <th style="width: 250px" data-ng-click="sort( 'entity' );">
+                        Entidade
+                        <i data-ng-show="sortKey === 'entity'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+
+                    <th style="width: 250px" data-ng-click="sort( 'category' );">
+                        Categoria
+                        <i data-ng-show="sortKey === 'category'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="panel-body">
+        <table style="width: 2000px" class="table table-condensed">
+            <tbody>
+                <tr class="tr" data-ng-class="{trselected: postingSelected._id === posting._id }" 
+                               data-ng-click="selectPosting(posting)" 
+                               dir-paginate="posting in postings | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
+                    <td style="width: 15px"><img data-ng-src="icons/{{getIcon(posting)}}" class="btn-icon"></img></td>
+                    <td style="width: 250px">{{posting.name}}</td>
+                    <td style="width: 250px">{{posting.estimateDate | date}}</td>
+                    <td style="width: 250px">{{posting.realDate | date}}</td>
+                    <td style="width: 250px">{{posting.realValue}}</td>
+                    <td style="width: 250px">{{posting.estimateValue}}</td>
+                    <td style="width: 250px">{{getUserName( posting.user )}}</td>
+                    <td style="width: 250px">{{getEntityName( posting.entity )}}</td>
+                    <td style="width: 250px">{{getCategoryName( posting.category )}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
+    </div>
+    <data-ng-include src="'partials/Util/PostingLegendPane.html'"></data-ng-include>
+</div>

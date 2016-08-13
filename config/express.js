@@ -17,8 +17,8 @@ module.exports = function()
 	app.set( 'view engine', 'ejs' );
 	app.set( 'views', './app/views' );
 	
-	app.use( bodyParser.urlencoded( { extended: true } ) );
-	app.use( bodyParser.json() );
+	app.use( bodyParser.urlencoded( { extended: true, limit: '50mb' } ) );
+	app.use( bodyParser.json( { limit: '50mb' } ) );
 	app.use( methodOverride() );
 	app.use( cookieParser() );
 	app.use( session({secret: 'homemavestruz', resave: true, saveUninitialized: true } ) );

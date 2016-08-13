@@ -11,19 +11,16 @@
                     <!-- BEGIN TABS -->
                     <ul data-ng-model="tabActive" data-ng-init="tabActive = 'generalTab'" class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" data-ng-click="tabActive = 'generalTab'">Geral</a></li>
-                        <li><a data-toggle="tab" data-ng-show="posting.repeat" data-ng-click="tabActive = 'valueTab'">Valores</a></li>
                         <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Informações</a></li>
                         <li><a data-toggle="tab" data-ng-click="tabActive = 'attachmentTab'">Anexos</a></li>
                     </ul>
                     <!-- END TABS -->
 
                     <!-- BEGIN GENERAL PANE -->
-
                     <div class="tab-content">
                         <div id="generalTab" class="tab-pane active" data-ng-show="tabActive == 'generalTab'">
                             
-                            <div class="form-group row has-feedback" 
-                                 data-ng-class="{ 'has-success' : PostingForm.name.$valid, 'has-error' : PostingForm.name.$invalid }" >
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-sm-2-form" for="nameField">Nome</label>
                                 <div class="form-group row col-sm-10">
                                     <input ng-required="true" 
@@ -38,28 +35,22 @@
                             </div>
 
                             <div class="form-group row">
-                                <div class="has-feedback" 
-                                     data-ng-class="{ 'has-success' : PostingForm.estimateDate.$valid, 'has-error' : PostingForm.estimateDate.$invalid }" >
-                                    <mydate label="Data Estimada" 
-                                            name="estimateDate" 
-                                            mask="DD/MM/YYYY" 
-                                            model="posting.estimateDate"
-                                            required="true">
-                                    </mydate>
+                                <mydate label="Data Estimada" 
+                                        name="estimateDate" 
+                                        mask="DD/MM/YYYY" 
+                                        model="posting.estimateDate"
+                                        required="true">
+                                </mydate>
 
-                                </div>
-                                <div class="">
-                                    <mydate label="Data Realizada" 
-                                            name="realDate" 
-                                            mask="DD/MM/YYYY" 
-                                            model="posting.realDate">
-                                    </mydate>
-                                </div>
+                                <mydate label="Data Realizada" 
+                                        name="realDate" 
+                                        mask="DD/MM/YYYY" 
+                                        model="posting.realDate">
+                                </mydate>
                             </div>
 
                             <div class="form-group row">
-                                <div class="has-feedback" 
-                                     data-ng-class="{ 'has-success' : PostingForm.estimateValue.$valid, 'has-error' : PostingForm.estimateValue.$invalid }" >
+                                <div>
                                     <label class="col-sm-2 col-sm-2-form" for="estimateValueField">Valor Estimada</label>
                                     <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-required="true" 
@@ -72,7 +63,7 @@
                                            ui-money-mask  >
                                     </div>
                                 </div>
-                                <div class="" >
+                                <div >
                                     <label class="col-sm-2 col-sm-2-form" for="realValueField">Valor Realizada</label>
                                     <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-model="posting.realValue" 
@@ -80,39 +71,41 @@
                                            type="text"
                                            class="form-control" 
                                            id="realValueField" 
-                                           ui-money-mask  >
+                                           ui-money-mask>
                                     </div>
                                 </div>
                             </div>
                             
-                            <item-selector data-ng-model="posting.entity" items="entities"size="10" name="Entity" title="Entidade"></item-selector>
+                            <item-selector model="posting.entity" 
+                                           items="entities" 
+                                           size="10" 
+                                           name="Entity" 
+                                           title="Entidade">  
+                            </item-selector>
                         
-                            <item-selector data-ng-model="posting.category" items="categories" size="10" name="Category" title="Categoria"></item-selector>
+                            <item-selector model="posting.category" 
+                                           items="categories" 
+                                           size="10" 
+                                           name="Category" 
+                                           title="Categoria">
+                            </item-selector>
                         
-                            <item-selector data-ng-model="posting.user" size="10" items="users" name="User" title="Responsável"></item-selector>
+                            <item-selector model="posting.user" 
+                                           size="10" 
+                                           items="users" 
+                                           name="User" 
+                                           title="Responsável">
+                            </item-selector>
                             
-                            <div class="form-group row">
-                                 <div class="form-group col-sm-4" >
-                                    <mycheckbox ng-required="true" model="posting.repeat" name="repeat" size="70" label="Repete"></mycheckbox>
-                                </div>  
-                                <div class="form-group col-sm-4">
-                                  <mycheckbox ng-required="true" model="posting.completionAuto" name="completionAuto" size="150" label="Finaliza Automaticamente"></mycheckbox>
-                                </div> 
+                            <item-selector model="posting.completionAuto" 
+                                           size="10" 
+                                           items="[ { name : 'Sim', value: true },
+                                                    { name:  'Não', value: false } ]" 
+                                           name="completionAuto" 
+                                           title="Finaliza Automáticamente">
+                            </item-selector>
 
-                                <div class="" >
-                                    <label class="col-sm-2 col-sm-2-form" for="portionTotalField">Parcelas</label>
-                                    <div class="form-group col-sm-2">
-                                        <input ng-model="posting.portionTotal" 
-                                               name="portionTotal" 
-                                               type="number"
-                                               class="form-control" 
-                                               id="portionTotalField"
-                                               min="2" max="12" >
-                                    </div>
-                                </div> 
-                            </div>
-
-                            <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto" 
+                            <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto.value" 
                                            data-ng-model="posting.completionType"
                                            items="completionTypes"
                                            size="10" 
@@ -132,26 +125,11 @@
 
                         <!-- END INFO PANE -->
 
-                        
-                        <!-- BEGIN VALUES PANE -->                        
-
-                        <div id="valuesTab" class="tab-pane active" data-ng-show="tabActive == 'valueTab'">
-                            <ul>
-                              <li data-ng-repeat="value in values">
-                                <input type="text" name="">
-                                <input type="text" name="">
-                              </li>
-
-                            </ul>
-                        </div>
-
-                        <!-- END VALUES PANE -->                        
-
 
                         <!-- BEGIN ATTACHMENT PANE -->                        
 
                         <div id="attachmentTab" class="tab-pane active" data-ng-show="tabActive == 'attachmentTab'">
-                            <myfile model="posting.attachments" name="attachments" label="Anexos"></myfile> 
+                            <myfile style="height: 350px;" model="posting.attachments" name="attachments" label="Anexos"></myfile> 
                         </div>
 
 

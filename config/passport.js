@@ -21,8 +21,6 @@ module.exports = function()
          */
         function( login, password, done ) 
         {
-            console.log( done.req );
-
             User.findOne( { login: login }, function ( error, user )
             {
                 if ( error ) 
