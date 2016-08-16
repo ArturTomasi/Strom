@@ -106,5 +106,5 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
         }
     };
 	
-	return PostingService;
+    return PostingService;
 } ] );

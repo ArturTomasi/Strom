@@ -13,6 +13,7 @@
 				label: '@',
 				name: '@',
 				model: '=',
+				disabled: '=',
 				required: '@',
 				mask: '@'
 			},
@@ -27,9 +28,14 @@
 	{
     	return function ( date ) 
     	{	
-    		moment.locale( 'pt-br' );
-    		
-    		return moment( date ).format( 'L' );
+    		if ( date )
+    		{
+	    		moment.locale( 'pt-br' );
+	    		
+	    		return moment( date ).format( 'L' );
+    		}
+
+    		return 'N/D';
     	};
     } );
 

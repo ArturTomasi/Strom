@@ -30,16 +30,18 @@
                                            type="text"
                                            class="form-control" 
                                            id="nameField" 
-                                           placeholder="Nome">
+                                           placeholder="Nome"
+                                           data-ng-disabled="isFinish">
                                 </div>
                             </div>
-
-                            <div class="form-group row">
+                           
+                           <div class="form-group row">
                                 <mydate label="Data Estimada" 
                                         name="estimateDate" 
                                         mask="DD/MM/YYYY" 
                                         model="posting.estimateDate"
-                                        required="true">
+                                        required="true"
+                                        disabled="isFinish">
                                 </mydate>
 
                                 <mydate label="Data Realizada" 
@@ -60,7 +62,8 @@
                                            type="text"
                                            class="form-control" 
                                            id="estimateDateField" 
-                                           ui-money-mask  >
+                                           data-ng-disabled="isFinish"
+                                           ui-money-mask>
                                     </div>
                                 </div>
                                 <div >
@@ -80,33 +83,36 @@
                                            items="entities" 
                                            size="10" 
                                            name="Entity" 
-                                           title="Entidade">  
+                                           title="Entidade"
+                                           data-ng-show="! isFinish">  
                             </item-selector>
                         
                             <item-selector model="posting.category" 
                                            items="categories" 
                                            size="10" 
                                            name="Category" 
-                                           title="Categoria">
+                                           title="Categoria"
+                                           data-ng-show="! isFinish">
                             </item-selector>
                         
                             <item-selector model="posting.user" 
                                            size="10" 
                                            items="users" 
                                            name="User" 
-                                           title="Responsável">
+                                           title="Responsável"
+                                           data-ng-show="! isFinish">
                             </item-selector>
                             
                             <item-selector model="posting.completionAuto" 
                                            size="10" 
-                                           items="[ { name : 'Sim', value: true },
-                                                    { name:  'Não', value: false } ]" 
+                                           items="YesNoOptions" 
                                            name="completionAuto" 
-                                           title="Finaliza Automáticamente">
+                                           title="Finaliza Automáticamente"
+                                           data-ng-show="! isFinish">
                             </item-selector>
 
-                            <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto.value" 
-                                           data-ng-model="posting.completionType"
+                            <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto.value || isFinish" 
+                                           model="posting.completionType"
                                            items="completionTypes"
                                            size="10" 
                                            name="CompletionType" 

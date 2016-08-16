@@ -1,12 +1,23 @@
 angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService',
 												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService ) 
 {
+    var Posting  = {
+        STATE_REGISTRED : 0,
+        STATE_PROGRESS  : 1,
+        STATE_FINISHED  : 2,
+        STATE_DELETED   : 3
+    }; 
+
  	$scope.postingSelected;
     $scope.postings;
     $scope.users;
     $scope.entities;
     $scope.completionTypes;
     $scope.categories;
+    $scope.isFinish = false;
+    
+    $scope.YesNoOptions =[ { name : 'Sim', value: true },
+                           { name:  'Não', value: false } ];
 
     /**
      * [sort description]
@@ -38,11 +49,15 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     {
         if( posting )
         {
+            $scope.isFinish = false;
+
             var _posting = angular.copy( posting );
 
-            _posting.user     = $scope.getUser( _posting.user );
-            _posting.entity   = $scope.getEntity( _posting.entity );
-            _posting.category = $scope.getCategory( _posting.category );
+            _posting.user           = $scope.getUser( _posting.user );
+            _posting.entity         = $scope.getEntity( _posting.entity );
+            _posting.category       = $scope.getCategory( _posting.category );
+            _posting.completionType = $scope.getCompletionType( _posting.completionType );
+            _posting.completionAuto = $scope.YesNoOptions[ _posting.completionAuto ? 0 : 1 ];
 
             return _posting;
         }
@@ -67,20 +82,82 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
     
     /**
+     * [editPosting description]
+     * @param  {[type]} $event  [description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.editPosting = function( $event, posting )
+    {
+        var errors = validateEdit( posting );
+
+        if ( ! errors )
+        {
+            $scope.posting = $scope.getPostingForm( posting );
+                   
+            $( '#store' ).modal();
+        }
+
+        else
+        {
+            Message.alert( errors );
+        }
+    };
+
+    /**
      * [deletePosting description]
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
      */
     $scope.deletePosting = function(posting)
     {
-        Message.confirm( 'Você deseja realmente excluir o lançamento ' + $scope.postingSelected.name, function () 
+        var errors = validateDelete( posting );
+
+        if ( ! errors )
         {
-            PostingService.deletePosting( posting, function( data )
+            Message.confirm( 'Você deseja realmente excluir o lançamento ' + $scope.postingSelected.name, function () 
             {
-                loadPostings();
-                $scope.selectPosting( data );
+                PostingService.deletePosting( posting, function( data )
+                {
+                    loadPostings();
+                    $scope.selectPosting( data );
+                } );
             } );
-        } );
+        }
+
+        else
+        {
+            Message.alert( errors );
+
+            $event.preventDefault();
+        }
+    };
+
+    /**
+     * [finishPosting description]
+     * @param  {[type]} $event  [description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.finishPosting = function( $event, posting )
+    {
+        var errors = validateFinish( posting );
+
+        if ( ! errors )
+        {
+            $scope.posting = $scope.getPostingForm( posting );
+                   
+            $scope.isFinish = true;
+
+            $( '#store' ).modal();
+        }
+
+        else
+        {
+            Message.alert( errors );
+
+            $event.preventDefault();
+        }
     };
 
     /**
@@ -169,6 +246,29 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [getCompletionTypeName description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getCompletionTypeName = function( id )
+    {
+        return $scope.getCompletionType( id ).name;
+    };
+
+    /**
+     * [getCompletionType description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getCompletionType = function( id )
+    {
+        return $scope.completionTypes.filter( function( completion )
+        {
+            return completion._id === id;
+        } )[0];
+    };
+
+    /**
      * [showCompletionType description]
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
@@ -184,6 +284,84 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         return false;
     };
+
+
+    /**
+     * [validateFinish description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function validateFinish( posting )
+    {
+        if( ! posting )
+            return "Selecione um Lançamento para finalizar !";
+
+        if( posting.state === Posting.STATE_DELETED )
+            return "Lançamento está deletado,\n não é possivel finaliza-lo !";
+
+        if( posting.state === Posting.STATE_FINISHED )
+            return "Lançamento está finalizado,\n não é possivel finaliza-lo duas vezes !";
+    };
+
+    /**
+     * [validateEdit description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function validateEdit( posting )
+    {
+        if( ! posting )
+            return "Selecione um Lançamento para editar !";
+
+        if( posting.state === Posting.STATE_DELETED )
+            return "Lançamento está deletado,\n não é possivel edita-lo !";
+
+        if( posting.state === Posting.STATE_FINISHED )
+            return "Lançamento está finalizado,\n não é possivel edita-lo após finalizado!";
+    };
+
+    /**
+     * [validateDelete description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function validateDelete( posting )
+    {
+        if( ! posting )
+            return "Selecione um Lançamento para excluir !";
+
+        if( posting.state === Posting.STATE_DELETED )
+            return "Lançamento está excluido,\n não é possivel exclui-lo duas vezes !";
+
+        if( posting.state === Posting.STATE_FINISHED )
+            return "Lançamento está finalizado,\n não é possivel excluir após finalizado!";
+
+        //var user = $scope.user;
+
+        //if( user.role === 0 && user._id !== posting.user )
+          //  return "Você não tem permissão para excluir esse lançamento";
+    }
+
+    /**
+     * [validateReserve description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function validateReserve( posting )
+    {
+        if( ! posting )
+            return "Selecione um Lançamento para extornar!";
+
+        if( posting.state === Posting.STATE_DELETED )
+            return "Lançamento está excluido,\n não é possivel extorná-lo!";
+
+        if( posting.state !== Posting.STATE_FINISHED )
+            return "Lançamento deve estár finalizado para extornar";
+
+        //if( ! ApplicationUtilities.getInstance().hasPermission() )
+          //  return "Você não tem permissão para extornar esse lançamento";
+    };
+
       
     /**
      * [loadPostings description]

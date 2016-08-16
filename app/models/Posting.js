@@ -6,16 +6,11 @@ var uniqueValidator = require('mongoose-unique-validator');
 
 module.exports = function ()
 {
-    var STATE_REGISTRED = 0;
-    var STATE_PROGRESS  = 1;
-    var STATE_FINISHED  = 2;
-    var STATE_DELETED   = 3;
-
     var schemaAttachment = 
     {
         name:   { type: String, required: [ true, 'não pode estar vazio' ] },
         base64: { type: String, required: [ true, 'não pode estar vazio' ] },
-        type:   { type: String, required: [ true, 'não pode estar vazio' ] }
+        type:   { type: String }
     };
 
     var schema = mongoose.Schema

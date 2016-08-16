@@ -3,16 +3,48 @@
     Novo
 </button>
 
-<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="posting = getPostingForm(postingSelected)" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#store">
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="editPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block">
     <img src="icons/edit.png" class="btn-icon"></img>
     Editar
 </button>
 
-<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="deleteposting( postingSelected )" type="button" class="btn btn-strom btn-block" >
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="deletePosting( postingSelected )" type="button" class="btn btn-strom btn-block" >
     <img src="icons/delete.png" class="btn-icon"></img>
     Excluir
 </button>
 
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="finishPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/finish.png" class="btn-icon"></img>
+    Finalizar
+</button>
+<!--
+
+ */
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="reversePosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/reverse.png" class="btn-icon"></img>
+    Extornar
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="inspectPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/details.png" class="btn-icon"></img>
+    Detalhes
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="copyPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/copy.png" class="btn-icon"></img>
+    Copiar
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="filterPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/pdf.png" class="btn-icon"></img>
+    Filtro
+</button>
+
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="printPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+    <img src="icons/pdf.png" class="btn-icon"></img>
+    Imprimir
+</button>
+-->
 
 <!--  actions for report -->
 

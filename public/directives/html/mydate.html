@@ -4,13 +4,12 @@
     <div class="col-sm-4 col-sm-4-form form-group">     
 
         <ng-datepicker data-ng-model="model"
-                       ng-disabled="true"
                        name="{{name}}"
         	             locale="pt-br" 
-                       format="{{mask}}" 
+                       format="YYYY-MM-DD" 
                        view-format="{{mask}}"
                        placeholder="{{mask}}"
-                       editable="false"
+                       disabled="disabled"
                        data-ng-required="required">
         </ng-datepicker>        
 

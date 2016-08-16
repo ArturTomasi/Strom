@@ -1,11 +1,13 @@
 <div class="col-sm-12">
-    <div class="col-sm-10">
-        <ul id="myfilelist" data-ng-repeat="attachment in model">
-            <div data-ng-class="{ 'file-list file-list-selected' : selectedAttachment === attachment, 'file-list' :  selectedAttachment !== attachment }"
-               data-ng-model="attachment" data-ng-click="selectAttachment(attachment)">
-                <i class="{{getIcon( attachment.type )}}"></i>
-                {{attachment.name}}
-            </div>
+    <div class="col-sm-10" style="height: 100%; overflow: auto;">
+        <ul id="myfilelist">
+            <li data-ng-repeat="attachment in model">
+                <div data-ng-class="{ 'file-list file-list-selected' : selectedAttachment === attachment, 'file-list' :  selectedAttachment !== attachment }"
+                   data-ng-model="attachment" data-ng-click="selectAttachment(attachment)">
+                    <i class="{{getIcon( attachment.type )}}"></i>
+                    {{attachment.name}}
+                </div>
+            </li>
         </ul>        
     </div>
     <div id="action-postings" class="col-sm-2">

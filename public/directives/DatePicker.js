@@ -7,13 +7,13 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 		scope.locale = attrs.locale || 'en';
 		scope.firstWeekDaySunday = scope.$eval(attrs.firstWeekDaySunday) || false; 
 		scope.placeholder = attrs.placeholder || '';
-		scope.editable= attrs.editable || true;
 	};
 
 	return {
 		restrict: 'EA',
 		require: '?ngModel',
 		scope: {
+			disabled_field: '=disabled'
 		},
 		link: function (scope, element, attrs, ngModel) {
 			setScopeValues(scope, attrs);
@@ -140,11 +140,15 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 					scope.viewValue = moment(newValue).format(attrs.viewFormat);
 					scope.dateValue = newValue;
 				}
+				else {
+					scope.clearDate();
+				}
+
 			};
 		},
 		template: 
 		'<div style="width: 100%;">' +
-		'  	<input type="text" ng-focus="showCalendar()" onkeydown="return false;" ng-model="viewValue" class="col-sm-11 ng-datepicker-input form-group" placeholder="{{ placeholder }}">' +
+		'  	<input type="text" ng-focus="showCalendar()" data-ng-disabled="disabled_field" onkeydown="return false;" ng-model="viewValue" class="col-sm-11 ng-datepicker-input form-group" placeholder="{{ placeholder }}">' +
 		'	<i data-ng-click="clearDate()" class="fa fa-times ng-datepicker-clear" aria-hidden="true"></i>' +
 		'</div>' +
 		'<div class="ng-datepicker" ng-show="calendarOpened">' +

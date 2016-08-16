@@ -3,7 +3,7 @@
         <table style="width: 2000px" class="table table-condensed">
             <thead>
                 <tr>
-                    <th style="width: 15px" data-ng-click="sort( 'state' );">
+                    <th style="width: 45px" data-ng-click="sort( 'state' );">
                         #
                         <i data-ng-show="sortKey === 'state'" data-ng-class="{ 'fa fa-angle-up' : reverse , 'fa fa-angle-down' : !reverse }"></i>
                     </th>
@@ -57,7 +57,7 @@
                 <tr class="tr" data-ng-class="{trselected: postingSelected._id === posting._id }" 
                                data-ng-click="selectPosting(posting)" 
                                dir-paginate="posting in postings | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 10">
-                    <td style="width: 15px"><img data-ng-src="icons/{{getIcon(posting)}}" class="btn-icon"></img></td>
+                    <td style="width: 45px"><img data-ng-src="icons/{{getIcon(posting)}}" class="btn-icon"></img></td>
                     <td style="width: 250px">{{posting.name}}</td>
                     <td style="width: 250px">{{posting.estimateDate | date}}</td>
                     <td style="width: 250px">{{posting.realDate | date}}</td>

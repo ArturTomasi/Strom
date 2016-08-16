@@ -14,6 +14,12 @@ module.exports = function ( app )
     var MODE_EDIT   = 1;
     var MODE_FINISH = 2;
 
+    var STATE_REGISTRED = 0;
+    var STATE_PROGRESS  = 1;
+    var STATE_FINISHED  = 2;
+    var STATE_DELETED   = 3;
+
+
    /**
     * 
     * @param {type} req
@@ -64,6 +70,8 @@ module.exports = function ( app )
     {
         var posting = req.body;
 
+        makeState( posting );
+        
         var errors = validate( posting, MODE_NEW );
 
         if ( ! errors )
@@ -80,7 +88,10 @@ module.exports = function ( app )
             } );
         }
 
-        res.status( 500 ).json( errors );
+        else
+        {
+            res.status( 500 ).json( errors );
+        }
     };
     
     /**
@@ -93,16 +104,30 @@ module.exports = function ( app )
     {
         var _id = sanitize( req.body._id );
 
-        Posting.findOneAndUpdate( { _id : _id }, req.body, 
-                               { new : true, runValidators: true, context: 'query' } ).exec( function ( error, posting )
-        {
-            if ( error )
-            {
-                res.status( 500 ).json( composeError( error ) );
-            }
+        var posting = req.body;
 
-            res.status( 200 ).json( posting );
-        } );
+        makeState( posting );
+       
+        var errors = validate( posting, MODE_EDIT );
+
+        if ( ! errors )
+        {
+          Posting.findOneAndUpdate( { _id : _id }, posting, 
+                                 { new : true, runValidators: true, context: 'query' } ).exec( function ( error, posting )
+          {
+              if ( error )
+              {
+                  res.status( 500 ).json( composeError( error ) );
+              }
+
+              res.status( 200 ).json( posting );
+          } );
+        }
+
+        else
+        {
+          res.status( 500 ).json( errors );
+        }
     };
     
     /**
@@ -118,7 +143,7 @@ module.exports = function ( app )
             var _id = sanitize( req.params.id );
         
             Posting.findOneAndUpdate( { _id : _id },
-                                      { state: Posting.STATE_DELETE }, 
+                                      { state: STATE_DELETED }, 
                                       { new : true, runValidators: true, context: 'query' } ).exec( function ( error, posting )
             {
                 if ( error )
@@ -155,7 +180,7 @@ module.exports = function ( app )
         if( ( posting.completionAuto || ! notFinish ) && ! posting.completionType )
             errors += "O tipo de finalização não pode estar vazio!<br>";
 
-        if( ! posting.realDate && ! posting.completionType )
+        if( posting.realDate && ! posting.completionType )
             errors += "O tipo de finalização não pode estar vazio<br>";
 
         if( notFinish && ! posting.entity )
@@ -180,8 +205,21 @@ module.exports = function ( app )
             errors += "A data real não pode estar vazia<br>!";
 
         if ( errors ) return errors;
-
     };
+
+    /**
+     * [makeState description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function makeState( posting )
+    {
+        posting.state =  posting.realDate ? STATE_FINISHED : STATE_PROGRESS;
+
+        posting.completionAuto = posting.completionAuto.value;
+        
+    };
+
 
     /**
      * 
