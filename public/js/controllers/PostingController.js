@@ -177,6 +177,16 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [filterItems description]
+     * @param  {[type]} filters [description]
+     * @return {[type]}         [description]
+     */
+    $scope.filterAction = function()
+    {
+        Message.alert( " asdsadasd " +  filters );
+    };
+
+    /**
      * [getUserName description]
      * @param  {[type]} id [description]
      * @return {[type]}    [description]
@@ -285,7 +295,6 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         return false;
     };
 
-
     /**
      * [validateFinish description]
      * @param  {[type]} posting [description]
@@ -361,8 +370,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         //if( ! ApplicationUtilities.getInstance().hasPermission() )
           //  return "Você não tem permissão para extornar esse lançamento";
     };
+    
 
-      
     /**
      * [loadPostings description]
      * @return {[type]} [description]

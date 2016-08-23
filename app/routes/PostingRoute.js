@@ -20,7 +20,7 @@ module.exports = function( app )
 
     app.get('/postings', checkAuthenticated, controller.getPostings );
     
-    app.get('/postings:id', checkAuthenticated, controller.getPosting );
+    app.get('/postings/:id', checkAuthenticated, controller.getPosting );
         
     app.post('/postings', checkAuthenticated, controller.addPosting );
 	

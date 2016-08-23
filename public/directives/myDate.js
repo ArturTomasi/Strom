@@ -6,7 +6,6 @@
 	
 		return {
 			restrict: 'E',
-			require: '^form',
 			replace: true,
 			templateUrl: '/directives/html/mydate.html' ,
 			scope : {

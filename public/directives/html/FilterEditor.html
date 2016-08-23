@@ -1,53 +1,102 @@
-<button type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#addFilter">
-    <img src="icons/search.png" class="btn-icon"></img>
-    Filtro
-</button>
+<div class="btn-block">
 
-<div class="modal fade" data-backdrop="static" id="addFilter" role="dialog">
-	<div  style="width: 80%" class="modal-dialog">
-	    <div style="height: 90%" class="modal-content">
-	        <div class="modal-header">
-	        	<button type="button" class="close" data-ng-click="close()">&times;</button>
-	            <h3 class="modal-title">{{title}}</h3>
-	        </div>
-	        <div class="modal-body">
-    			<table id="tableItems">
-    				<tr>
-    					<td class="label">
-    						
-    					</td class="input">
-    					<td>
-    						
-    					</td>
-    				</tr>
-    			</table>
-	        </div>
-	    </div>  
+
+	<button type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#addFilter">
+	    <img src="icons/search.png" class="btn-icon"></img>
+	    Filtro
+	</button>
+
+	<div class="modal fade" data-backdrop="static" id="addFilter" role="dialog">
+	    <div  style="width: 90%" class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                <h3 class="modal-title">Adicionar Filtro</h3>
+	            </div>
+	            <div style="height: 350px;" class="modal-body">
+	               
+	               <div class="col-sm-12">
+	               
+   	               		<ul class="col-sm-10">
+	               			<li ng-repeat="filter in filters track by $index">
+	               				
+	               				<div ng-if="filter.type === 'input'" class="form-group row">
+									<label class="col-sm-2 col-sm-2-form" for="nameField">{{filter.label}}</label>
+			        	    		<div class="form-group row col-sm-10">
+			                			<input  ng-required="true"
+				                       		    ng-model="filter.value"
+				                       		    name="filter.name"
+				                       			type="text"
+				                       			class="form-control"
+				                       			id="{{filter.name + $index}}">
+				            		</div>
+				        		</div>
+
+			        		   <div ng-if="filter.type === 'date'" class="form-group row">
+	                                <mydate label="{{filter.label}}" 
+	                                        name="filter.name" 
+	                                        mask="DD/MM/YYYY" 
+	                                        model="filter.value.from"
+	                                        required="true">
+	                                </mydate>
+
+	                                <mydate label="Até" 
+	                                        name="untilDate" 
+	                                        mask="DD/MM/YYYY" 
+	                                        model="filter.value.until">
+	                                </mydate>
+	                            </div>
+
+	                            <item-selector model="filter.value" 
+	                                           items="filter.items" 
+	                                           size="10" 
+	                                           name="{{filter.name + $index }}" 
+	                                           title="{{filter.label}}"
+	                                           ng-if="filter.type === 'list'">  
+                            	</item-selector>
+
+	               			</li>
+	               		</ul>	
+
+	               		<div class="col-sm-2">
+		               		<button type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#newFilter">
+							    <img src="icons/new.png" class="btn-icon"></img>
+							    Novo
+							</button>
+							<button type="button" class="btn btn-strom btn-block">
+							    <img src="icons/delete.png" class="btn-icon"></img>
+							    Excluir
+							</button>
+	              		</div>	
+	               </div>
+	            </div>
+    	        <div class="modal-footer">
+		            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="button" ng-click="filterAction" class="btn btn-success">Salvar</button>                </div>	
+	        </div>  
+	    </div>
 	</div>
-</div>
 
-
-
-
-<div class="modal fade" data-backdrop="static" id="choice{{name}}" role="dialog">
-	<div  style="width: 80%" class="modal-dialog">
-	    <div style="height: 90%" class="modal-content">
-	        <div class="modal-header">
-	        	<button type="button" class="close" data-ng-click="close()">&times;</button>
-	            <h3 class="modal-title">{{title}}</h3>
-	        </div>
-	        <div class="modal-body">
-    			<input data-ng-model="search" type="search" class="form-control"/>
-	            <ul class="item-selector-list list-group">
-	            	<li class="tr list-group-item" 
-	            		data-ng-class="{trselected: model === item }" 
-                       	data-ng-click="selectItem( item )" 
-                        dir-paginate="item in items | filter: { name: search } | orderBy: item | itemsPerPage: 10  track by $index">
-	            		{{item.name || item}}
-	            	</li>
-	            </ul>
-	        </div>
-	    </div>  
+	<div class="modal fade" data-backdrop="static" id="newFilter" role="dialog">
+		<div  style="width: 80%" class="modal-dialog">
+		    <div style="height: 90%" class="modal-content">
+		        <div class="modal-header">
+		        	<button type="button" class="close" data-ng-click="close()">&times;</button>
+		            <h3 class="modal-title">Campos para Fitros</h3>
+		        </div>
+		        <div class="modal-body">
+	    			<input data-ng-model="search" type="search" class="form-control"/>
+		            <ul class="item-selector-list list-group">
+		            	<li class="tr list-group-item" 
+		            		data-ng-class="{trselected: model === item }" 
+	                       	data-ng-click="selectItem( item )" 
+	                        dir-paginate="item in items | filter: { name: search } | orderBy: item | itemsPerPage: 10  track by $index">
+		            		{{item.label || item}}
+		            	</li>
+		            </ul>
+		        </div>
+		    </div>  
+		</div>
 	</div>
-</div>
 
+<div>
