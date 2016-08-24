@@ -1,14 +1,5 @@
-angular.module( 'Strom' ).directive( 'filterEditor', [ 'FilterService', function ( FilterService ) 
+angular.module( 'Strom' ).directive( 'filterEditor', [ function () 
 {
-	var _TYPES = 
-    {
-        POSTING:    0,
-        USER:       1,
-        CATEGORY:   2,
-        COMPLETION: 3,
-        ENTITY:     4
-    };
-
 	var FilterEditor = {};
 
 	FilterEditor.restrict = 'E';
@@ -17,20 +8,13 @@ angular.module( 'Strom' ).directive( 'filterEditor', [ 'FilterService', function
 
 	FilterEditor.templateUrl = 'directives/html/FilterEditor.html';
 
-	FilterEditor.scope = 
-	{
-		model : "=",
-		type  : "=",
-		filterAction: "&"
-	};
-
 	FilterEditor.link = function ( $scope, $element, $attrs, $model )
 	{
 		$scope.filters = [];
 		
 		$scope.selectItem = function ( item ) 
 		{
-        	$scope.filters.push( angular.copy( item ) );
+			$scope.filters.push( angular.copy( item ) );
 
         	$scope.close();
         };
@@ -42,11 +26,15 @@ angular.module( 'Strom' ).directive( 'filterEditor', [ 'FilterService', function
 
 		loadFilters = function()
 		{
-			FilterService.getFilters( $scope.type, function( items )
-			{
-				$scope.items = items;
-			} );
-		};
+
+			$scope.items = 
+	        [
+	            { name: "name", label: "Nome", type: "input" },
+	            { name: "state", label: "Situação", type: "list", items:  [ { name: "Registrado",   id: 0 }, { name: "Em Andamento", id: 1 }, { name: "Finalizado",   id: 2 }, { name: "Deletado",     id: 3 } ] },
+	            { name: "estimateDate", label: "Data Estimada", type: "date" },
+	            { name: "users", label: "Usuários", type: "list", items :  $scope.users }
+	        ];
+		};	
 
 		loadFilters();
 	};

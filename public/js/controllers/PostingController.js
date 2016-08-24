@@ -181,9 +181,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      * @param  {[type]} filters [description]
      * @return {[type]}         [description]
      */
-    $scope.filterAction = function()
+    $scope.filterPosting = function( filters )
     {
-        Message.alert( " asdsadasd " +  filters );
+        Message.alert( filters );
     };
 
     /**

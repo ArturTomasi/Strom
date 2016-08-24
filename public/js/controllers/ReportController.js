@@ -37,7 +37,7 @@ angular.module( "Strom" ).controller( "ReportController", [ '$scope', '$location
 	 */
 	$scope.printMonthly = function()
 	{
-		Message.info( 'Compre sua licença para este report' );
+		Message.alert( 'Compre sua licença para este report' );
 	}
 
 } ] );
