@@ -42,6 +42,27 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
             Message.error( error );
         } );
     };
+
+    /**
+     * [filterPosting description]
+     * @param  {[type]}   filters  [description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.filterPosting = function( filters, callback )
+    {
+        $http.post( '/postingfiltered/', filters )
+
+        .success( function ( postings ) 
+        {
+            eval( callback( postings ) );
+        } )
+
+        .error ( function ( error )
+        {
+            Message.alert( error );            
+        });
+    };
     
     /**
      * 

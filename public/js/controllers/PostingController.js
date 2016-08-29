@@ -177,13 +177,16 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
-     * [filterItems description]
+     * [filterPosting description]
      * @param  {[type]} filters [description]
      * @return {[type]}         [description]
      */
     $scope.filterPosting = function( filters )
     {
-        Message.alert( filters );
+        PostingService.filterPosting( filters, function( postings )
+        {
+            $scope.postings = postings;
+        } );
     };
 
     /**

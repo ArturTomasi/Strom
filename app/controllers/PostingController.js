@@ -38,6 +38,35 @@ module.exports = function ( app )
             res.json( postings );
         } );
     };
+
+    /**
+     * [getPostingFiltered description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.getPostingFiltered = function( req, res )
+    {
+        var query = composeFilter( req.body );
+
+        if ( query )
+        {
+          Posting.find( query ).sort( 'estimateDate' ).exec( function ( error , postings )
+          {
+              if ( error )
+              {
+                  res.status( 500 ).json( error );
+              }
+              
+              res.json( postings );
+          } );
+        }
+
+        else
+        {
+          controller.getPostings( req, res );
+        }
+    };
     
     /**
      * 
@@ -220,10 +249,59 @@ module.exports = function ( app )
         
     };
 
+    /**
+     * [composeFilter description]
+     * @param  {[type]} filters [description]
+     * @return {[type]}         [description]
+     */
+    function composeFilter( filters )
+    {
+        var query = {};
+ 
+        if ( Object.keys( filters ).length === 0) return {}; //valid empty conditions
+
+        query.$and = [];
+
+        for( var filter in filters )
+        {
+            var values = filters[ filter ];
+
+            var conditions = {};
+            
+            conditions.$or = [];
+
+            values.forEach( function( condition ) 
+            {
+              var where;
+                          
+              switch( filter ) 
+              {
+                  case 'name': where = { name : new RegExp( '.*' + condition + '.*' , "i" ) }; break;
+                  case 'state': where = { state : condition.id }; break;
+                  case 'estimateDate': where = { estimateDate : {"$gte": condition.from, "$lt": condition.until } }; break;
+                  case 'realDate': where = { realDate : { $get : condition.from, $lte: condition.until } }; break;
+                  case 'realValue': where = { realValue : condition }; break;
+                  case 'estimateValue': where = { estimateValue : condition }; break;
+                  case 'user': where = { user : condition }; break;
+                  case 'entity': where = { entity : condition }; break;
+                  case 'category': where = { category : condition }; break;
+                  case 'completionType': where = { completionType : condition }; break;
+                  case 'deadline': where = { $where : 'this.estimateDate < this.realDate' } ; break;
+                  case 'inBudget': where = { $where : 'this.estimateValue < this.realValue' } ; break;                 
+              }
+
+              conditions.$or.push( where );
+            } );
+        };
+ 
+        query.$and.push( conditions );
+
+        return query;
+    };
 
     /**
      * 
-     * @param {type} errors
+     * @param {type} errors 
      * @returns {unresolved}
      */
     function composeError( errors )

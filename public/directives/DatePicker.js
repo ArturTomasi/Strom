@@ -143,8 +143,11 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 				else {
 					scope.clearDate();
 				}
-
 			};
+
+			ngModel.$parsers.push(function(viewValue) {
+                return moment( viewValue ).format();
+            });
 		},
 		template: 
 		'<div style="width: 100%;">' +

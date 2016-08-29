@@ -23,6 +23,8 @@ module.exports = function( app )
     app.get('/postings/:id', checkAuthenticated, controller.getPosting );
         
     app.post('/postings', checkAuthenticated, controller.addPosting );
+    
+    app.post('/postingfiltered', checkAuthenticated, controller.getPostingFiltered );
 	
     app.put('/postings', checkAuthenticated, controller.editPosting );
     
