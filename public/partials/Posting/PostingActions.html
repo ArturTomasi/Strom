@@ -20,9 +20,6 @@
 
 <posting-filter method="filterPosting( filter )"></posting-filter>
 
-<!--
-
- */
 <button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="reversePosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/reverse.png" class="btn-icon"></img>
     Extornar
@@ -38,19 +35,12 @@
     Copiar
 </button>
 
-<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="filterPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
-    <img src="icons/pdf.png" class="btn-icon"></img>
-    Filtro
-</button>
-
 <button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="printPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/pdf.png" class="btn-icon"></img>
     Imprimir
 </button>
--->
 
 <!--  actions for report -->
-
 
 
 <button data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#filter">

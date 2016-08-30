@@ -28,7 +28,7 @@ module.exports = function ( app )
     */
     controller.getPostings = function( req, res )
     {
-        Posting.find().exec( function ( error , postings )
+        Posting.find().sort( 'estimateDate').exec( function ( error , postings )
         {
             if ( error )
             {
@@ -286,9 +286,61 @@ module.exports = function ( app )
                   case 'entity': where = { entity : condition }; break;
                   case 'category': where = { category : condition }; break;
                   case 'completionType': where = { completionType : condition }; break;
-                  case 'deadline': where = { $where : 'this.estimateDate < this.realDate' } ; break;
-                  case 'inBudget': where = { $where : 'this.estimateValue < this.realValue' } ; break;                 
+                  case 'deadline': 
+                  {
+                    if ( ! condition.id )
+                    {
+                        where = { $where : function() 
+                        {
+                            var estimate = this.estimateDate;
+                            var real     = this.realDate;
+
+                            var estTime = new Date( estimate.getYear(), estimate.getMonth(), estimate.getDay() ).getTime();
+
+                            if ( ! real && estTime >= Date.now() )
+                            {
+                                return true;
+                            }
+
+                            if( real && estTime >=  new Date( real.getYear(), real.getMonth(), real.getDay() ).getTime() )
+                            {
+                              return true;
+                            } 
+
+                            return false;
+                        } }; 
+                    }
+
+                    else
+                    {
+                      where = { $where : function() 
+                      {
+                          var estimate = this.estimateDate;
+                          var real     = this.realDate;
+
+                          var estTime = new Date( estimate.getYear(), estimate.getMonth(), estimate.getDay() ).getTime();
+
+                          if ( ! real && estTime < Date.now() )
+                          {
+                              return true;
+                          }
+
+                          if( real && estTime < new Date( real.getYear(), real.getMonth(), real.getDay() ).getTime() )
+                          {
+                            return true;
+                          } 
+
+                          return false;
+                      } }; 
+                    }
+                  }
+                  break;
+                  
+                  case 'inBudget': where = { $where : 'this.estimateValue' + ( condition.id ? '>' : '<' ) + 'this.realValue' } ; break;                 
               }
+
+              console.log( condition );
+              console.log( where );
 
               conditions.$or.push( where );
             } );

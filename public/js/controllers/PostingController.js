@@ -14,6 +14,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     $scope.entities;
     $scope.completionTypes;
     $scope.categories;
+    $scope.defaultFilter;
     $scope.isFinish = false;
     
     $scope.YesNoOptions =[ { name : 'Sim', value: true },
@@ -109,7 +110,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
      */
-    $scope.deletePosting = function(posting)
+    $scope.deletePosting = function( $event, posting)
     {
         var errors = validateDelete( posting );
 
@@ -123,6 +124,44 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
                     $scope.selectPosting( data );
                 } );
             } );
+        }
+
+        else
+        {
+            Message.alert( errors );
+
+            $event.preventDefault();
+        }
+    };
+
+    /**
+     * [reversePosting description]
+     * @param  {[type]} $event  [description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.reversePosting = function( $event, posting)
+    {
+        var errors = validateReserve( posting );
+       
+        if ( ! errors )
+        {
+            Message.confirm( 'Você deseja realmente extornar o lançamento ' + $scope.postingSelected.name, function () 
+            {
+                if( posting.state == Posting.STATE_FINISHED )
+                {
+                    posting.state    = Posting.STATE_PROGRESS;
+                    posting.realDate = null;
+                    posting.realValue = null;
+
+                    PostingService.storePosting( posting, function( data )
+                    {
+                        loadPostings();
+                        $scope.selectPosting( data );
+                    } );
+                }
+
+            } );    
         }
 
         else
@@ -161,6 +200,32 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [copyPosting description]
+     * @param  {[type]} $event  [description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.copyPosting = function( $event, posting )
+    {
+        if ( $scope.postingSelected )
+        {
+            $scope.posting = $scope.getPostingForm( posting );
+
+            $scope.posting._id = null;
+                  
+            $( '#store' ).modal();
+        }
+
+        else
+        {
+            Message.alert( 'Selecione um lançamento');
+
+            $event.preventDefault();
+        }
+
+    };
+
+    /**
      * [getIcon description]
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
@@ -183,6 +248,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.filterPosting = function( filters )
     {
+        $scope.defaultFilter = filters;
+
         PostingService.filterPosting( filters, function( postings )
         {
             $scope.postings = postings;
@@ -381,7 +448,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     loadPostings = function()
     {
-        PostingService.getPostings( function( data )
+        PostingService.filterPosting( $scope.defaultFilter , function( data )
         {
             $scope.postings = data;
         } );
@@ -436,11 +503,22 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };    
 
     /**
+     * [makeDefaultFilter description]
+     * @return {[type]} [description]
+     */
+    makeDefaultFilter = function()
+    {
+        $scope.defaultFilter = {};
+
+    };
+
+    /**
      * [init description]
      * @return {[type]} [description]
      */
     function init()
     {
+        makeDefaultFilter();
     	loadUsers();
     	loadCategories();
     	loadEntities();
