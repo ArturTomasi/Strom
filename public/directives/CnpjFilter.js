@@ -47,7 +47,7 @@ Strom.directive( 'cnpjFilter', [ '$filter', '$browser', function( $filter, $brow
     return CnpjFilter;
 } ] );
 
-angular.module( 'Strom' ).filter( 'cnpj', function() 
+Strom.filter( 'cnpj', function() 
 {
     return function( input )
     {

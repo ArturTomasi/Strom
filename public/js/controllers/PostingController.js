@@ -1,5 +1,5 @@
-angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService',
-												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService ) 
+angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$window',
+												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $window ) 
 {
     var Posting  = {
         STATE_REGISTRED : 0,
@@ -9,11 +9,11 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     }; 
 
  	$scope.postingSelected;
-    $scope.postings;
-    $scope.users;
-    $scope.entities;
-    $scope.completionTypes;
-    $scope.categories;
+    $scope.postings = [];
+    $scope.users = [];
+    $scope.entities = [];
+    $scope.completionTypes = [];
+    $scope.categories = [];
     $scope.defaultFilter;
     $scope.isFinish = false;
     
@@ -48,10 +48,10 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.getPostingForm = function ( posting )
     {
+        $scope.isFinish = false;
+
         if( posting )
         {
-            $scope.isFinish = false;
-
             var _posting = angular.copy( posting );
 
             _posting.user           = $scope.getUser( _posting.user );
@@ -222,7 +222,6 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
             $event.preventDefault();
         }
-
     };
 
     /**
@@ -263,7 +262,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.getUserName = function( id )
     {
-        return $scope.getUser( id ).name;
+        var item = $scope.getUser( id );
+        
+        if ( item ) return item.name;
     };
 
     /**
@@ -286,7 +287,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.getCategoryName = function( id )
     {
-        return $scope.getCategory( id ).name;
+        var item = $scope.getCategory( id );
+        
+        if ( item ) return item.name;
     };
 
     /**
@@ -309,7 +312,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.getEntityName = function( id )
     {
-        return $scope.getEntity( id ).name;
+        var item = $scope.getEntity( id );
+        
+        if ( item ) return item.name;
     };
 
     /**
@@ -332,7 +337,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.getCompletionTypeName = function( id )
     {
-        return $scope.getCompletionType( id ).name;
+        var item = $scope.getCompletionType( id );
+        
+        if ( item ) return item.name;
     };
 
     /**
@@ -518,12 +525,12 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     function init()
     {
-        makeDefaultFilter();
-    	loadUsers();
+        loadUsers();
     	loadCategories();
     	loadEntities();
     	loadCompletionTypes();
     	loadPostings();
+        makeDefaultFilter();
     };
 
     init();

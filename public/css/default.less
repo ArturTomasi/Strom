@@ -373,3 +373,64 @@ ul
 {
   border: 3px solid @main-color;
 }
+
+.field
+{
+    font-weight: bolder;
+    color: #263238;
+    padding: 5px 15px 5px 20px;
+    width: 190px;
+    border-radius: 10px;
+    background: #90A4AE;
+    font-size: 12px;
+}
+.value{
+    padding: 8px;
+    color: #37474F;
+    font-weight: bolder;
+    border-radius: 10px;
+    background: #CFD8DC;
+    font-size: 12px;
+}
+
+.head{
+    padding: 10px 10px 0px 10px;
+    font-size: 25px;
+    text-align: left;
+    color: #37474F;
+    font-weight: bolder;
+}
+
+.info{
+    padding-left: 50px;
+    font-size: 14px;
+    text-align: left;
+}
+
+tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100px;
+    background-color: #607D8B;
+    color: #ECEFF1;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 10px;
+    font-size: 10px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext 
+{
+    visibility: visible;
+}

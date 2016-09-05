@@ -34,7 +34,7 @@
 	    		return moment( date ).format( 'L' );
     		}
 
-    		return 'N/D';
+    		return 'n\d';
     	};
     } );
 

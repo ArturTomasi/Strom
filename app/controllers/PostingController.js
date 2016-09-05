@@ -245,7 +245,7 @@ module.exports = function ( app )
     {
         posting.state =  posting.realDate ? STATE_FINISHED : STATE_PROGRESS;
 
-        posting.completionAuto = posting.completionAuto.value;
+        posting.completionAuto = posting.completionAuto ? posting.completionAuto.value : false;
         
     };
 
@@ -292,46 +292,26 @@ module.exports = function ( app )
                     {
                         where = { $where : function() 
                         {
-                            var estimate = this.estimateDate;
-                            var real     = this.realDate;
-
-                            var estTime = new Date( estimate.getYear(), estimate.getMonth(), estimate.getDay() ).getTime();
-
-                            if ( ! real && estTime >= Date.now() )
+                            if ( ! this.realDate )
                             {
-                                return true;
+                                return Date.parse( this.estimateDate ) >= Date.now();
                             }
 
-                            if( real && estTime >=  new Date( real.getYear(), real.getMonth(), real.getDay() ).getTime() )
-                            {
-                              return true;
-                            } 
-
-                            return false;
-                        } }; 
+                            return Date.parse( this.estimateDate ) >= Date.parse( this.realDate );
+                        } };
                     }
 
                     else
                     {
-                      where = { $where : function() 
-                      {
-                          var estimate = this.estimateDate;
-                          var real     = this.realDate;
+                        where = { $where : function() 
+                        {
+                            if ( ! this.realDate )
+                            {
+                                return Date.parse( this.estimateDate ) < Date.now();
+                            }
 
-                          var estTime = new Date( estimate.getYear(), estimate.getMonth(), estimate.getDay() ).getTime();
-
-                          if ( ! real && estTime < Date.now() )
-                          {
-                              return true;
-                          }
-
-                          if( real && estTime < new Date( real.getYear(), real.getMonth(), real.getDay() ).getTime() )
-                          {
-                            return true;
-                          } 
-
-                          return false;
-                      } }; 
+                            return Date.parse( this.estimateDate ) < Date.parse( this.realDate );
+                        } };
                     }
                   }
                   break;

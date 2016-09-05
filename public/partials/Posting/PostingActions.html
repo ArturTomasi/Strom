@@ -25,11 +25,8 @@
     Extornar
 </button>
 
-<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="inspectPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
-    <img src="icons/details.png" class="btn-icon"></img>
-    Detalhes
-</button>
-
+<inspector data-ng-model="postingSelected"></inspector>
+ 
 <button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="copyPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/copy.png" class="btn-icon"></img>
     Copiar

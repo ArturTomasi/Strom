@@ -9,8 +9,6 @@
 
  		MyFile.restrict = 'E';
 
- 		MyFile.require = '^form';
-
  		MyFile.replace = true;
 
  		MyFile.templateUrl = '/directives/html/myfile.html';

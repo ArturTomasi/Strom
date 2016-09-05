@@ -61,8 +61,8 @@
                     <td style="width: 250px">{{posting.name}}</td>
                     <td style="width: 250px">{{posting.estimateDate | date}}</td>
                     <td style="width: 250px">{{posting.realDate | date}}</td>
-                    <td style="width: 250px">{{posting.realValue}}</td>
-                    <td style="width: 250px">{{posting.estimateValue}}</td>
+                    <td style="width: 250px">{{posting.realValue | money }}</td>
+                    <td style="width: 250px">{{posting.estimateValue | money }}</td>
                     <td style="width: 250px">{{getUserName( posting.user )}}</td>
                     <td style="width: 250px">{{getEntityName( posting.entity )}}</td>
                     <td style="width: 250px">{{getCategoryName( posting.category )}}</td>

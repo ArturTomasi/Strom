@@ -145,8 +145,10 @@ angular.module('Strom' ).directive('ngDatepicker', ['$document', function($docum
 				}
 			};
 
-			ngModel.$parsers.push(function(viewValue) {
-                return moment( viewValue ).format();
+			ngModel.$parsers.push(function(viewValue) 
+			{
+				if ( viewValue )
+                	return moment( viewValue ).format();
             });
 		},
 		template: 

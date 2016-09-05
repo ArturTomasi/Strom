@@ -99,7 +99,6 @@
             templateUrl: '/partials/Reports/ReportCategory.html',
             controller: 'CategoryController'
         } );
-            
         
         $routeProvider.otherwise( { redirectTo: '/home' } );
     } ] );
