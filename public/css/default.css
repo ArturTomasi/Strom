@@ -253,19 +253,19 @@ ul {
 }
 .file-list {
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 8px;
   padding-left: 10px;
   padding-bottom: 10px;
-  border: 3px solid #ECEFF1;
+  font-weight: bold;
 }
 .file-list-selected {
-  border: 3px solid #607D8B;
+  background-color: rgba(69, 90, 100, 0.2);
 }
 .field {
   font-weight: bolder;
   color: #263238;
   padding: 5px 15px 5px 20px;
-  width: 190px;
+  width: 20%;
   border-radius: 10px;
   background: #90A4AE;
   font-size: 12px;
@@ -277,6 +277,7 @@ ul {
   border-radius: 10px;
   background: #CFD8DC;
   font-size: 12px;
+  width: 80%;
 }
 .head {
   padding: 10px 10px 0px 10px;
@@ -284,20 +285,28 @@ ul {
   text-align: left;
   color: #37474F;
   font-weight: bolder;
+  width: 100%;
 }
 .info {
   padding-left: 50px;
   font-size: 14px;
   text-align: left;
+  width: 100%;
+  padding-bottom: 10px;
 }
-tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-  /* If you want dots under the hoverable text */
+.mytooltip {
+  background: transparent;
+  border: none;
+  color: #607D8B;
+  position: absolute;
+  right: 55px;
+  margin: 4px;
 }
-/* Tooltip text */
-.tooltip .tooltiptext {
+.mytooltip > i:hover {
+  color: #90A4AE;
+  cursor: pointer;
+}
+.mytooltip .mytooltiptext {
   visibility: hidden;
   width: 100px;
   background-color: #607D8B;
@@ -306,11 +315,20 @@ tooltip {
   padding: 5px 0;
   border-radius: 10px;
   font-size: 10px;
-  /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
+.mytooltip:hover .mytooltiptext {
   visibility: visible;
+}
+.drop-box {
+  border-radius: 8px;
+  height: 100%;
+  overflow: auto;
+  padding-top: 10px;
+  border: 3px dashed #607D8B;
+}
+.dragover {
+  border: 4px dashed #455a64;
+  background-color: rgba(69, 90, 100, 0.2);
 }

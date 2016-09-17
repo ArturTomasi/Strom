@@ -9,6 +9,7 @@
         <div style="width: 80%" class="modal-dialog">
             <div style="height: 80%;" class="modal-content">
                 <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                     
                     <ul data-ng-model="tabSelecetd" data-ng-init="tabSelecetd = 'resumeTab'" class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" data-ng-click="tabSelecetd = 'resumeTab'">Resumo</a></li>
@@ -16,77 +17,79 @@
                     </ul>
                     <div style="height: 80%;" id="resumeTab" class="tab-pane active" data-ng-show="tabSelecetd == 'resumeTab'">
                         
-                        <table>
-                            <tr>
-                                <th id="posting_name" colspan="1" class="head">{{postingSelected.name}}</th>
-                                <th><img  style="width: 32px;" src="icons/posting.png" ></th>
-                                <div style="padding-top: 60px;" class="tooltip">
-                                    <button style="top: 10px" onclick="application.print( document.documentElement.outerHTML );" class="fa fa-print fa-3x"></button>
-                                    <span class="tooltiptext">Imprimir Lançamento</span>
-                                </div>
-                            </tr>
-                        </table>
+                        <div class="mytooltip">
+                            <i data-ng-click="print( postingSelected );" class="fa fa-print fa-2x"></i>
+                            <span class="mytooltiptext">Imprimir Lançamento</span>
+                        </div>
 
-                        <table>
-                            <tr>
-                                <th id="posting_info" colspan="2" class="info">{{postingSelected.info}}</th>
-                            </tr>
+                        <div id="postingReport">
+                            <table>
+                                <tr>
+                                    <th id="posting_name" colspan="1" class="head">{{postingSelected.name}}</th>
+                                    <th><img  style="width: 32px;" src="icons/posting.png" ></th>
+                                    
+                                </tr>
+                            </table>
 
-                            <tr>
-                                <td class="field">Data Real:</td>
-                                <td id="real_date" class="value">{{postingSelected.realDate | date}}</td>
-                            </tr>
+                            <table style="width: 100%">
+                                <tr>
+                                    <th id="posting_info" colspan="2" class="info">{{postingSelected.info}}</th>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Data Estimada:</td>
-                                <td id="estimate_date" class="value">{{postingSelected.estimateDate  | date}}</td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Data Real:</td>
+                                    <td id="real_date" class="value">{{postingSelected.realDate | date}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Valor Real:</td>
-                                <td id="real_value" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Data Estimada:</td>
+                                    <td id="estimate_date" class="value">{{postingSelected.estimateDate  | date}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Valor Estimado:</td>
-                                <td id="estimate_value" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Valor Real:</td>
+                                    <td id="real_value" class="value">{{postingSelected.realValue | money}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Finaliza Automáticamente:</td>
-                                <td id="fl_completion_auto" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Valor Estimado:</td>
+                                    <td id="estimate_value" class="value">{{postingSelected.estimateValue | money}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Situação:</td>
-                                <td id="state" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Finaliza Automáticamente:</td>
+                                    <td id="fl_completion_auto" class="value">{{postingSelected.completionAuto ? 'Sim' : 'Não'}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Categoria do Lançamento:</td>
-                                <td id="ref_posting_category" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Situação:</td>
+                                    <td id="state" class="value">{{getState(postingSelected)}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Responsável:</td>
-                                <td id="ref_user" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Categoria do Lançamento:</td>
+                                    <td id="ref_posting_category" class="value">{{getCategoryName(postingSelected.category)}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Tipo de Finalização:</td>
-                                <td id="ref_completion_type" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Responsável:</td>
+                                    <td id="ref_user" class="value">{{getUserName(postingSelected.user)}}</td>
+                                </tr>
 
-                            <tr>
-                                <td class="field">Entidade:</td>
-                                <td id="ref_entity" class="value"></td>
-                            </tr>
+                                <tr>
+                                    <td class="field">Tipo de Finalização:</td>
+                                    <td id="ref_completion_type" class="value">{{getCompletionTypeName( postingSelected.completionType)}}</td>
+                                </tr>
 
-                        </table>
-
+                                <tr>
+                                    <td class="field">Entidade:</td>
+                                    <td id="ref_entity" class="value">{{getEntityName(postingSelected.entity)}}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
 
-                    <div style="height: 80%;" id="attachmentTab" class="tab-pane active" data-ng-show="tabSelecetd == 'attachmentTab'">
+                    <div style="height: 80%; margin-top: 10px;" id="attachmentTab" class="tab-pane active" data-ng-show="tabSelecetd == 'attachmentTab'">
                         <myfile model="postingSelected.attachments" name="attachments" label="Anexos"></myfile> 
                     </div>
                 </div>

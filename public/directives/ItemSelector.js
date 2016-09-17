@@ -10,7 +10,8 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
         model: "=",
 		title: '@',
 		name:  '@',
-		size:  '@'
+		size:  '@',
+		hidelabel: '='
 	};
 
 	ItemSelector.templateUrl = 'directives/html/ItemSelector.html';

@@ -70,7 +70,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
      * @param {type} callback
      * @returns {undefined}
      */
-    PostingService.storePosting = function( posting, callback )
+    PostingService.storePosting = function( posting, callback, params )
     {
         if ( ! posting._id )
         {
@@ -89,7 +89,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
         
         else
         {
-            $http.put( '/postings/' , posting )
+            $http.put( '/postings/' , posting, { params : 'artur-tomasi' } )
             
             .success( function( posting )
             {
@@ -122,10 +122,34 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
 
             .error( function (error) 
             {
-                Message.error( error );
+                Message.alert( error );
             } );
         }
     };
 	
+    /**
+     * [print description]
+     * @param  {[type]}   filter   [description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.print = function( filter, callback )
+    {
+        if ( filter )
+        {
+            $http.post( '/printPostings/' , filter )
+            
+            .success( function( pdf )
+            {
+                eval( callback( pdf ) );
+            } )
+            
+            .error( function (error) 
+            {
+                Message.alert( error );            
+            } );  
+        }
+    }
+
     return PostingService;
 } ] );

@@ -1,15 +1,21 @@
 <div class="col-sm-12">
-    <div class="col-sm-10" style="height: 100%; overflow: auto;">
+
+    <div ngf-drop="uploadFiles( $files )" class="col-sm-10 drop-box" 
+         ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true">
+
         <ul id="myfilelist">
             <li data-ng-repeat="attachment in model">
                 <div data-ng-class="{ 'file-list file-list-selected' : selectedAttachment === attachment, 'file-list' :  selectedAttachment !== attachment }"
-                   data-ng-model="attachment" data-ng-click="selectAttachment(attachment)">
+                     data-ng-model="attachment" 
+                     data-ng-click="selectAttachment(attachment)"
+                     data-ng-dblclick="download()">
                     <i class="{{getIcon( attachment.type )}}"></i>
                     {{attachment.name}}
                 </div>
             </li>
         </ul>        
     </div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
     <div id="action-postings" class="col-sm-2">
         <button type="button" class="btn btn-strom btn-block">
             <img src="icons/new.png" class="btn-icon"></img>

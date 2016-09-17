@@ -32,7 +32,7 @@
     Copiar
 </button>
 
-<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="printPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
+<button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="print( postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/pdf.png" class="btn-icon"></img>
     Imprimir
 </button>
@@ -40,7 +40,7 @@
 <!--  actions for report -->
 
 
-<button data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#filter">
+<button data-ng-click="print()" data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block">
     <img src="icons/pdf.png" class="btn-icon"></img>
     Imprimir
 </button>

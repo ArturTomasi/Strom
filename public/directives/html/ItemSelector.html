@@ -1,5 +1,5 @@
 <div class="form-group row" >
-	<label class="col-sm-2-form col-sm-{{12-( size || 11 )}}" for="{{name}} Field">{{title}}</label>
+	<label data-ng-if="! hidelabel" class="col-sm-2-form col-sm-{{12-( size || 11 )}}" for="{{name}} Field">{{title}}</label>
 	<div class="form-group row col-sm-{{size || 11}}">
 		<table>
 			<tr>

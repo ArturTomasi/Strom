@@ -1,5 +1,5 @@
-angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$window',
-												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $window ) 
+angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$filter',
+												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $filter ) 
 {
     var Posting  = {
         STATE_REGISTRED : 0,
@@ -14,7 +14,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     $scope.entities = [];
     $scope.completionTypes = [];
     $scope.categories = [];
-    $scope.defaultFilter;
+    $scope.defaultFilter = {};
     $scope.isFinish = false;
     
     $scope.YesNoOptions =[ { name : 'Sim', value: true },
@@ -59,6 +59,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
             _posting.category       = $scope.getCategory( _posting.category );
             _posting.completionType = $scope.getCompletionType( _posting.completionType );
             _posting.completionAuto = $scope.YesNoOptions[ _posting.completionAuto ? 0 : 1 ];
+            _posting.portionTotal   = _posting.portionTotal ? _posting.portionTotal : 1;
 
             return _posting;
         }
@@ -73,13 +74,23 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.storePosting = function(posting)
     {
-        PostingService.storePosting( posting, function( data )
+        var errors = validateToStore(posting);
+
+        if ( ! errors ) 
         {
-            $( '#store' ).modal( 'hide' );
-                
-            $scope.selectPosting( data );
-            loadPostings();
-        } );
+            PostingService.storePosting( posting, function( data )
+            {
+                $( '#store' ).modal( 'hide' );
+                    
+                $scope.selectPosting( data );
+                loadPostings();
+            }, $scope.isFinish );
+        }
+
+        else
+        {
+            Message.alert( errors );
+        }
     };
     
     /**
@@ -241,6 +252,27 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [getState description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.getState = function( posting )
+    {
+        if ( posting && posting.state )
+        {
+            switch( posting.state )
+            {
+                case 0: return 'Cadastrado';
+                case 1: return 'Em Andamento';
+                case 2: return 'Finalizado';
+                case 3: return 'Excluído';
+            }
+        }
+
+        return 'n/d';
+    };
+
+    /**
      * [filterPosting description]
      * @param  {[type]} filters [description]
      * @return {[type]}         [description]
@@ -265,6 +297,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         var item = $scope.getUser( id );
         
         if ( item ) return item.name;
+
+        return 'n/d';
     };
 
     /**
@@ -290,6 +324,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         var item = $scope.getCategory( id );
         
         if ( item ) return item.name;
+
+        return 'n/d';
     };
 
     /**
@@ -315,6 +351,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         var item = $scope.getEntity( id );
         
         if ( item ) return item.name;
+
+        return 'n/d';
     };
 
     /**
@@ -340,6 +378,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         var item = $scope.getCompletionType( id );
         
         if ( item ) return item.name;
+
+        return 'n/d';
     };
 
     /**
@@ -373,6 +413,71 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [print description]
+     * @return {[type]} [description]
+     */
+    $scope.print = function( _posting )
+    {
+        var _filter;
+
+        if ( _posting ) _filter =  { _id: [ _posting._id ] };
+
+        if ( ! _posting ) _filter = $scope.defaultFilter;
+
+        PostingService.print( _filter, function( pdf )
+        {
+            var element = document.createElement('a');
+            element.setAttribute('href', pdf );
+            element.setAttribute('download', "Strom-lancamentos.pdf" );
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        } );
+    };
+
+    /**
+     * [createPortions description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    $scope.createPortions = function( posting )
+    {
+        if ( posting && posting.portionTotal >  1 )
+        {
+            if ( ! posting.values ) posting.values = [];
+            
+           
+            for ( var i =  posting.portionTotal - 1; i < posting.values.length ; i++ ) 
+            {
+                posting.values.pop();
+            }          
+
+
+            for ( var i = 0; i < posting.portionTotal - 1; i++ ) 
+            {
+                if ( ! posting.values[ i ] )
+                {
+                    var _copy = angular.copy( posting );
+
+                    delete _copy.values;
+
+                    _copy.estimateDate = moment( posting.estimateDate ).add( (i + 1), 'month' );
+
+                    _copy.state = Posting.STATE_REGISTRED;
+
+                    posting.values[i] = _copy;
+                }
+            }
+
+            return posting.values;
+        }
+    };
+
+    /**
      * [validateFinish description]
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
@@ -387,6 +492,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         if( posting.state === Posting.STATE_FINISHED )
             return "Lançamento está finalizado,\n não é possivel finaliza-lo duas vezes !";
+
+        if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )  
+            return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
     };
 
     /**
@@ -446,6 +554,37 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         //if( ! ApplicationUtilities.getInstance().hasPermission() )
           //  return "Você não tem permissão para extornar esse lançamento";
+    };
+
+    /**
+     * [validateToStore description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function validateToStore( posting )
+    {
+        var errors = "";
+
+        if ( $scope.isFinish )
+        {
+            if ( ! posting.realDate ) errors += "Preencha uma data para finalizar o lançamento!<br>";
+
+            if ( ! posting.realValue || posting.realValue === 0 ) errors += "Preencha um valor maior que zero para finalizar o lançamento!<br>";
+
+            if ( ! posting.completionType ) errors += "Preencha um tipo de finalização!";
+        }
+
+        if ( ! posting._id && posting.portionTotal > 1 )
+        {
+            posting.values.forEach( function( portion, index ) 
+            {
+                if ( ! portion.estimateDate ) errors += "Preencha uma data estimada para a parcela " + ( index + 1 ) + "!<br>";
+                
+                if ( ! portion.estimateValue ) errors += "Preencha um valor estimado para a parcela " + ( index + 1 ) + "!<br>";
+            } );
+        }
+
+        return errors;
     };
     
 

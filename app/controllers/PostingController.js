@@ -1,10 +1,11 @@
 /* global module */
-
 module.exports = function ( app ) 
 {
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
-    
+    var MyReport = require( '../utils/MyReport.js' );
+    var moment = require( 'moment' );
+            
     /**
      * @type type
      */
@@ -51,7 +52,8 @@ module.exports = function ( app )
 
         if ( query )
         {
-          Posting.find( query ).sort( 'estimateDate' ).exec( function ( error , postings )
+          Posting.find( query )
+          .sort( 'estimateDate' ).exec( function ( error , postings )
           {
               if ( error )
               {
@@ -105,15 +107,29 @@ module.exports = function ( app )
 
         if ( ! errors )
         {
+            var values = createPortions( posting );
+
             Posting.create( posting, function( error, posting )
             {
                 if ( error )
                 {
                     res.status( 500 ).json( error );
                 }
-                
-                res.json( posting );
-                
+
+                if ( values )
+                {
+                    defineId( posting._id, values );
+
+                    Posting.create( values, function( error, portions )
+                    {
+                        if ( error )
+                        {
+                            res.status( 500 ).json( error );
+                        }
+                        
+                        res.status( 200 ).json( portions );
+                    } );
+                }
             } );
         }
 
@@ -141,12 +157,37 @@ module.exports = function ( app )
 
         if ( ! errors )
         {
-          Posting.findOneAndUpdate( { _id : _id }, posting, 
-                                 { new : true, runValidators: true, context: 'query' } ).exec( function ( error, posting )
+          Posting.findOneAndUpdate( { _id : _id }, 
+                                    posting, 
+                                    { new : true, runValidators: true, context: 'query' } )
+          .exec( function ( error, posting )
           {
               if ( error )
               {
                   res.status( 500 ).json( composeError( error ) );
+              }
+
+              if ( posting.portion < posting.portionTotal && posting.state === STATE_FINISHED )
+              {
+                 Posting.findOneAndUpdate( { 
+                                              posting : ( posting.portion === 1 ? posting._id : posting.posting ),
+                                              state   : STATE_REGISTRED,
+                                              portion : posting.portion + 1
+                                            }, 
+                                            {
+                                              state : STATE_PROGRESS,
+                                              $unset : { realDate : 1, realValue : 1 }
+                                            }, 
+                                            { new : true, runValidators: true, context: 'query' } )
+                  .exec( function ( error, posting )
+                  {
+                      if ( error )
+                      {
+                          res.status( 500 ).json( composeError( error ) );
+                      }
+
+                      res.status( 200 ).json( posting );
+                  } );
               }
 
               res.status( 200 ).json( posting );
@@ -173,7 +214,8 @@ module.exports = function ( app )
         
             Posting.findOneAndUpdate( { _id : _id },
                                       { state: STATE_DELETED }, 
-                                      { new : true, runValidators: true, context: 'query' } ).exec( function ( error, posting )
+                                      { new : true, runValidators: true, context: 'query' } )
+            .exec( function ( error, posting )
             {
                 if ( error )
                 {
@@ -185,6 +227,108 @@ module.exports = function ( app )
         }
     };
     
+    /**
+     * [printPosting description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.printPosting = function( req, res )
+    {
+        var _query = composeFilter( req.body );
+
+        if ( _query )
+        {
+            Posting.find( _query )
+            .populate( 'user', 'name' )
+            .populate( 'category', 'name' )
+            .populate( 'entity', 'name' )
+            .populate( 'completionType', 'name' )
+            .sort( 'estimateDate' )
+            .exec( function ( error , _postings )
+            {
+                if ( error ) res.status( 500 ).json( error );
+                 
+                var shortid = _postings.length > 1 ? 'SyAWzKXn' : 'SyMXDMQ2';
+
+                var data = _postings.length > 1 ? _postings : _postings[0];
+  
+                app.jsreport.render(
+                {
+                    template: 
+                    {
+                        'shortid': shortid
+                    },
+                    data: 
+                    {
+                        "posting" : data
+                    }
+                })
+                .then( function( out )
+                {
+                    res.json( "data:" + out.headers.Content-Type + ';base64,' + out.content.toString( 'base64' ) );
+                } );
+            } );
+        }
+    };
+
+    /**
+     * [createPortions description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    function createPortions( posting )
+    {
+        if ( posting && posting.values )
+        {
+            var _values   = clone( posting.values );
+
+            delete posting.values;
+            
+            posting.portionTotal = _values.length + 1;
+
+            var _postings = [];
+
+            _values.forEach( function ( _portion, _index )
+            {
+                var _copy = clone( posting );
+                
+                _copy.state = STATE_REGISTRED;
+                _copy.estimateDate = _portion.estimateDate;
+                _copy.estimateValue = _portion.estimateValue;
+                _copy.portion = ( _index + 2 );
+                _copy.postionTotal = posting.portionTotal;
+                _copy.posting = posting._id;
+                
+                delete _copy.attachments;
+                delete _copy.realDate;
+                delete _copy.realValue;
+    
+                if ( posting.category && posting.category.type )
+                          _copy.type =  _copy.category.type;
+
+                _postings.push( _copy );
+            } );
+
+            if ( ! _postings && posting.state !== Posting.STATE_PROGRESS )
+            {
+                _postings[ 0 ].state = STATE_PROGRESS;
+            }
+        }
+
+        return _postings;
+    };
+
+    function defineId( _id, values )
+    {
+      if ( _id && values )
+      {
+          values.forEach( function( value ) 
+          {
+              value.posting = _id;
+          } );
+      }
+    };
 
     /**
      * [validate description]
@@ -196,6 +340,9 @@ module.exports = function ( app )
         var errors = '';
 
         var notFinish = mode != MODE_FINISH;
+
+        if( posting.portionTotal > 12 || posting.portionTotal < 1 )
+            errors += "As parcelas do lançamento devem ser entre 1 e 12";
 
         if( notFinish && ! posting.estimateDate )
             errors += "A data estimada não pode estar vazia !<br>";
@@ -246,8 +393,10 @@ module.exports = function ( app )
         posting.state =  posting.realDate ? STATE_FINISHED : STATE_PROGRESS;
 
         posting.completionAuto = posting.completionAuto ? posting.completionAuto.value : false;
-        
-    };
+
+        if ( posting.category && posting.category.type )
+            posting.type =  posting.category.type;
+    }
 
     /**
      * [composeFilter description]
@@ -286,6 +435,8 @@ module.exports = function ( app )
                   case 'entity': where = { entity : condition }; break;
                   case 'category': where = { category : condition }; break;
                   case 'completionType': where = { completionType : condition }; break;
+                  case 'type': where = { type : condition.id }; break;
+                  case '_id': where = { _id : condition }; break;
                   case 'deadline': 
                   {
                     if ( ! condition.id )
@@ -317,12 +468,9 @@ module.exports = function ( app )
                   break;
                   
                   case 'inBudget': where = { $where : 'this.estimateValue' + ( condition.id ? '>' : '<' ) + 'this.realValue' } ; break;                 
-              }
-
-              console.log( condition );
-              console.log( where );
-
-              conditions.$or.push( where );
+                }
+  
+                conditions.$or.push( where );
             } );
         };
  
@@ -354,7 +502,12 @@ module.exports = function ( app )
         
         return msg;
     };
-    
+
+    clone = function( _original ) 
+    {
+        return JSON.parse( JSON.stringify( _original ) );
+    };
+   
     return controller;
 };
 

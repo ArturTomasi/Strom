@@ -151,7 +151,8 @@ angular.module( 'Strom' )
 	            { name: "realValue",     label: "Valor Real", 	       type: "number" },
 	            { name: "estimateValue", label: "Valor Estimado",      type: "number" },
 	            { name: "deadline",      label: "Dentro do Prazo",     type: "list",  items: [ { name : "Sim", id : 0 }, { name: "Não", id : 1 } ] },
-	            { name: "inBudget",      label: "Dentro do Orçamento", type: "list",  items: [ { name : "Sim", id : 0 }, { name: "Não", id : 1 } ] }
+	            { name: "inBudget",      label: "Dentro do Orçamento", type: "list",  items: [ { name : "Sim", id : 0 }, { name: "Não", id : 1 } ] },
+	            { name: "type",      	 label: "Tipo", type: "list",  items: [ { name : "Receita", id : 'Receita' }, { name: "Despesa", id : 'Despesa' } ] }
 	        ];
 
 			UserService.getUsers( function( users )

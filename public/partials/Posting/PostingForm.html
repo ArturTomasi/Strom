@@ -11,6 +11,7 @@
                     <!-- BEGIN TABS -->
                     <ul data-ng-model="tabActive" data-ng-init="tabActive = 'generalTab'" class="nav nav-tabs">
                         <li class="active"><a data-toggle="tab" data-ng-click="tabActive = 'generalTab'">Geral</a></li>
+                        <li><a data-ng-show="! posting._id && posting.portionTotal  && posting.portionTotal > 1" data-toggle="tab" data-ng-click="tabActive = 'valuesTab'">Valores</a></li>
                         <li><a data-toggle="tab" data-ng-click="tabActive = 'infoTab'">Informações</a></li>
                         <li><a data-toggle="tab" data-ng-click="tabActive = 'attachmentTab'">Anexos</a></li>
                     </ul>
@@ -53,7 +54,7 @@
 
                             <div class="form-group row">
                                 <div>
-                                    <label class="col-sm-2 col-sm-2-form" for="estimateValueField">Valor Estimada</label>
+                                    <label class="col-sm-2 col-sm-2-form" for="estimateValueField">Valor Estimado</label>
                                     <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-required="true" 
                                            ng-model="posting.estimateValue" 
@@ -67,13 +68,14 @@
                                     </div>
                                 </div>
                                 <div >
-                                    <label class="col-sm-2 col-sm-2-form" for="realValueField">Valor Realizada</label>
+                                    <label class="col-sm-2 col-sm-2-form" for="realValueField">Valor Realizado</label>
                                     <div class="form-group col-sm-4 col-sm-4-form">
                                     <input ng-model="posting.realValue" 
                                            name="realValue" 
                                            type="text"
                                            class="form-control" 
                                            id="realValueField" 
+                                           required="isFinish"
                                            money-mask>
                                     </div>
                                 </div>
@@ -103,13 +105,36 @@
                                            data-ng-show="! isFinish">
                             </item-selector>
                             
-                            <item-selector model="posting.completionAuto" 
-                                           size="10" 
-                                           items="YesNoOptions" 
-                                           name="completionAuto" 
-                                           title="Finaliza Automáticamente"
-                                           data-ng-show="! isFinish">
-                            </item-selector>
+
+                            <div class="form-group row" data-ng-show="! isFinish">
+                                <div>
+                                    <label class="col-sm-2 col-sm-2-form" for="completionAuto">Finaliza Automáticamente</label>
+                                    <div class="form-group col-sm-6">
+                                      <item-selector
+                                               model="posting.completionAuto" 
+                                               size="12"
+                                               hidelabel="true"
+                                               items="YesNoOptions" 
+                                               name="completionAuto" 
+                                               title="Finaliza Automáticamente">
+                                      </item-selector>
+                                    </div>
+                                </div>
+                                <div >
+                                    <label class="col-sm-1" for="portionTotalField">Parcelas</label>
+                                    <div class="form-group col-sm-3">
+                                    <input ng-disabled="posting._id"
+                                           ng-model="posting.portionTotal" 
+                                           name="portionTotal" 
+                                           type="text"
+                                           class="form-control" 
+                                           id="portionTotalField" 
+                                           ui-number-mask="0" min="1" max="12">
+                                    </div>
+                                </div>
+                            </div>
+
+                          
 
                             <item-selector data-ng-show="posting.realValue || posting.realDate || posting.completionAuto.value || isFinish" 
                                            model="posting.completionType"
@@ -122,6 +147,42 @@
                         </div>
 
                         <!-- END GENERAL PANE -->
+
+                        <!-- BEGIN VALUES PANE -->
+
+                        <div id="valuesTab" class="tab-pane active" data-ng-show="tabActive == 'valuesTab'">
+                            <ul class="col-sm-12">
+                                <li data-ng-repeat="portion in createPortions( posting ) track by $index">
+                                    <div class="form-group row">
+                                      
+                                        <mydate label="Data Estimada" 
+                                                name="{{ 'valueDate' + $index}}" 
+                                                mask="DD/MM/YYYY" 
+                                                model="portion.estimateDate"
+                                                required="true">
+                                        </mydate>
+
+                                        
+                                        <div>
+                                            <label class="col-sm-2 col-sm-2-form" for="{{ 'estimateValue' + $index }}">Valor Estimado</label>
+                                            <div class="form-group col-sm-4 col-sm-4-form">
+                                            <input ng-required="true" 
+                                                   ng-model="portion.estimateValue" 
+                                                   name="{{ 'estimateValue' + $index }}" 
+                                                   title="Valor é obrigatório"
+                                                   type="text"
+                                                   class="form-control" 
+                                                   id="{{ 'estimateValue' + $index }}" 
+                                                   money-mask>
+                                            </div>
+                                        </div>                                     
+
+                                      </div>
+                                  </li>
+                              </ul> 
+                        </div>
+
+                        <!-- END VALUES PANE -->
 
                         <!-- BEGIN INFO PANE -->                        
 
@@ -137,7 +198,6 @@
                         <div id="attachmentTab" class="tab-pane active" data-ng-show="tabActive == 'attachmentTab'">
                             <myfile style="height: 350px;" model="posting.attachments" name="attachments" label="Anexos"></myfile> 
                         </div>
-
 
                         <!-- END ATTACHMENT PANE -->                        
                    

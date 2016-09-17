@@ -8,7 +8,8 @@
                                 'ngRoute', 
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
-                                'ui.utils.masks'] );
+                                'ui.utils.masks',
+                                'ngFileUpload' ] );
 
     angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
     {
@@ -24,8 +25,8 @@
 
         .when('/analysis',
         {
-            templateUrl: 'partials/Analysis/Analysis.html',
-            controller: 'AnalysisCtrl'
+            templateUrl: 'partials/Util/Analisys.html',
+            controller: 'AnalysisController'
         } )
 
         .when('/user', 

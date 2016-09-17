@@ -5,13 +5,19 @@ var express        = require( 'express' ),
     helmet 		   = require( 'helmet' ),
     session        = require( 'express-session' ),
     cookieParser   = require( 'cookie-parser' ),
-    passport       = require( 'passport' );
+    passport       = require( 'passport' ),
+    jsreport	   = require( 'jsreport');
 
 module.exports = function()
 {
 	var app = express();
 
 	app.set( 'port', 8080 );
+	
+	jsreport( { httpPort: 8081 } ).init();
+	
+	app.jsreport = jsreport;
+
 	app.use( express.static( './public' ) );
 	
 	app.set( 'view engine', 'ejs' );

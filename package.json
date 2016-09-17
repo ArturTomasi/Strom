@@ -4,8 +4,7 @@
   "description": "App MEAN Stack",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Artur Tomasi",
   "license": "ISC",
@@ -17,6 +16,8 @@
     "express-load": "^1.1.15",
     "express-session": "^1.14.0",
     "helmet": "^2.1.1",
+    "html-pdf": "^2.1.0",
+    "jsreport": "^1.0.9",
     "method-override": "^2.3.6",
     "mongo-sanitize": "^1.0.0",
     "mongodb": "^2.1.18",
@@ -25,7 +26,8 @@
     "node-ini": "^1.0.0",
     "nodemailer": "^2.4.2",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "phantomjs-prebuilt":"^2.1.12" 
   },
   "devDependencies": {
     "grunt": "^1.0.1",

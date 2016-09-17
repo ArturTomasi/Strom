@@ -26,11 +26,12 @@ module.exports = function ()
         repet:              { type: Boolean,required: [ true, 'não pode estar vazio'], default: false },
         completionAuto:     { type: Boolean,required: [ true, 'não pode estar vazio'], default: false },
         state:              { type: Number, required: [ true, 'não pode estar vazio'], default: 0 },
-        category:           { type: mongoose.Schema.Types.ObjectId, ref: 'Categories',  required: [ true, 'não pode estar vazio'] },
-        user:               { type: mongoose.Schema.Types.ObjectId, ref: 'Users',       required: [ true, 'não pode estar vazio'] },
-        completionType:     { type: mongoose.Schema.Types.ObjectId, ref: 'CompletionTypes' },
-        entity:             { type: mongoose.Schema.Types.ObjectId, ref: 'Entities',    required: [ true, 'não pode estar vazio'] },
-        posting:            { type: mongoose.Schema.Types.ObjectId, ref: 'Postigns' },
+        type :              { type: String, required: [ true, 'não pode estar vazio'], enum: [ 'Receita', 'Despesa' ] },
+        category:           { type: mongoose.Schema.Types.ObjectId, ref: 'Category',  required: [ true, 'não pode estar vazio'] },
+        user:               { type: mongoose.Schema.Types.ObjectId, ref: 'User',       required: [ true, 'não pode estar vazio'] },
+        completionType:     { type: mongoose.Schema.Types.ObjectId, ref: 'CompletionType' },
+        entity:             { type: mongoose.Schema.Types.ObjectId, ref: 'Entity',    required: [ true, 'não pode estar vazio'] },
+        posting:            { type: mongoose.Schema.Types.ObjectId, ref: 'Posting' },
         attachments:        [ schemaAttachment ],
         createAt:           { type: Date,   default: Date.now }
     } );
