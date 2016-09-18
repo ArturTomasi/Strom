@@ -3,17 +3,28 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
    * @param  {[type]}
    * @return {[type]}
    */
-  $scope.login = function(user) {
-    $http.post('/login/', user)
+  $scope.login = function( user ) 
+  {
+      if ( user && user.username && user.password )
+      {
+          $http.post( '/login/', user )
 
-    .success(function() {
-      window.location = '/#/posting';
-      window.location.reload();
-    })
+          .success( function() 
+          {
+              $location.path( '/#/posting' );
+              window.location.reload();
+          } )
 
-    .error(function(error) {
-      Message.error("Acesso Negado", error);
-    });
+          .error( function( error ) 
+          {
+              Message.error( "Acesso Negado", error );
+          } );
+      }
+
+      else
+      {
+        Message.alert( "Preencha todos os campos!" );
+      }
   };
 
-}]);
+} ] );

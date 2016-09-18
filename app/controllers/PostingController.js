@@ -3,9 +3,8 @@ module.exports = function ( app )
 {
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
-    var MyReport = require( '../utils/MyReport.js' );
-    var moment = require( 'moment' );
-            
+    var MyReport = require( '../utils/MyReport.js' )( app );
+                
     /**
      * @type type
      */
@@ -130,6 +129,11 @@ module.exports = function ( app )
                         res.status( 200 ).json( portions );
                     } );
                 }
+
+                else
+                {
+                    res.status( 200 ).json( posting );
+                }
             } );
         }
 
@@ -172,10 +176,10 @@ module.exports = function ( app )
                  Posting.findOneAndUpdate( { 
                                               posting : ( posting.portion === 1 ? posting._id : posting.posting ),
                                               state   : STATE_REGISTRED,
-                                              portion : posting.portion + 1
+                                              portion : { $gt: posting.portion, $lt: posting.portionTotal + 1 }
                                             }, 
                                             {
-                                              state : STATE_PROGRESS,
+                                              state : ( posting.state === STATE_FINISHED ? STATE_PROGRESS : STATE_REGISTRED ),
                                               $unset : { realDate : 1, realValue : 1 }
                                             }, 
                                             { new : true, runValidators: true, context: 'query' } )
@@ -248,26 +252,15 @@ module.exports = function ( app )
             .exec( function ( error , _postings )
             {
                 if ( error ) res.status( 500 ).json( error );
-                 
-                var shortid = _postings.length > 1 ? 'SyAWzKXn' : 'SyMXDMQ2';
-
-                var data = _postings.length > 1 ? _postings : _postings[0];
-  
-                app.jsreport.render(
+                     
+                MyReport.setShortId( _postings.length > 1 ? 'SyAWzKXn' : 'SyMXDMQ2' );
+                MyReport.setData( _postings.length > 1 ? _postings : _postings[0] );
+                
+                MyReport.generate( function( base64 )
                 {
-                    template: 
-                    {
-                        'shortid': shortid
-                    },
-                    data: 
-                    {
-                        "posting" : data
-                    }
-                })
-                .then( function( out )
-                {
-                    res.json( "data:" + out.headers.Content-Type + ';base64,' + out.content.toString( 'base64' ) );
+                    res.status( 200 ).json( base64 );
                 } );
+                
             } );
         }
     };
@@ -319,6 +312,12 @@ module.exports = function ( app )
         return _postings;
     };
 
+    /**
+     * [defineId description]
+     * @param  {[type]} _id    [description]
+     * @param  {[type]} values [description]
+     * @return {[type]}        [description]
+     */
     function defineId( _id, values )
     {
       if ( _id && values )

@@ -83,13 +83,13 @@
     </head>
     <body>
         <%if( ! currentUser ) { %>
-        <div class="container" style="width: 500px; margin: auto">
-            <form class="form-signin" data-ng-controller="AuthController">
+        <div class="container" style="width: 500px; margin: auto" data-ng-controller="AuthController">
+            <form class="form-signin">
                 <h2 class="form-signin-heading">Strom</h2>
                 <label for="inputLogin" class="sr-only">Login</label>
-                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus>
+                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus required>
                 <label for="inputPassword" class="sr-only">Senha</label>
-                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha">
+                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
 
                 <button class="btn btn-lg btn-primary btn-block" type="button" data-ng-click="login( user )"> Sign in</button>
             </form>
