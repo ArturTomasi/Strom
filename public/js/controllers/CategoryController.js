@@ -31,12 +31,19 @@ angular.module("Strom").controller( "CategoryController",['$scope','CategoryServ
      */
     $scope.getCategoryForm = function ( category )
     {
+        var _category = {};
+
         if( category )
         {
-            return angular.copy( category );
+            _category = angular.copy( category );
+        }
+
+        else
+        {
+            _category.state = 0;
         }
         
-        return {};
+        return _category;
     };
     
     /**

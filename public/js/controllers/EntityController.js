@@ -32,12 +32,19 @@ angular.module( "Strom" ).controller( "EntityController", [ '$scope', 'EntitySer
      */
     $scope.getEntityForm = function ( entity )
     {
+        var _entity = {};
+
         if( entity )
         {
-            return angular.copy( entity );
+            _entity = angular.copy( entity );
+        }
+
+        else
+        {
+            _entity.state = 0;
         }
         
-        return {};
+        return _entity;
     };
     
     /**

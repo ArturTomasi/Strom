@@ -45,17 +45,10 @@ module.exports = function ( app )
         })
         .then( function( out )
         {
-        	console.log( out.headers );
-        	
         	var base64 = "data:application/pdf;base64," + out.content.toString( "base64" );
         	
             eval( callback( base64 ) );
-        } )
-        .catch( function( error ) 
-    	{
-    		console.log( 'error' );	
-    		console.log( error );	
-    	});
+        } );
 	};
 
 	return MyReport;

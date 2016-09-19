@@ -1,7 +1,9 @@
 angular.module("Strom").controller("AuthController", ['$scope', '$http', '$location', function($scope, $http, $location) {
+  
   /**
-   * @param  {[type]}
-   * @return {[type]}
+   * [login description]
+   * @param  {[type]} user [description]
+   * @return {[type]}      [description]
    */
   $scope.login = function( user ) 
   {
@@ -9,10 +11,13 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
       {
           $http.post( '/login/', user )
 
-          .success( function() 
+          .success( function( user ) 
           {
-              $location.path( '/#/posting' );
+              Session.put( 'ActiveUser', user );
+
+              $location.path( '/posting' );
               window.location.reload();
+
           } )
 
           .error( function( error ) 
@@ -25,6 +30,35 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
       {
         Message.alert( "Preencha todos os campos!" );
       }
+  };
+
+  /**
+   * [logout description]
+   * @return {[type]} [description]
+   */
+  $scope.logout = function()
+  {
+      var user = Session.get( 'ActiveUser' );
+
+      if ( user )
+      {
+
+          $http.post( '/logout/', user )
+
+          .success( function( user ) 
+          {
+              Session.clear();
+
+              $location.path( '/' );
+              window.location.reload();
+          } )
+
+          .error( function( error ) 
+          {
+              Message.error( "Ocorreu um erro inesperado!", error );
+          } );
+      }
+
   };
 
 } ] );

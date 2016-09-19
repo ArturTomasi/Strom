@@ -50,9 +50,11 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     {
         $scope.isFinish = false;
 
+        var _posting = {};
+
         if( posting )
         {
-            var _posting = angular.copy( posting );
+            _posting = angular.copy( posting );
 
             _posting.user           = $scope.getUser( _posting.user );
             _posting.entity         = $scope.getEntity( _posting.entity );
@@ -60,11 +62,16 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
             _posting.completionType = $scope.getCompletionType( _posting.completionType );
             _posting.completionAuto = $scope.YesNoOptions[ _posting.completionAuto ? 0 : 1 ];
             _posting.portionTotal   = _posting.portionTotal ? _posting.portionTotal : 1;
-
-            return _posting;
         }
         
-        return {};
+        else
+        {
+            _posting.portionTotal = 1;
+            _posting.user = Session.get( 'ActiveUser' );
+            _posting.completionAuto = $scope.YesNoOptions[ 1 ];
+        }
+
+        return _posting;
     };
     
     /**
@@ -218,7 +225,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     $scope.copyPosting = function( $event, posting )
     {
-        if ( $scope.postingSelected )
+        var errors = validatePermission( $scope.postingSelected );
+
+        if ( errors )
         {
             $scope.posting = $scope.getPostingForm( posting );
 
@@ -229,7 +238,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         else
         {
-            Message.alert( 'Selecione um lançamento');
+            Message.alert( errors );
 
             $event.preventDefault();
         }
@@ -315,6 +324,19 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [getUsers description]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    $scope.getUsers = function()
+    {
+        return $scope.users.filter( function ( user ) 
+        {
+            return user.state === 0;
+        } );
+    };
+
+    /**
      * [getCategoryName description]
      * @param  {[type]} id [description]
      * @return {[type]}    [description]
@@ -339,6 +361,18 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         {
             return category._id === id;
         } )[0];
+    };
+
+    /**
+     * [getCategories description]
+     * @return {[type]} [description]
+     */
+    $scope.getCategories = function()
+    {
+        return $scope.categories.filter( function ( category ) 
+        {
+            return category.state === 0;
+        } );
     };
 
     /**
@@ -369,6 +403,18 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [getEntities description]
+     * @return {[type]} [description]
+     */
+    $scope.getEntities = function()
+    {
+        return $scope.entities.filter( function ( entity ) 
+        {
+            return entity.state === 0;
+        } );
+    };
+
+    /**
      * [getCompletionTypeName description]
      * @param  {[type]} id [description]
      * @return {[type]}    [description]
@@ -393,6 +439,18 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         {
             return completion._id === id;
         } )[0];
+    };
+
+    /**
+     * [getCompletionTypes description]
+     * @return {[type]} [description]
+     */
+    $scope.getCompletionTypes = function()
+    {
+        return $scope.completionTypes.filter( function( completion )
+        {
+            return completion.state === 0;
+        } );
     };
 
     /**
@@ -476,6 +534,34 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
             return posting.values;
         }
     };
+    
+    /**
+     * [hasPermission description]
+     * @return {Boolean} [description]
+     */
+    $scope.hasPermission = function()
+    {
+        return Session.get( 'ActiveUser' ).role === 'Administrador';
+    };
+
+    /**
+     * [validatePermission description]
+     * @param  {[type]} posting [description]
+     * @return {[type]}         [description]
+     */
+    validatePermission = function ( posting )
+    {
+        var errors = '';
+
+        var user = Session.get( 'ActiveUser' );
+
+        if ( ! posting ) errors += 'Selecione um lançamento!';
+
+        if ( ! user && user.role === 'Operador' )
+            errors += "Sem permissão para executar está operação!";
+
+        return errors;
+    };
 
     /**
      * [validateFinish description]
@@ -530,10 +616,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         if( posting.state === Posting.STATE_FINISHED )
             return "Lançamento está finalizado,\n não é possivel excluir após finalizado!";
 
-        //var user = $scope.user;
-
-        //if( user.role === 0 && user._id !== posting.user )
-          //  return "Você não tem permissão para excluir esse lançamento";
+        if ( user._id !== posting.user )
+            return validatePermission( posting );
     }
 
     /**
@@ -552,8 +636,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         if( posting.state !== Posting.STATE_FINISHED )
             return "Lançamento deve estár finalizado para extornar";
 
-        //if( ! ApplicationUtilities.getInstance().hasPermission() )
-          //  return "Você não tem permissão para extornar esse lançamento";
+        return validatePermission( posting );
     };
 
     /**

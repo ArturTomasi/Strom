@@ -32,12 +32,19 @@ angular.module( "Strom" ).controller( "CompletionTypeController", [ '$scope', 'C
      */
     $scope.getCompletionTypeForm = function ( completionType )
     {
+        var _completionType = {};
+
         if( completionType )
         {
-            return angular.copy( completionType );
+            _completionType = angular.copy( completionType );
         }
         
-        return {};
+        else
+        {
+            _completionType.state = 0;
+        }
+
+        return _completionType;
     };
     
     /**

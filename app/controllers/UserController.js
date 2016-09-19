@@ -18,7 +18,7 @@ module.exports = function ( app )
     */
     controller.getUsers = function( req, res )
     {
-       User.find( { state : 0 } ).exec( function ( error , users )
+       User.find().exec( function ( error , users )
         {
             if ( error )
             {

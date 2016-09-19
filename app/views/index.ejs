@@ -29,6 +29,7 @@
         <script type="text/javascript" src="/vendor/ng-file-upload/ng-file-upload.min.js"></script>
                 
         <script type="text/javascript" src="/js/Message.js"></script>
+        <script type="text/javascript" src="/js/Session.js"></script>
         <script type="text/javascript" src="/js/application.js"></script>
 
         <script type="text/javascript" src="/js/controllers/EntriesController.js"></script>
@@ -81,9 +82,9 @@
         <script type="text/javascript" src="/directives/Inspect.js"></script>
     <!-- endbuild -->
     </head>
-    <body>
+    <body data-ng-controller="AuthController">
         <%if( ! currentUser ) { %>
-        <div class="container" style="width: 500px; margin: auto" data-ng-controller="AuthController">
+        <div class="container" style="width: 500px; margin: auto">
             <form class="form-signin">
                 <h2 class="form-signin-heading">Strom</h2>
                 <label for="inputLogin" class="sr-only">Login</label>
@@ -102,7 +103,7 @@
                     <a class="navbar-brand" href="#">Strom</a>
                 </div>
                 <div class="nav navbar-nav navbar-right">
-                    <a class="navbar-brand" href="/logout"><%=currentUser.name %></a>
+                    <a class="navbar-brand" style="cursor: pointer;" data-ng-click="logout();"><%=currentUser.name %></a>
                 </div>
             </div>
         </nav>

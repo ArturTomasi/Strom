@@ -11,6 +11,7 @@
                                 'ui.utils.masks',
                                 'ngFileUpload' ] );
 
+    
     angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
     {
         $httpProvider.interceptors.push( 'InterceptorService' );
@@ -101,6 +102,6 @@
             controller: 'CategoryController'
         } );
         
-        $routeProvider.otherwise( { redirectTo: '/home' } );
+        $routeProvider.otherwise( { redirectTo: '/' } );
     } ] );
 })();

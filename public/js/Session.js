@@ -24,7 +24,7 @@
     var Session = {};
     var args = [];
  
-    Session.set = function( name , value )
+    Session.put = function( name , value )
     {
         args.push( name );
         sessionStorage.setItem( name , JSON.stringify( value ) );

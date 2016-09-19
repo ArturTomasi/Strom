@@ -9,7 +9,6 @@ angular.module( 'Strom' ).directive( 'stateSelector', [ function ()
 
 	StateSelector.scope = 
 	{
-		isPosting: '@',
 		size: '@'
 	};
 
@@ -17,6 +16,8 @@ angular.module( 'Strom' ).directive( 'stateSelector', [ function ()
 
 	StateSelector.link = function ( scope, iElement, iAttrs, iCtrl )
 	{
+		scope.items = [ { id: 1, name: "Ativo" }, { id: 0, name: "Inativo" } ];
+		
 	 	iElement.bind('change', function()
 	 	{
 	 		iCtrl.$setViewValue( scope.state );

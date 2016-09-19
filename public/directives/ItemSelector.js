@@ -7,6 +7,7 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
 	ItemSelector.scope = 
 	{ 
 		items: '=',
+		disabled: '=',
         model: "=",
 		title: '@',
 		name:  '@',
@@ -27,9 +28,21 @@ angular.module( 'Strom' ).directive( 'itemSelector', [ function ()
             $scope.close();
 		};
 
+		$scope.choice = function()
+		{
+			$scope.items = $scope.items.filter( function( it )
+			{
+				return ! it.state || it.state === 0;
+			} );
+
+			if ( ! $scope.disabled )
+				$( '#choice' + $scope.name ).modal();
+		};
+
 		$scope.clearItem = function () 
 		{
-			 $scope.model = undefined;
+			if ( ! $scope.disabled )
+			 	$scope.model = undefined;
 		};
 
 		$scope.close = function () 

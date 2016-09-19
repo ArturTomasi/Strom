@@ -4,11 +4,15 @@ var passport = require( 'passport' );
 
 module.exports = function ( app )
 {
-    app.post('/login', passport.authenticate('local', { successRedirect: '/#/posting'} ) );
+    app.post( '/login', passport.authenticate('local' ), function( req, res ) 
+	{
+		res.json( req.user );
+	} );
     
-    app.get('/logout', function( req, res )
+    app.post( '/logout', function( req, res )
     {
         req.logOut();   
-        res.redirect( '/#/login' );
+
+        res.status( 200 ).json( {} );
     } );
 };

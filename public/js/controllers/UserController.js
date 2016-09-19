@@ -33,12 +33,19 @@ angular.module("Strom").controller( "UserController",['$scope','UserService', fu
      */
     $scope.getUserForm = function ( user )
     {
+        var _user = {};
+
         if( user )
         {
-            return angular.copy( user );
+            _user = angular.copy( user );
+        }
+
+        else
+        {
+            _user.state = 0;
         }
         
-        return {};
+        return _user;
     };
     
     /**
