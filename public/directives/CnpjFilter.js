@@ -17,7 +17,7 @@ Strom.directive( 'cnpjFilter', [ '$filter', '$browser', function( $filter, $brow
 
         ngModelCtrl.$parsers.push( function( viewValue )
         {
-            return viewValue.replace( /[^0-9]/g, '' ).slice( 0,18 );
+            return viewValue.replace( /[^0-9]/g, '' ).slice( 0,14 );
         } );
 
         ngModelCtrl.$render = function() 

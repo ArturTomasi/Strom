@@ -38,27 +38,20 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
    */
   $scope.logout = function()
   {
-      var user = Session.get( 'ActiveUser' );
+      $http.post( '/logout/', {} )
 
-      if ( user )
+      .success( function() 
       {
+          Session.clear();
 
-          $http.post( '/logout/', user )
+          $location.path( '/' );
+          window.location.reload();
+      } )
 
-          .success( function( user ) 
-          {
-              Session.clear();
-
-              $location.path( '/' );
-              window.location.reload();
-          } )
-
-          .error( function( error ) 
-          {
-              Message.error( "Ocorreu um erro inesperado!", error );
-          } );
-      }
-
+      .error( function( error ) 
+      {
+          Message.error( "Ocorreu um erro inesperado!", error );
+      } );
   };
 
 } ] );

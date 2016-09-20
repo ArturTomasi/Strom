@@ -581,6 +581,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )  
             return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
+
+        return validatePermission( posting );
     };
 
     /**

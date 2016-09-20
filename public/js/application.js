@@ -20,8 +20,8 @@
         
         .when('/home', 
         {
-            templateUrl: '/partials/Home/Home.html',
-            controller: 'HomeCtrl'
+            templateUrl: '/partials/Util/Home.html',
+            controller: 'HomeController'
         } )
 
         .when('/analysis',
