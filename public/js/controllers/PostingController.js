@@ -557,7 +557,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
 
         if ( ! posting ) errors += 'Selecione um lançamento!';
 
-        if ( ! user && user.role === 'Operador' )
+        if ( user && user.role === 'Operador' )
             errors += "Sem permissão para executar está operação!";
 
         return errors;
@@ -582,7 +582,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )  
             return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
 
-        return validatePermission( posting );
+        if( ! $scope.hasPermission() || Session.get( 'ActiveUser' )._id === posting.user )
+            return "Sem permissão para executar está operação!";
     };
 
     /**
@@ -618,7 +619,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         if( posting.state === Posting.STATE_FINISHED )
             return "Lançamento está finalizado,\n não é possivel excluir após finalizado!";
 
-        if ( user._id !== posting.user )
+        if ( Session.get( "ActiveUser" )._id !== posting.user )
             return validatePermission( posting );
     }
 
@@ -734,27 +735,16 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };    
 
     /**
-     * [makeDefaultFilter description]
-     * @return {[type]} [description]
-     */
-    makeDefaultFilter = function()
-    {
-        $scope.defaultFilter = {};
-
-    };
-
-    /**
      * [init description]
      * @return {[type]} [description]
      */
     function init()
     {
         loadUsers();
-    	loadCategories();
-    	loadEntities();
-    	loadCompletionTypes();
-    	loadPostings();
-        makeDefaultFilter();
+        loadCategories();
+        loadEntities();
+        loadCompletionTypes();
+        loadPostings();
     };
 
     init();

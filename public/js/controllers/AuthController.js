@@ -22,6 +22,9 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
 
           .error( function( error ) 
           {
+              delete $scope.user;
+              $( '#inputLogin' ).focus();
+              
               Message.error( "Acesso Negado", error );
           } );
       }

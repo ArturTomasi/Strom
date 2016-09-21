@@ -27,13 +27,13 @@
     Session.put = function( name , value )
     {
         args.push( name );
-        sessionStorage.setItem( name , JSON.stringify( value ) );
+        localStorage.setItem( name , JSON.stringify( value ) );
     };
 
 
     Session.get = function ( name ) 
     {
-        return JSON.parse( sessionStorage.getItem( name ) );  
+        return JSON.parse( localStorage.getItem( name ) );  
     };
 
     Session.remove = function ( name ) 
@@ -41,12 +41,12 @@
         args = args.filter( function ( value ) {
            return name != value;  
         });
-        sessionStorage.removeItem( name );
+        localStorage.removeItem( name );
     };
 
     Session.clear = function () 
     {
-        sessionStorage.clear();
+        localStorage.clear();
     };
 
     return Session;
