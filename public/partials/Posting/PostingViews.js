@@ -174,48 +174,48 @@ angular.module( 'Strom' )
 	        {
 	        	$scope.items.push( { name: "entity", label: "Entidade", type: "list", items : entities } );
         	} );
-		
-	        var today = moment();
-	        var tomorrow = moment().add( 1, 'month' );
 
-	        setTimeout( function()
-	        {
-	        	$scope.items.forEach( function ( filter )
-	        	{
-	        		if ( filter.name === 'state' )
-	        		{
-	        			var actived  = angular.copy( filter );
-	        			var progress = angular.copy( filter );
-	        			var finished = angular.copy( filter );
+			setTimeout( function ()
+			{
+				var today = moment().format();
+				var tomorrow = moment().add( 1, 'month' ).format();
 
-	        			actived.value = { name: "Registrado",   id: 0 };
-	        			progress.value ={ name: "Em Andamento", id: 1 };
-	        			finished.value = { name: "Finalizado",   id: 2 };
+				$scope.items.forEach( function ( filter )
+				{
+					if ( filter.name === 'state' )
+					{
+						var actived  = angular.copy( filter );
+						var progress = angular.copy( filter );
+						var finished = angular.copy( filter );
 
-	        			$scope.filters.push( actived );
-	        			$scope.filters.push( progress);
-	        			$scope.filters.push( finished );
-	        		}
+						actived.value = { name: "Registrado",   id: 0 };
+						progress.value ={ name: "Em Andamento", id: 1 };
+						finished.value = { name: "Finalizado",   id: 2 };
 
-	        		else if ( filter.name === 'estimateDate' )
-	        		{
-	    				var estimate = angular.copy( filter );
-	    				estimate.value = { from : today, until : tomorrow };
-	    				$scope.filters.push( estimate );
-	        		}
+						$scope.filters.push( actived );
+						$scope.filters.push( progress);
+						$scope.filters.push( finished );
+					}
 
-	        		else if ( filter.name === 'user' )
-	        		{
-	    				var user = angular.copy( filter );
-	    				user.value = Session.get( 'ActiveUser' );
-	    				$scope.filters.push( user );
-	        		}
-	        	} );
+					else if ( filter.name === 'estimateDate' )
+					{
+						var estimate = angular.copy( filter );
+						estimate.value = { from : today, until : tomorrow };
+						$scope.filters.push( estimate );
+					}
 
-	        	$scope.validFilter();
+					else if ( filter.name === 'user' )
+					{
+						var user = angular.copy( filter );
+						user.value = Session.get( 'ActiveUser' );
+						$scope.filters.push( user );
+					}
+				} );
 
-	        }, 500 );
-		};	
+				$scope.validFilter();
+
+			}, 500 );
+		};
 
 		loadFilters();
 	};

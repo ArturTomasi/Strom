@@ -59,7 +59,7 @@ module.exports = function ( app )
                   res.status( 500 ).json( error );
               }
               
-              res.json( postings );
+              res.status(200).json( postings );
           } );
         }
 
@@ -303,7 +303,7 @@ module.exports = function ( app )
                 _postings.push( _copy );
             } );
 
-            if ( ! _postings && posting.state !== Posting.STATE_PROGRESS )
+            if (  _postings && posting.state !== STATE_PROGRESS )
             {
                 _postings[ 0 ].state = STATE_PROGRESS;
             }
@@ -426,8 +426,8 @@ module.exports = function ( app )
               {
                   case 'name': where = { name : new RegExp( '.*' + condition + '.*' , "i" ) }; break;
                   case 'state': where = { state : condition.id }; break;
-                  case 'estimateDate': where = { estimateDate : {"$gte": condition.from, "$lt": condition.until } }; break;
-                  case 'realDate': where = { realDate : { $get : condition.from, $lte: condition.until } }; break;
+                  case 'estimateDate': where = { estimateDate : { $gte: condition.from, $lte: condition.until } }; break;
+                  case 'realDate': where = { realDate : { $gte : condition.from, $lte: condition.until } }; break;
                   case 'realValue': where = { realValue : condition }; break;
                   case 'estimateValue': where = { estimateValue : condition }; break;
                   case 'user': where = { user : condition }; break;

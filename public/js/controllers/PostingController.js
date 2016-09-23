@@ -665,6 +665,8 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
             posting.values.forEach( function( portion, index ) 
             {
                 if ( ! portion.estimateDate ) errors += "Preencha uma data estimada para a parcela " + ( index + 1 ) + "!<br>";
+
+                if ( portion.estimateDate < posting.estimateDate ) errors += "As parcela " + index + 1 + " está com a data anterior a do lançamento original<br>";
                 
                 if ( ! portion.estimateValue ) errors += "Preencha um valor estimado para a parcela " + ( index + 1 ) + "!<br>";
             } );
@@ -744,7 +746,6 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         loadCategories();
         loadEntities();
         loadCompletionTypes();
-        loadPostings();
     };
 
     init();
