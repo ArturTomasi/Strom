@@ -12,9 +12,9 @@ module.exports = function()
 {
 	var app = express();
 
-	app.set( 'port', 8080 );
+	app.set( 'port', 80 );
 	
-	jsreport( { httpPort: 8081 } ).init();
+	jsreport().init();
 	
 	app.jsreport = jsreport;
 
