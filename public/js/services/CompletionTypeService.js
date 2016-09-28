@@ -1,6 +1,6 @@
 /* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'CompletionTypeService', [ '$http', function( $http ) 
+angular.module( 'Strom' ).factory( 'CompletionTypeService', [ '$q', '$http', function( $q, $http ) 
 {
     var CompletionTypeService = {};
     
@@ -11,10 +11,14 @@ angular.module( 'Strom' ).factory( 'CompletionTypeService', [ '$http', function(
      */
     CompletionTypeService.getCompletionTypes = function( callback )
     {
+        var d = $q.defer();
+
         $http.get( '/completionTypes' )
         
         .success( function( completionTypes )
         {
+            d.resolve( completionTypes );
+
             eval( callback( completionTypes ) );  
         } )
         
@@ -22,6 +26,8 @@ angular.module( 'Strom' ).factory( 'CompletionTypeService', [ '$http', function(
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
     
     /**

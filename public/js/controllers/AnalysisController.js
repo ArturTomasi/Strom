@@ -1,8 +1,8 @@
-angular.module( 'Strom' ).controller( 'AnalysisController', ['$scope', 'PostingService', 'CategoryService',
-												   function ( $scope, PostingService, CategoryService )
+angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'PostingService', 'CategoryService',
+												                          function ( $q, $scope, PostingService, CategoryService )
 {
-    var revenues          = [], 
-        costs             = [], 
+    var revenues          = 0, 
+        costs             = 0, 
         postings          = [], 
         categories        = [], 
         costsCategories   = [],
@@ -14,18 +14,14 @@ angular.module( 'Strom' ).controller( 'AnalysisController', ['$scope', 'PostingS
   	{
   		  Highcharts.setOptions( { lang: { drillUpText: '◁ Voltar para {series.name}' } } );
       	
-      	var serie = [ { name: 'Despesa', y: costs.length, color: 'red', drilldown: 'cost' },
-                    	{ name: 'Receita', y: revenues.length, color: 'green', drilldown: 'revenue' } ];
+      	var serie = [ { name: 'Despesa', y: costs, color: 'red', drilldown: 'cost' },
+                    	{ name: 'Receita', y: revenues, color: 'green', drilldown: 'revenue' } ];
 
-        var  test = [ { id: 'cost',    name: 'Despesa', data : costsCategories },
-                      { id: 'revenue', name: 'Receita', data : revenueCategories } ];
+        var  drilldown = [ { id: 'cost',    name: 'Despesa', data : costsCategories },
+                           { id: 'revenue', name: 'Receita', data : revenueCategories } ];
 
-        postingCategories.forEach( function ( el )
-        {
-          test.push( el );
-        } );
+        postingCategories.forEach( function ( p ) { drilldown.push( p ); } );
 
-        console.log( test );
 
         $('#drilldown').highcharts(
         {
@@ -51,7 +47,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', ['$scope', 'PostingS
                     data: serie 
                 } ],
             drilldown: {
-            series: test
+            series: drilldown
             },
             credits: [ { enabled: false } ]
         } );
@@ -63,77 +59,81 @@ angular.module( 'Strom' ).controller( 'AnalysisController', ['$scope', 'PostingS
      */
   	function init()
   	{
-  		  PostingService.filterPosting( {} , function( data )
-        {
-            postings = data;
-
-            postings.forEach( function( posting ) 
+        $q.all( 
+        [
+      		  PostingService.filterPosting( {} , function( data )
             {
-                if ( posting.type === 'Despesa' )
+                postings = data;
+
+                costs = 0; revenues = 0;
+
+                postings.forEach( function( posting )
                 {
-                    costs.push( posting );
-                }
-
-                else
-                {
-                    revenues.push( posting );
-                }
-            } );
-
-            CategoryService.getCategories( function( data )
-            {
-                $scope.categories = data;
-
-                data.forEach( function( category )
-                {
-                    var registred = 0, 
-                        finished  = 0, 
-                        progress  = 0, 
-                        deleted   = 0;
-
-                    var count = postings.filter( function( p )
+                    if ( posting.type === 'Despesa' )
                     {
-                        if ( p.category === category._id )
-                        {
-                            switch( p.state )
-                            {
-                                case 0: registred++; break;
-                                case 1: progress++;  break;
-                                case 2: finished++;  break;
-                                case 3: deleted++;   break;
-                            }
-                          
-                            return true;  
-                        }
-                        
-                    } );
-
-                    postingCategories.push( { id: category._id, name: category.name, data : [ 
-                      { name: 'Cadastrados',  y: registred , color: '#3364c8', drilldown: null }, 
-                      { name: 'Em Andamento', y: progress  , color: '#ded604', drilldown: null }, 
-                      { name: 'Excluidos',    y: deleted   , color: '#d82027', drilldown: null }, 
-                      { name: 'Finalizados',  y: finished  , color: '#408c1b', drilldown: null } 
-                    ] } );
-
-
-                    if ( category.type === 'Despesa' )
-                    {
-                        costsCategories.push( { name: category.name, y: count.length, drilldown: category._id } );
+                        costs++;
                     }
 
                     else
                     {
-                        revenueCategories.push( { name: category.name, y: count.length, drilldown: category._id } );
+                       revenues++;
                     }
                 } );
+            } ),
 
-                loadChart();
+            CategoryService.getCategories( function( data )
+            {
+                categories = data;
+            } )
+        ] ).then( function() 
+        {
+            categories.forEach( function( category )
+            {
+                var registred = 0, 
+                    finished  = 0, 
+                    progress  = 0, 
+                    deleted   = 0;
+
+                var count = postings.filter( function( p )
+                {
+                    if ( p.category === category._id )
+                    {
+                        switch( p.state )
+                        {
+                            case 0: registred++; break;
+                            case 1: progress++;  break;
+                            case 2: finished++;  break;
+                            case 3: deleted++;   break;
+                        }
+                      
+                        return true;  
+                    }
+                    
+                } );
+
+                postingCategories.push( { id: category._id, name: category.name, data : 
+                [ 
+                  { name: 'Cadastrados',  y: registred , color: '#3364c8', drilldown: null }, 
+                  { name: 'Em Andamento', y: progress  , color: '#ded604', drilldown: null }, 
+                  { name: 'Excluidos',    y: deleted   , color: '#d82027', drilldown: null }, 
+                  { name: 'Finalizados',  y: finished  , color: '#408c1b', drilldown: null } 
+                ] } );
+
+
+                if ( category.type === 'Despesa' )
+                {
+                    costsCategories.push( { name: category.name, y: count.length, drilldown: category._id } );
+                }
+
+                else
+                {
+                    revenueCategories.push( { name: category.name, y: count.length, drilldown: category._id } );
+                }
             } );
-            
-        } );
 
-        
-  	};
+            loadChart();
+          } );
+      }
 
-  	init();
+	    init();
 } ] );

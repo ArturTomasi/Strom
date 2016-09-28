@@ -582,7 +582,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )  
             return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
 
-        if( ! $scope.hasPermission() || Session.get( 'ActiveUser' )._id === posting.user )
+        if( ! $scope.hasPermission() || ! Session.get( 'ActiveUser' )._id === posting.user )
             return "Sem permissão para executar está operação!";
     };
 
@@ -682,7 +682,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     loadPostings = function()
     {
-        PostingService.filterPosting( $scope.defaultFilter , function( data )
+        PostingService.getPostingAgenda( function( data )
         {
             $scope.postings = data;
         } );
@@ -746,6 +746,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
         loadCategories();
         loadEntities();
         loadCompletionTypes();
+        loadPostings();
     };
 
     init();

@@ -50,8 +50,10 @@ angular.module( 'Strom' )
 
 	PostingFilter.replace = true;
 
-	PostingFilter.scope = {
-		method :'&'
+	PostingFilter.scope = 
+	{
+		method :'&',
+		disabled: '='
 	};
 
 	PostingFilter.templateUrl = 'directives/html/FilterEditor.html'; 
@@ -159,62 +161,21 @@ angular.module( 'Strom' )
 			{
 				$scope.items.push( { name: "user", label: "Usuário", type: "list", items : users } );
 	        } );
-			
-		 	CompletionTypeService.getCompletionTypes( function( completions )
+
+	        CompletionTypeService.getCompletionTypes( function( completions )
 	        {
 				$scope.items.push( { name: "completionType", label: "Finalização", type: "list", items : completions } );
 	        } );
 
-			CategoryService.getCategories( function( categories )
+	        CategoryService.getCategories( function( categories )
         	{
 				$scope.items.push( { name: "category", label: "Categoria", type: "list", items : categories } );
 	        } );
-	        
+
 	        EntityService.getEntities( function( entities )
 	        {
 	        	$scope.items.push( { name: "entity", label: "Entidade", type: "list", items : entities } );
-        	} );
-
-			setTimeout( function ()
-			{
-				var today = moment().format();
-				var tomorrow = moment().add( 1, 'month' ).format();
-
-				$scope.items.forEach( function ( filter )
-				{
-					if ( filter.name === 'state' )
-					{
-						var actived  = angular.copy( filter );
-						var progress = angular.copy( filter );
-						var finished = angular.copy( filter );
-
-						actived.value = { name: "Registrado",   id: 0 };
-						progress.value ={ name: "Em Andamento", id: 1 };
-						finished.value = { name: "Finalizado",   id: 2 };
-
-						$scope.filters.push( actived );
-						$scope.filters.push( progress);
-						$scope.filters.push( finished );
-					}
-
-					else if ( filter.name === 'estimateDate' )
-					{
-						var estimate = angular.copy( filter );
-						estimate.value = { from : today, until : tomorrow };
-						$scope.filters.push( estimate );
-					}
-
-					else if ( filter.name === 'user' )
-					{
-						var user = angular.copy( filter );
-						user.value = Session.get( 'ActiveUser' );
-						$scope.filters.push( user );
-					}
-				} );
-
-				$scope.validFilter();
-
-			}, 500 );
+	    	} );
 		};
 
 		loadFilters();

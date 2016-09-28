@@ -4,6 +4,7 @@ module.exports = function ( app )
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
     var MyReport = require( '../utils/MyReport.js' )( app );
+    var moment   = require( 'moment' );
                 
     /**
      * @type type
@@ -51,16 +52,18 @@ module.exports = function ( app )
 
         if ( query )
         {
-          Posting.find( query )
-          .sort( 'estimateDate' ).exec( function ( error , postings )
-          {
-              if ( error )
-              {
-                  res.status( 500 ).json( error );
-              }
-              
-              res.status(200).json( postings );
-          } );
+            console.log( JSON.stringify( query ) );
+            Posting
+            .find( query )
+            .sort( 'estimateDate' ).exec( function ( error , postings )
+            {
+                if ( error )
+                {
+                    res.status( 500 ).json( error );
+                }
+                
+                res.status(200).json( postings );
+            } );
         }
 
         else
@@ -89,7 +92,64 @@ module.exports = function ( app )
             res.json( posting );
         } );
     };
-    
+
+    /**
+     * [getPostingAgenda description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.getPostingAgenda = function( req, res )
+    {
+        Posting.find( 
+        {
+            $and: [
+                    { $or : [ { state: 1 }, { estimateDate : { $gte: moment(), $lte: moment().add( 1, 'month' ) } } ] },
+                    { $or : [ { user:  req.user } ] }
+                  ]
+        } )
+        .sort( 'estimateDate' )
+        .exec( function( error, postings )
+        {
+             if ( error ) res.status( 500 ).json( error );
+
+             res.status( 200 ).json( postings );
+        } );
+    };
+
+    /**
+     * [getMapMonth description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.getMapMonth = function( req, res )
+    {
+        Posting.aggregate()
+        .match( 
+        { 
+            realDate:{ 
+                       $exists: true, 
+                       $gte: new Date( moment().startOf( 'month' ) ), 
+                       $lte: new Date( moment().endOf( 'month' ) ) 
+                     }
+        } )
+
+        .group( 
+        { 
+            _id:   { type: "$type", date: '$realDate' }, 
+            sum :  { $sum: "$realValue" },
+            count: { $sum: 1 } 
+        } )
+        
+        .exec( function( error, data ) 
+        {
+            if ( error ) res.status( 500 ).json( error );
+
+            res.status( 200 ).json( data );
+        } );
+    };
+
     /**
      * 
      * @param {type} req

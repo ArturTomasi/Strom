@@ -19,6 +19,10 @@ module.exports = function( app )
     var controller = app.controllers.PostingController;
 
     app.get('/postings', checkAuthenticated, controller.getPostings );
+
+    app.get('/postingAgenda', checkAuthenticated, controller.getPostingAgenda );
+    
+    app.get('/mapMonth', checkAuthenticated, controller.getMapMonth );
     
     app.get('/postings/:id', checkAuthenticated, controller.getPosting );
         

@@ -22,17 +22,34 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
 
           .error( function( error ) 
           {
-              delete $scope.user;
-              $( '#inputLogin' ).focus();
-              
-              Message.error( "Acesso Negado", error );
+            effectError();
           } );
       }
 
       else
       {
-        Message.alert( "Preencha todos os campos!" );
+        effectError();
       }
+  };
+
+  /**
+   * [effectError description]
+   * @return {[type]} [description]
+   */
+  function effectError()
+  {
+    delete $scope.user;
+              
+    $( '#inputLogin' ).focus();
+    
+    $( '#login' ).effect( "bounce", "swith", function()
+    {
+        $( '#error-login' ).show( 'fade' );
+
+        setTimeout( function() {
+            $( '#error-login' ).hide( 'fade' );            
+        }, 3000 );
+    } );
   };
 
   /**

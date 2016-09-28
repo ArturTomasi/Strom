@@ -11,20 +11,57 @@
         <link rel="stylesheet"  type="text/css" href="/css/datepicker.css">
         <link rel="stylesheet"  type="text/css" href="/css/default.css">
         <!-- endbuild -->
+    </head>
+    <body data-ng-controller="AuthController">
+        <div id="preload" class="preload">
+            <div class="fa fa-refresh fa-pulse fa-3x fa-fw preload-center"></div>
+        </div>
+        <%if( ! currentUser ) { %>
+        <div id="login" class="container login-center" style="width: 500px; margin: auto">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">Strom</h2>
+                <label for="inputLogin" class="sr-only">Login</label>
+                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus required>
+                <label for="inputPassword" class="sr-only">Senha</label>
+                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+
+                <button class="btn btn-lg btn-login btn-block" type="button" data-ng-click="login( user )"> Sign in</button>
+            </form>
+            <div id="error-login" class="alert-danger" style="display: none">
+                ERRO: Login ou senha incorretos
+            </div>
+        </div>
+
+        <%} else { %>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Strom</a>
+                </div>
+                <div class="nav navbar-nav navbar-right">
+                    <a class="navbar-brand" style="cursor: pointer;" data-ng-click="logout();"><%=currentUser.name %></a>
+                </div>
+            </div>
+        </nav>
+        <div ng-include="'partials/Menu/MenuPane.html'"></div>
+        <data-ng-view></data-ng-view>
+        <%}%>
+    </body>
         
         <!-- build:js js/index.min.js -->
         <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/vendor/jquery-ui/jquery-ui.min.js"></script>
         <script type="text/javascript" src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/vendor/angular/angular.min.js"></script>
-        <script type="text/javascript" src="/vendor/angular-input-masks/angular-input-masks-standalone.min.js"></script>
+        <!-- <script type="text/javascript" src="/vendor/angular-input-masks/angular-input-masks-standalone.min.js"></script> -->
         <script type="text/javascript" src="/vendor/highcharts/highcharts.js"></script>
         <script type="text/javascript" src="/vendor/highcharts/modules/drilldown.js"></script>
-        <script type="text/javascript" src="/vendor/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+        <!-- <script type="text/javascript" src="/vendor/bootstrap-switch/dist/js/bootstrap-switch.js"></script> -->
         <script type="text/javascript" src="/vendor/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="/vendor/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="/vendor/angularUtils-pagination/dirPagination.js"></script>
         <script type="text/javascript" src="/vendor/bootstrap3-dialog/dist/js/bootstrap-dialog.min.js"></script>
-        <script type="text/javascript" src="/vendor/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script>
+        <!-- <script type="text/javascript" src="/vendor/angular-bootstrap-switch/dist/angular-bootstrap-switch.js"></script> -->
         <script type="text/javascript" src="/vendor/moment/min/moment-with-locales.js"></script>
         <script type="text/javascript" src="/vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
         <script type="text/javascript" src="/vendor/ng-file-upload/ng-file-upload.min.js"></script>
@@ -83,34 +120,4 @@
         <script type="text/javascript" src="/directives/MoneyMask.js"></script>
         <script type="text/javascript" src="/directives/Inspect.js"></script>
     <!-- endbuild -->
-    </head>
-    <body data-ng-controller="AuthController">
-        <%if( ! currentUser ) { %>
-        <div class="container" style="width: 500px; margin: auto">
-            <form class="form-signin">
-                <h2 class="form-signin-heading">Strom</h2>
-                <label for="inputLogin" class="sr-only">Login</label>
-                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus required>
-                <label for="inputPassword" class="sr-only">Senha</label>
-                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
-
-                <button class="btn btn-lg btn-primary btn-block" type="button" data-ng-click="login( user )"> Sign in</button>
-            </form>
-        </div>
-
-        <%} else { %>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Strom</a>
-                </div>
-                <div class="nav navbar-nav navbar-right">
-                    <a class="navbar-brand" style="cursor: pointer;" data-ng-click="logout();"><%=currentUser.name %></a>
-                </div>
-            </div>
-        </nav>
-        <div ng-include="'partials/Menu/MenuPane.html'"></div>
-        <data-ng-view></data-ng-view>
-        <%}%>
-    </body>
 </html>

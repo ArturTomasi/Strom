@@ -1,4 +1,4 @@
-angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http )
+angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function ( $q, $http )
 {
 	var PostingService = {};	
 
@@ -9,17 +9,23 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
 	 */
     PostingService.getPostings = function( callback )
     {
+        var d = $q.defer();
+
         $http.get( '/postings' )
         
         .success( function( postings )
         {
             eval( callback( postings ) );  
+
+            d.resolve( postings );
         } )
         
         .error( function (error) 
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
     
     /**
@@ -30,17 +36,23 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
      */
     PostingService.getPosting = function( id, callback )
     {
+        var d = $q.defer();
+
         $http.get( '/postings/' + id )
         
         .success( function( posting )
         {
             eval( callback( posting ) );  
+            
+            d.resolve( posting );
         } )
         
         .error( function (error) 
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
 
     /**
@@ -51,19 +63,77 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
      */
     PostingService.filterPosting = function( filters, callback )
     {
+        var d = $q.defer();
+
         $http.post( '/postingfiltered/', filters )
 
         .success( function ( postings ) 
         {
             eval( callback( postings ) );
+
+            d.resolve( postings );
         } )
 
         .error ( function ( error )
         {
             Message.alert( error );            
         });
+
+        return d.promise;
     };
     
+    /**
+     * [getPostingAgenda description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.getPostingAgenda = function( callback )
+    {
+        var d = $q.defer();
+
+        $http.get( 'postingAgenda' )
+
+        .success( function( postings )
+        {
+            eval( callback( postings ) );
+
+            d.resolve( postings );
+        } )
+
+        .error( function( error ) 
+        {
+            Message.alert( error );
+        } );
+
+        return d.promise;
+    };
+
+    /**
+     * [getMapMonth description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.getMapMonth = function( callback )
+    {
+        var d = $q.defer();
+
+        $http.get( 'mapMonth' )
+
+        .success( function( map )
+        {
+            eval( callback( map ) );
+
+            d.resolve( map );
+        } )
+
+        .error( function( error ) 
+        {
+            Message.alert( error );
+        } );
+
+        return d.promise;
+    };
+
     /**
      * 
      * @param {type} posting
@@ -89,7 +159,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
         
         else
         {
-            $http.put( '/postings/' , posting, { params : 'artur-tomasi' } )
+            $http.put( '/postings/' , posting )
             
             .success( function( posting )
             {
@@ -137,7 +207,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$http', function ( $http
     {
         if ( filter )
         {
-            $http.post( '/printPostings/' , filter )
+            $http.post( '/printPostings/' , filter, { preload: true } )
             
             .success( function( pdf )
             {

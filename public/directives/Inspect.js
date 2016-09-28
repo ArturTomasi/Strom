@@ -8,10 +8,5 @@ angular.module( 'Strom' ).directive('inspector', [ function ()
 
 	Inspector.templateUrl = 'directives/html/Inspect.html';
 
-	Inspector.link =  function ( scope, iElement, iAttrs, model ) 
-	{
-		
-	};
-
 	return Inspector;
 } ] );

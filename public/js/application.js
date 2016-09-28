@@ -4,13 +4,10 @@
 	
     'use strict';
     
-    angular.module( 'Strom' , [ 'frapontillo.bootstrap-switch',
-                                'ngRoute', 
+    angular.module( 'Strom' , [ 'ngRoute', 
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
-                                'ui.utils.masks',
                                 'ngFileUpload' ] );
-
     
     angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
     {
@@ -102,6 +99,6 @@
             controller: 'CategoryController'
         } );
         
-        $routeProvider.otherwise( { redirectTo: '/' } );
+        $routeProvider.otherwise( { redirectTo: '/#/home' } );
     } ] );
 })();

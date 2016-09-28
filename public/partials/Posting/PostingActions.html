@@ -18,7 +18,7 @@
     Finalizar
 </button>
 
-<posting-filter data-ng-disabled="validatePermission()" method="filterPosting( filter )"></posting-filter>
+<posting-filter disabled="! hasPermission()" method="filterPosting( filter )"></posting-filter>
 
 <button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="reversePosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/reverse.png" class="btn-icon"></img>

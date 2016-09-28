@@ -1,6 +1,6 @@
 /* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'UserService', [ '$http', function( $http ) 
+angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q, $http ) 
 {
     var UserService = {};
     
@@ -11,10 +11,14 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$http', function( $http )
      */
     UserService.getUsers = function( callback )
     {
+        var d = $q.defer();
+
         $http.get( '/users' )
         
         .success( function( users )
         {
+            d.resolve( users );
+
             eval( callback( users ) );  
         } )
         
@@ -22,6 +26,8 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$http', function( $http )
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
     
     /**

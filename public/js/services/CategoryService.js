@@ -1,6 +1,6 @@
 /* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'CategoryService', [ '$http', function( $http ) 
+angular.module( 'Strom' ).factory( 'CategoryService', [ '$q', '$http', function( $q, $http )  
 {
     var CategoryService = {};
     
@@ -11,10 +11,14 @@ angular.module( 'Strom' ).factory( 'CategoryService', [ '$http', function( $http
      */
     CategoryService.getCategories = function( callback )
     {
+        var d = $q.defer();
+
         $http.get( '/categories' )
         
         .success( function( categories )
         {
+            d.resolve( categories );
+
             eval( callback( categories ) );  
         } )
         
@@ -22,6 +26,8 @@ angular.module( 'Strom' ).factory( 'CategoryService', [ '$http', function( $http
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
     
     /**

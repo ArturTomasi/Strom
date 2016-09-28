@@ -1,6 +1,6 @@
 /* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'EntityService', [ '$http', function( $http ) 
+angular.module( 'Strom' ).factory( 'EntityService', [ '$q', '$http', function( $q, $http ) 
 {
     var EntityService = {};
     
@@ -11,10 +11,14 @@ angular.module( 'Strom' ).factory( 'EntityService', [ '$http', function( $http )
      */
     EntityService.getEntities = function( callback )
     {
+        var d = $q.defer();
+
         $http.get( '/entities' )
         
         .success( function( entities )
         {
+            d.resolve( entities );
+
             eval( callback( entities ) );  
         } )
         
@@ -22,6 +26,8 @@ angular.module( 'Strom' ).factory( 'EntityService', [ '$http', function( $http )
         {
             Message.error( error );
         } );
+
+        return d.promise;
     };
     
     /**
