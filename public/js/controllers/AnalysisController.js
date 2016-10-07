@@ -14,8 +14,8 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
   	{
   		  Highcharts.setOptions( { lang: { drillUpText: '◁ Voltar para {series.name}' } } );
       	
-      	var serie = [ { name: 'Despesa', y: costs, color: 'red', drilldown: 'cost' },
-                    	{ name: 'Receita', y: revenues, color: 'green', drilldown: 'revenue' } ];
+      	var serie = [ { name: 'Despesa', y: costs,    color: 'red',   drilldown: 'cost' },
+                      { name: 'Receita', y: revenues, color: 'green', drilldown: 'revenue' } ];
 
         var  drilldown = [ { id: 'cost',    name: 'Despesa', data : costsCategories },
                            { id: 'revenue', name: 'Receita', data : revenueCategories } ];

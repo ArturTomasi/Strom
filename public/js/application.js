@@ -72,7 +72,8 @@
         .when('/reportPosting', 
         {
             templateUrl: '/partials/Reports/ReportPosting.html',
-            controller: 'PostingController'
+            controller: 'PostingController',
+            report: true
         } )
 
         .when('/reportUser', 

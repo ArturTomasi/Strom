@@ -41,6 +41,17 @@ angular.module( 'Strom' )
 	return PostingForm;
 }] )
 
+.directive('postingMail', [ function () 
+{
+	var PostingMail = {};
+
+	PostingMail.restrict = 'E';
+
+	PostingMail.templateUrl = 'partials/Posting/PostingMail.html';
+	
+	return PostingMail; 
+} ] )
+
 .directive( 'postingFilter', [ 'UserService', 'CategoryService', 'EntityService', 'CompletionTypeService',
 					 function ( UserService, CategoryService, EntityService, CompletionTypeService ) 
 {

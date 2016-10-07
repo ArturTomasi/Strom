@@ -4,6 +4,8 @@ module.exports = function ( app )
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
     var MyReport = require( '../utils/MyReport.js' )( app );
+    var Mail     = require( '../utils/PostingMail.js' )( app );
+
     var moment   = require( 'moment' );
                 
     /**
@@ -251,8 +253,11 @@ module.exports = function ( app )
                       }
 
                       res.status( 200 ).json( posting );
+
                   } );
               }
+              
+              Mail.sendPosting( posting );
 
               res.status( 200 ).json( posting );
           } );

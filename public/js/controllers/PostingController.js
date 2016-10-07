@@ -1,5 +1,5 @@
-angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$filter',
-												  function (  $scope ,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $filter ) 
+angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$filter',
+												  function (  $scope ,  $route,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $filter ) 
 {
     var Posting  = {
         STATE_REGISTRED : 0,
@@ -545,6 +545,17 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
     };
 
     /**
+     * [sendPosting description]
+     * @param  {[type]} posting [description]
+     * @param  {[type]} email   [description]
+     * @return {[type]}         [description]
+     */
+    $scope.sendPosting = function( posting, email )
+    {
+        //TO DO
+    };
+
+    /**
      * [validatePermission description]
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
@@ -682,10 +693,21 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', 'PostingS
      */
     loadPostings = function()
     {
-        PostingService.getPostingAgenda( function( data )
+        if ( $route.current.$$route.report )
         {
-            $scope.postings = data;
-        } );
+            PostingService.getPostings( function( data )
+            {
+                $scope.postings = data;
+            } );
+        }
+
+        else
+        {
+            PostingService.getPostingAgenda( function( data )
+            {
+                $scope.postings = data;
+            } );
+        }
     };
     
     /**

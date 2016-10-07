@@ -1,21 +1,12 @@
-var Posting = require( '../models/Posting.js' )();
-
-var moment   = require( 'moment' );
+var Mail = require( './MyMail.js' )();
 
 function doWork()
 {
-
-	Posting.find( {} )
-    
-    .exec( function( error, data ) 
-    {
-    	console.log( data );
-    } );
-
-    setTimeout( function()
-    {
-    	console.log( "the end" );
-    }, 500 )
+     	Mail.setSubject( 'Teste do Art' );
+	Mail.setHtml( '<h1>arturlindo</h1>' );     	
+	Mail.setTo( 'Artur', 'tomasi.artur@gmail.com' );
+	Mail.send();
+     	console.log( Mail );
 }
 
 doWork();

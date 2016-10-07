@@ -6,3 +6,4 @@ public/vendor/
 dist/
 logs/
 data/
+config/mail.ini

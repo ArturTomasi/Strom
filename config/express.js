@@ -14,7 +14,7 @@ module.exports = function()
 
 	app.set( 'port', 8080 );
 	
-	jsreport().init();
+	jsreport( { httpPort: 8081 } ).init();
 	
 	app.jsreport = jsreport;
 
