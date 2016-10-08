@@ -221,5 +221,25 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
         }
     }
 
+    /**
+     * [sendMail description]
+     * @param  {[type]} wrapper [description]
+     * @return {[type]}         [description]
+     */
+    PostingService.sendMail = function( wrapper, callback )
+    {
+        $http.post( '/sendPostings/', wrapper )
+
+        .success( function()
+        {
+            eval( callback() );
+        } )
+
+        .error(function( error ) 
+        {
+            Message.alert( error );
+        } );
+    }
+
     return PostingService;
 } ] );

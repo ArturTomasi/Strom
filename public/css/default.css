@@ -354,19 +354,15 @@ ul {
   margin-top: -42x;
 }
 .login-center {
-  color: #ECEFF1;
-  border: 1px solid #ECEFF1;
-  border-radius: 10px;
+  color: #607D8B;
   position: fixed;
-  background-color: #607D8B;
   top: 50%;
   left: 50% !important;
   transform: translate(-50%, -50%);
-  padding-bottom: 20px !important;
 }
 .btn-login {
-  color: #455a64 !important;
-  background-color: #ECEFF1;
+  color: #ECEFF1 !important;
+  background-color: #607D8B;
   border: 2px solid #607D8B !important;
   font-weight: bold !important;
   border-radius: 10px !important;
@@ -377,11 +373,15 @@ ul {
   padding: 2px 12px;
   border-radius: 10px;
   display: none;
-  margin: -12px 0px;
 }
 .pagination {
   bottom: 0px;
   position: fixed;
   transform: translateX(50%);
   margin-bottom: 2px !important;
+}
+.title-login {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
 }

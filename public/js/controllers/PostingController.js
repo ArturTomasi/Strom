@@ -552,7 +552,10 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.sendPosting = function( posting, email )
     {
-        //TO DO
+        PostingService.sendMail( { email: email, posting : posting }, function()
+        {
+            $( '#postingMail' ).modal( 'hide' );
+        } );
     };
 
     /**

@@ -18,11 +18,11 @@
         <%if( ! currentUser ) { %>
         <div id="login" class="container login-center" style="width: 500px; margin: auto">
             <form class="form-signin">
-                <h2 class="form-signin-heading">Strom</h2>
-                <label for="inputLogin" class="sr-only">Login</label>
-                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus required>
-                <label for="inputPassword" class="sr-only">Senha</label>
-                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+                <h2 class="form-signin-heading title-login">Strom</h2>
+                <label for="inputLogin">Login</label>
+                <input data-ng-required="true" data-ng-model="user.username" name="username" type="text" id="inputLogin" class="form-control" placeholder="Digite seu Login" autofocus required>
+                <label for="inputPassword">Senha</label>
+                <input data-ng-required="true" data-ng-model="user.password" name="password" type="password" id="inputPassword" class="form-control" placeholder="Digite sua Senha" required>
 
                 <button class="btn btn-lg btn-login btn-block" type="button" data-ng-click="login( user )"> Sign in</button>
             </form>

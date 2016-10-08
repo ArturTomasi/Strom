@@ -2,10 +2,28 @@ module.exports = function ( app )
 {
     var Mail = require( './MyMail.js' )();
 
-    var Posting = app.models.Posting;
+    var Posting = app.models.Posting,
+        _to, 
+        _subject = 'Strom: Lançamento',
+        _content;
     
     var PostingMail = {};
-       
+
+    PostingMail.setTo = function( to )
+    {
+        _to = to;
+    }
+     
+    PostingMail.setSubject = function( subject )
+    {
+        _subject = subject;
+    }  
+
+    PostingMail.setContent = function( content )
+    {
+        _content = content;
+    }
+
     PostingMail.sendPosting = function( posting )
     {  
         Posting.find( { _id: posting._id } )
@@ -21,11 +39,23 @@ module.exports = function ( app )
 
                 _user = _posting.user;
 
-                Mail.setSubject( 'Strom: Lançamento' );
+                Mail.setSubject( _subject );
 
-                Mail.setHtml( _generateBody( _posting ) );      
+                var _body = _generateBody( _posting );
+
+                if ( _content )
+                {
+                    _body = '<div style="width: 100%">' +
+                                _content +
+                            '</div>' +
+                            '<hr>' +
+                            _body;
+                }
+
+                Mail.setHtml( _body );      
                 
-                Mail.setTo( _user.name, _user.email );
+                Mail.setTo( _to ? _to : _user.name, 
+                            _to ? _to : _user.email );
                 
                 _posting.attachments.map( function( file )
                 {

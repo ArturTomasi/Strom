@@ -4,7 +4,7 @@ module.exports = function ( app )
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
     var MyReport = require( '../utils/MyReport.js' )( app );
-    var Mail     = require( '../utils/PostingMail.js' )( app );
+    var Mail     = require( '../utils/PostingMail.js' );
 
     var moment   = require( 'moment' );
                 
@@ -257,7 +257,7 @@ module.exports = function ( app )
                   } );
               }
               
-              Mail.sendPosting( posting );
+              new Mail( app ).sendPosting( posting );
 
               res.status( 200 ).json( posting );
           } );
@@ -329,6 +329,26 @@ module.exports = function ( app )
             } );
         }
     };
+
+    /**
+     * [sendPosting description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.sendPosting = function( req, res )
+    {
+        var wrapper = req.body;
+
+        var email = new Mail( app );
+
+        email.setSubject( wrapper.email.subject );
+        email.setTo( wrapper.email.to );
+        email.setContent( wrapper.email.content );
+        email.sendPosting( wrapper.posting );
+
+        res.status( 200 ).json( { ok : 'ok' } );
+    }
 
     /**
      * [createPortions description]

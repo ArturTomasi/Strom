@@ -35,4 +35,6 @@ module.exports = function( app )
     app.delete('/postings/:id', checkAuthenticated, controller.deletePosting );
 
     app.post( '/printPostings', checkAuthenticated, controller.printPosting );
+    
+    app.post( '/sendPostings', checkAuthenticated, controller.sendPosting );
 };
