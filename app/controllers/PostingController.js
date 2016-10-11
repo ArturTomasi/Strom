@@ -50,10 +50,15 @@ module.exports = function ( app )
      */
     controller.getPostingFiltered = function( req, res )
     {
+        console.log( "body" );
+        console.log( JSON.stringify( req.body ) );
+
+
         var query = composeFilter( req.body );
 
         if ( query )
         {
+            console.log( "query" );
             console.log( JSON.stringify( query ) );
             Posting
             .find( query )
@@ -626,10 +631,10 @@ module.exports = function ( app )
   
                 conditions.$or.push( where );
             } );
+          
+            query.$and.push( conditions );
         };
  
-        query.$and.push( conditions );
-
         return query;
     };
 

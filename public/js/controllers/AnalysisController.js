@@ -141,22 +141,22 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
         
             PostingService.getMapMonth( function( items )
             {
-                items.forEach( function( item )
+                items.forEach( function( item, i )
                 {
-                    categoriesMonth.push( "Dia " + new Date( item._id.date ).getDate() );
+                    categoriesMonth.push( "Parcela " + i );
 
                     if ( item._id.type === 'Despesa' )
                     {
-                    var last = revenueData.slice( -1 );
+                        var last = costData.slice( -1 );
 
-                      costData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
+                        costData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
                     }
                     
                     if ( item._id.type === 'Receita' )
                     {
-                      var last = revenueData.slice( -1 );
+                        var last = revenueData.slice( -1 );
 
-                      revenueData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
+                        revenueData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
                     }
                 } );
 
