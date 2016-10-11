@@ -24,6 +24,10 @@ module.exports = function( app )
     
     app.get('/mapMonth', checkAuthenticated, controller.getMapMonth );
     
+    app.get('/progressPosting', checkAuthenticated, controller.getProgress );
+    
+    app.get('/historyPosting', checkAuthenticated, controller.getHistory );
+    
     app.get('/postings/:id', checkAuthenticated, controller.getPosting );
         
     app.post('/postings', checkAuthenticated, controller.addPosting );

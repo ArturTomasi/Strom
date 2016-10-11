@@ -15,7 +15,7 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
           {
               Session.put( 'ActiveUser', user );
 
-              $location.path( '/posting' );
+              $location.path( '/home' );
               window.location.reload();
 
           } )

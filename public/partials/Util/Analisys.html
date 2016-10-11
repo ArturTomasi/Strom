@@ -1,3 +1,18 @@
 <div class="pane-center col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    <div id="drilldown" style="height: 100%"></div>
+    
+    <div style="height: 100%">
+	    <ul data-ng-model="tabActive" data-ng-init="tabActive = 'costsTab'" class="nav nav-tabs">
+		    <li class="active"><a data-toggle="tab" data-ng-click="refresh( 'costsTab' )">Receita x Despesas</a></li>
+		    <li><a data-toggle="tab" data-ng-click="refresh( 'drilldownTab' )">DrillDown - Categorias</a></li>
+		</ul>
+		
+		<div class="tab-content">
+	        <div id="costsTab" class="tab-pane active" data-ng-show="tabActive == 'costsTab'">
+	        	 <div id="homeChart" style="height: 100%; padding-bottom: 10px;"></div>
+			</div>
+			<div id="drilldownTab" class="tab-pane active" data-ng-show="tabActive == 'drilldownTab'">
+	 	   		<div id="drilldown" style="height: 100%; padding-bottom: 10px;"></div>
+			</div>
+		</div>
+    </div>
 </div>

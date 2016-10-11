@@ -134,7 +134,9 @@ module.exports = function ( app )
                        $exists: true, 
                        $gte: new Date( moment().startOf( 'month' ) ), 
                        $lte: new Date( moment().endOf( 'month' ) ) 
-                     }
+                     },
+            state : { $ne : STATE_DELETED },
+            user  : req.user._id
         } )
 
         .group( 
@@ -143,10 +145,78 @@ module.exports = function ( app )
             sum :  { $sum: "$realValue" },
             count: { $sum: 1 } 
         } )
-        
+        .sort( 'realDate' )
         .exec( function( error, data ) 
         {
             if ( error ) res.status( 500 ).json( error );
+
+            res.status( 200 ).json( data );
+        } );
+    };
+
+    /**
+     * [getProgress description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.getProgress = function( req, res )
+    {
+        Posting.aggregate()
+        
+        .match(
+        {
+            state : { $ne : STATE_DELETED },
+            user  : req.user._id
+        } )
+
+        .group(
+        {
+            _id:           "$type",
+            realValue:     { $sum: "$realValue" },
+            estimateValue: { $sum: "$estimateValue" },
+            count:         { $sum: 1 }
+        } )
+
+        .sort( 'type' )
+
+        .exec( function( error, data )
+        {
+            if ( error ) res.status( 500 ).json( error );
+            
+            res.status( 200 ).json( data );
+
+        } );
+    }
+
+    /**
+     * [getHistory description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.getHistory = function( req, res )
+    {
+        Posting.aggregate()
+        
+        .match(
+        {
+            realDate: { $exists: true },
+            state : STATE_FINISHED, 
+            user  : req.user._id
+        } )
+
+        .group( 
+        {
+            _id: { date: { $month: "$realDate" }, type : "$type" },
+            realValue : { $sum: "$realValue" }
+        } )
+
+        .sort( 'type' )
+
+        .exec( function( error, data )
+        {
+            if ( error ) res.status(500).json( error );
 
             res.status( 200 ).json( data );
         } );

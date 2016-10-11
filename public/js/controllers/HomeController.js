@@ -1,70 +1,33 @@
 angular.module( "Strom" ).controller('HomeController', [ '$scope', 'PostingService', function ( $scope, PostingService )
 {
-	var revenueData = [], costData = [], categories = [];
+    $scope.groupCost;
+    $scope.percentCost;
+    $scope.percentRevenue;
+    $scope.groupRevenue;
 
-	function refreshGraphic()
-	{
-	    $( '#homeChart' ).highcharts(
-        {
-            chart:    { backgroundColor: '#ECEFF1' },
-            title:    { text: 'Balanço Mensal - ' + moment().format( 'MMMM' ), style: { fontWeight: 'bold', color: "#607D8B" } },
-            subtitle: { text: 'Acumulado dos lançamentos finalizados do mês de ' + moment().format( 'MMMM' ) + " (por dia)", style: { color: "#607D8B" } },
-            tooltip:  { shared: true, pointFormat: '{series.name}: <b>R$ {point.y:,.2f}</b><br/>' },
-            legend:   { layout: 'horizontal', align: 'center', verticalAlign: 'bottom', floating: false, backgroundColor: 'transparent' },
+    adjustData = function( data )
+    {
+        $scope.groupCost    = data[1];
+        $scope.groupRevenue = data[0];
 
-            xAxis: [ { categories: categories, crosshair: true } ],
-            yAxis: [
-            {
-                labels: { format: '{value}', enabled: false, style: { color: 'red' } },
-                title:  { text: 'Despesas',  enabled: false, style: { color: 'red' } }
-            },
-            {
-                labels: { format: '{value}', enabled: false, style: { color: 'green' } },
-                title:  { text: 'Receitas',  enabled: false, style: { color: 'green' } }
-            } ],
+        var sum = $scope.groupCost.realValue + $scope.groupRevenue.realValue;
 
-            series: [
-            {
-                name: 'Despesas', type: 'column', color: '#e60000', data: costData
-            },
-            {
-                name: 'Receitas', type: 'spline', color: '#009933', data: revenueData
-            } ],
-            credits: [ { enabled: false } ]
-        } );
-	};
+        $scope.percentCost    = Math.round( ( $scope.groupCost.realValue * 100 ) / sum );
+        $scope.percentRevenue = Math.round( ( $scope.groupRevenue.realValue * 100 ) / sum );
+    }
 
-	/**
-	 * [init description]
-	 * @return {[type]} [description]
-	 */
 	function init()
-	{
-		PostingService.getMapMonth( function( items )
-		{
-            items.forEach( function( item )
-            {
-            	categories.push( "Dia " + new Date( item._id.date ).getDate() );
+    {
+        PostingService.getProgressPosting( function( data )
+        {
+            adjustData( data );
+        } );
 
-            	if ( item._id.type === 'Despesa' )
-            	{
-        			var last = revenueData.slice( -1 );
+        PostingService.getHistory( function( data )
+        {
+            console.log( data );
+        } );
+    }
 
-            		costData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
-            	}
-            	
-            	if ( item._id.type === 'Receita' )
-            	{
-            		var last = revenueData.slice( -1 );
-
-            		revenueData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
-            	}
-            } );
-
-            refreshGraphic();
-		} );
-	};
-
-	init();
-
+    init();
 } ] );

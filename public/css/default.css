@@ -385,3 +385,102 @@ ul {
   font-size: 40px;
   font-weight: bold;
 }
+.card {
+  padding-top: 5px;
+  height: 70px !important;
+  background-color: rgba(96, 125, 139, 0.13);
+  border: 2px solid #607D8B;
+  margin: 20px;
+  border-radius: 10px;
+}
+.card-hand {
+  color: #607D8B;
+  font-size: 50px;
+}
+.card-hand-cost {
+  color: #d9534f;
+}
+.card-hand-revenue {
+  color: #5cb85c;
+}
+.card-title {
+  font-weight: bold;
+  color: #607D8B;
+  padding-top: 5px;
+}
+.card-revenue {
+  font-weight: bold;
+  color: #5cb85c;
+}
+.card-cost {
+  font-weight: bold;
+  color: #d9534f;
+}
+figure {
+  width: 128px;
+  height: 111px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  position: relative;
+}
+figure:before {
+  content: '';
+  display: block;
+  width: 128px;
+  height: 69px;
+  border-radius: 10px 10px 0 0;
+  background-image: -webkit-linear-gradient(white 0%, #edeeef 100%);
+  background-image: -moz-linear-gradient(white 0%, #edeeef 100%);
+  background-image: -o-linear-gradient(white 0%, #edeeef 100%);
+  background-image: linear-gradient(white 0%, #edeeef 100%);
+}
+figure header {
+  width: 128px;
+  height: 27px;
+  position: absolute;
+  top: -1px;
+  background-color: #607D8B;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 3px solid #ECEFF1;
+  font: 600 20px/27px Arial, Helvetica, Geneva, sans-serif;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-align: center;
+}
+figure section {
+  width: 128px;
+  height: 80px;
+  position: absolute;
+  top: 28px;
+  font: 600 65px/75px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+  letter-spacing: -2px;
+  color: #607D8B;
+  text-align: center;
+  z-index: 10;
+}
+figure section:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 35px;
+  width: 3px;
+  height: 10px;
+  background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+}
+figure section:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 3px;
+  height: 10px;
+  background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+  background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+}
+/* @end */

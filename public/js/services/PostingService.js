@@ -117,7 +117,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
     {
         var d = $q.defer();
 
-        $http.get( 'mapMonth' )
+        $http.get( '/mapMonth/' )
 
         .success( function( map )
         {
@@ -133,6 +133,58 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         return d.promise;
     };
+
+    /**
+     * [getProgressPosting description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.getProgressPosting = function( callback )
+    {
+        var d = $q.defer();
+
+        $http.get( '/progressPosting/' )
+
+        .success( function( data )
+        {
+            eval( callback( data ) );
+
+            d.resolve( data );
+        } )
+
+        .error( function( error )
+        {
+            Message.alert( error );
+        } );
+
+        return d.promise;
+    };
+
+    /**
+     * [getHistory description]
+     * @param  {Function} callback [description]
+     * @return {[type]}            [description]
+     */
+    PostingService.getHistory = function( callback )
+    {
+        var d = $q.defer();
+
+        $http.get( '/historyPosting/' )
+
+        .success( function( data )
+        {
+            eval( callback( data ) );
+
+            d.resolve( data );
+        } )
+
+        .error( function( error ) 
+        {
+            Message.alert( error );
+        } );
+
+        return d.promise;
+    }
 
     /**
      * 

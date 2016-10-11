@@ -100,6 +100,6 @@
             controller: 'CategoryController'
         } );
         
-        $routeProvider.otherwise( { redirectTo: '/#/home' } );
+        $routeProvider.otherwise( { redirectTo: '/home' } );
     } ] );
 })();

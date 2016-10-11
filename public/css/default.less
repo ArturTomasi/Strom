@@ -4,6 +4,8 @@
 @main-color-black: #455a64; 
 @main-color-light: #b0bec5;
 @main-color-light2: #cfd8dc;
+@color-revenue: #5cb85c;
+@color-cost:  #d9534f;
 
 .jumbotron 
 {
@@ -533,3 +535,138 @@ ul
     font-size: 40px;
     font-weight: bold;
 }
+
+.card {
+    padding-top: 5px;
+    height: 70px !important;
+    background-color: rgba(96,125,139,0.13);
+    border: 2px solid @main-color;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.card-hand {
+    color: @main-color;
+    font-size: 50px;
+}
+
+.card-hand-cost {
+    color: @color-cost;
+}
+
+.card-hand-revenue {
+    color: @color-revenue;
+}
+
+.card-title {
+    font-weight: bold;
+    color: @main-color;
+    padding-top: 5px;
+}
+
+.card-revenue {
+    font-weight: bold;
+    color: @color-revenue;
+}
+
+.card-cost {
+    font-weight: bold;
+    color: @color-cost;
+}
+
+figure 
+{
+    width: 128px;
+    height: 111px;
+    
+    background-color: #ffffff;
+    border-radius: 10px;
+    
+    position: relative;
+    
+    &:before {
+        content: '';
+        display: block;
+        
+        width:128px;
+        height: 69px;
+        
+        border-radius: 10px 10px 0 0;
+        
+        background-image: -webkit-linear-gradient(white 0%, #edeeef 100%); 
+        background-image: -moz-linear-gradient(white 0%, #edeeef 100%); 
+        background-image: -o-linear-gradient(white 0%, #edeeef 100%); 
+        background-image: linear-gradient(white 0%, #edeeef 100%);
+
+    }
+    
+    header {
+        width: 128px;
+        height: 27px;
+        
+        position: absolute;
+        top: -1px;
+        
+        background-color: @main-color;
+        border-radius: 10px 10px 0 0;
+        border-bottom: 3px solid @back-color;
+        
+        font: 600 20px/27px Arial, Helvetica, Geneva, sans-serif;
+        letter-spacing: 0.5px;
+        color: #fff;
+        
+        text-align: center;
+    }
+    
+    section {
+        width: 128px;
+        height: 80px;
+        
+        position: absolute;
+        top: 28px;
+        
+        font: 600 65px/75px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+        letter-spacing: -2px;
+        color: @main-color;
+        
+        text-align: center;
+        
+        z-index: 10;
+        
+        &:before {
+            content: '';
+            display: block;
+            
+            position: absolute;
+            top: 35px;
+                        
+            width: 3px;
+            height: 10px;
+            
+            background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+        }
+        
+        &:after {
+            content: '';
+            display: block;
+            
+            position: absolute;
+            top: 35px;
+            right: 0;
+                        
+            width: 3px;
+            height: 10px;
+            
+            background-image: -webkit-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: -moz-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%); 
+            background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
+        }
+        
+    }
+}
+
+/* @end */

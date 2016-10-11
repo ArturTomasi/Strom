@@ -1,3 +1,92 @@
 <div class="pane-center col-xs-10 col-sm-10 col-md-10 col-lg-10">
-    <div id="homeChart" style="height: 100%"></div>
+   
+    <div class="row">
+        <div class="col-xs-10">
+            <div class="progress">
+				<div class="progress-bar progress-bar-success" 
+					 role="progressbar" 
+					 aria-valuenow="{{percentRevenue}}" 
+					 aria-valuemin="0" 
+					 aria-valuemax="100"
+					 style="width: {{percentRevenue }}%" >
+				    <span>{{percentRevenue + '% Receitas'}}</span>
+				</div>
+			</div>
+        </div>
+        <div class="col-xs-2">
+            <span style="font-weight: bold; color: #5cb85c">R$ {{groupRevenue.realValue.toFixed(2)}}</span>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-xs-10">
+            <div class="progress">
+		  		<div class="progress-bar progress-bar-danger" 
+		  		     role="progressbar" 
+		  		     aria-valuenow="{{percentCost}}" 
+		  		     aria-valuemin="0" 
+		  		     aria-valuemax="100"
+		  		     style="width: {{percentCost}}%" >
+					<span>{{ percentCost  + '% Despesas' }}</span>
+					</div>
+			</div>
+    	</div>
+        <div class="col-xs-2">
+            <span style="font-weight: bold; color: #d9534f;">R$ {{groupCost.realValue.toFixed(2)}}</span>
+        </div>
+    </div>
+    
+    <ul class="row">
+		<li>
+		  	<div class="card">
+		  		<div class="col-xs-12">
+			  		<div class="col-xs-1">
+				  		<figure style="zoom: 0.5">
+							<header>
+								2016
+							</header>
+							<section>
+								Out
+							</section>
+						</figure>
+			  		</div>
+			  		<div class="col-xs-10">
+			  			<span class="card-revenue" >Receitas: &nbsp R$ 125.25</span>
+			  			</p>
+			  			</p>
+			  			<span class="card-cost" >Despesas: R$ 255.00</span>
+			  		</div>
+			  		<div class="col-xs-1">
+		  				<i class="fa fa-thumbs-down card-hand card-hand-cost" aria-hidden="true"></i>
+			  		</div>
+		  		</div>
+		  	</div>
+		</li>
+		<li>
+		  	<div class="card">
+		  		<div class="col-xs-12">
+			  		<div class="col-xs-1">
+				  		<figure style="zoom: 0.5">
+							<header>
+								2016
+							</header>
+							<section>
+								Set
+							</section>
+						</figure>
+			  			<!-- <i class="fa fa-calendar-o card-hand" aria-hidden="true"> 8 </i> -->
+			  		</div>
+			  		<div class="col-xs-10">
+			  			<span class="card-revenue" >Receitas: &nbsp R$ 300.25</span>
+			  			</p>
+			  			</p>
+			  			<span class="card-cost" >Despesas: R$ 125.25</span>
+			  		</div>
+			  		<div class="col-xs-1">
+		  				<i class="fa fa-thumbs-up card-hand card-hand-revenue" aria-hidden="true"></i>
+			  		</div>
+		  		</div>
+		  	</div>
+		</li>
+    </ul>
+
 </div>
