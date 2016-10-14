@@ -136,11 +136,11 @@ module.exports = function ( app )
             switch ( error.path )
             {
                 case 'name':
-                    msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Nome (' + error.value + ') ' +  error.message;
                 break;
 
                 case 'type':
-                    msg +=  '<br>' + 'Tipo (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Tipo (' + error.value + ') ' +  error.message;
                 break;
                
             }

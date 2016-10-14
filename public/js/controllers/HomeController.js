@@ -4,7 +4,8 @@ angular.module( "Strom" ).controller('HomeController', [ '$scope', 'PostingServi
     $scope.percentCost;
     $scope.percentRevenue;
     $scope.groupRevenue;
-
+    $scope.groupMonth;
+    
     adjustData = function( data )
     {
         $scope.groupCost    = data[1];
@@ -25,6 +26,7 @@ angular.module( "Strom" ).controller('HomeController', [ '$scope', 'PostingServi
 
         PostingService.getHistory( function( data )
         {
+            $scope.groupMonth = data;
             console.log( data );
         } );
     }

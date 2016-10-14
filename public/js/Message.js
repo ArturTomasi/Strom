@@ -1,5 +1,3 @@
-/* global module, define */
-
 (function (root, factory) {
 
     "use strict";
@@ -17,181 +15,106 @@
         // planted over the root!
         root.Message = factory(root.jQuery);
     }
-
 }
 (this, function ($) 
 {
     var Message = new Object();
-    
-    
-    Message.alert = function ( message ) {
+
+    Message.alert = function ( message ) 
+    {
+        if ( typeof message === 'object' ) message = JSON.stringify( message );
         
-        var mess = message ?  message : 'Alert' ;
-
-        var dialog = new BootstrapDialog( 
-        {
-            message: function( dialogRef )
-            {
-                var $body = $('<div></div>');
-                var $title = $('<div style="font-size: 20px; font-weight: bold;">Information</div>');
-                
-                var $message = $('<div  style="height:115px;font-size: 15px;">' + mess + '</div>' );
-
-                var $button  = $('<span style="font-size: 20px; padding-right:10px; float: right; cursor: pointer;" class="glyphicon glyphicon-ok" aria-hidden="true"></span>');
-                
-                $button.on('click', {dialogRef: dialogRef}, function(event){
-                    event.data.dialogRef.close();
-                });
-
-                $body.append($title);
-                $body.append($message);
-                $body.append($button);
-                
-                return $body;
-            }
-        });
-
-        dialog.realize();
-        dialog.getModalHeader().hide();
-        dialog.getModalFooter().hide();
-        dialog.getModalBody().css('color', '#fff');
-        dialog.getModalBody().css('background-color' , '#ec971f');
-        dialog.getModalBody().css('border-color' , '#d58512');
-        dialog.getModalBody().css('border-radius', '20px');
-        dialog.getModalContent().css('border-radius', '20px');
-        dialog.getModalContent().height( '200px');
-        dialog.getModalBody().height( '200px');
-        dialog.open();   
+        swal("Atenção!", message, "warning");
     };
 
-    Message.success = function ( message ) {
-        
-        var mess = message ? message : 'Success' ;
+    Message.error = function ( message ) 
+    {
+        if ( typeof message === 'object' ) message = JSON.stringify( message );
 
-        var dialog = new BootstrapDialog( 
-        {
-            message: function( dialogRef )
-            {
-                var $body = $('<div></div>');
-                var $title = $('<div style="font-size: 20px; font-weight: bold;">Information</div>');
-                
-                var $message = $('<div  style="height:115px;font-size: 15px;">' + mess + '</div>' );
-
-                var $button  = $('<span style="font-size: 20px; padding-right:10px; float: right; cursor: pointer;" class="glyphicon glyphicon-ok" aria-hidden="true"></span>');
-                
-                $button.on('click', {dialogRef: dialogRef}, function(event){
-                    event.data.dialogRef.close();
-                });
-
-                $body.append($title);
-                $body.append($message);
-                $body.append($button);
-                
-                return $body;
-            }
-        });
-
-        dialog.realize();
-        dialog.getModalHeader().hide();
-        dialog.getModalFooter().hide();
-        dialog.getModalBody().css('color', '#fff');
-        dialog.getModalBody().css('background-color' , '#419641');
-        dialog.getModalBody().css('border-color' , '#398439');
-        dialog.getModalBody().css('border-radius', '20px');
-        dialog.getModalContent().css('border-radius', '20px');
-        dialog.getModalContent().height( '200px');
-        dialog.getModalBody().height( '200px');
-        dialog.open();   
+        swal("Opss!", message , "error" );
     };
 
-    Message.error = function ( title, message ) {
-
-        var mess = ( message ) ? message : title ? title : 'Error Inesperado' ;
-
-        var dialog = new BootstrapDialog( 
-        {
-            message: function( dialogRef )
-            {
-                var $body = $('<div></div>');
-                var $title = $('<div style="font-size: 20px; font-weight: bold;">' + title + ' </div>');
-                
-                var $message = $('<div  style="font-size: 15px;"> ' + mess + '</div>' );
-
-                var $button  = $('<span style="font-size: 20px; float: right; cursor: pointer;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
-                
-                $button.on('click', {dialogRef: dialogRef}, function(event){
-                    event.data.dialogRef.close();
-                });
-
-                $body.append($button);
-                $body.append($title);
-                $body.append($message);
-                
-                return $body;
+    Message.success = function ( message ) 
+    {
+        swal("Sucesso!", message , "success");
+    };    
+    
+    Message.confirm = function ( message , callback, param ) 
+    {
+        swal({   
+            title: "Continuar ?",   
+            text: message,   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#459c50",   
+            confirmButtonText: "Sim!",   
+            cancelButtonText: "Cancelar",   
+            closeOnConfirm: true 
+        }, function( isConfirm ){   
+            if( isConfirm ) {
+                eval( callback( param ) );
             }
         });
-
-        dialog.realize();
-        dialog.getModalHeader().hide();
-        dialog.getModalFooter().hide();
-        dialog.getModalBody().css('color', '#fff');
-        dialog.getModalBody().css('background-color' , '#c9302c');
-        dialog.getModalBody().css('border-color' , '#ac2925');
-        dialog.getModalBody().css('border-radius', '20px');
-        dialog.getModalContent().css('border-radius', '20px');
-        dialog.getModalContent().height( '200px');
-        dialog.getModalBody().height( '200px');
-        dialog.open();
     };
 
-    Message.confirm = function ( message , callback ) {
-         
-        var dialog = new BootstrapDialog( 
-        {
-            message: function( dialogRef )
-            {
-                var $body = $('<div></div>');
-                var $title = $('<div style="font-size: 20px; font-weight: bold;">Information</div>');
-                
-                var $message = $('<div  style="height:115px;font-size: 15px;"> ' + message + '</div>' );
-
-                var $buttons = $('<div style="font-size: 20px; paddingRight:10px; float: right; cursor: pointer;"></div>');
-                var $buttonCancel  = $('<button class=" btn btn-danger glyphicon glyphicon-remove"></button>');
-                var $buttonOk      = $('<button class=" btn btn-success glyphicon glyphicon-ok"></button>');
-                
-                $buttonCancel.on('click', {dialogRef: dialogRef}, function(event){
-                    event.data.dialogRef.close();
-                });
-
-                $buttonOk.on('click', {dialogRef: dialogRef}, function(event){
-                    event.data.dialogRef.close();
-                    eval( callback() );
-                });
-
-                $buttons.append($buttonOk);
-                $buttons.append($buttonCancel);
-
-                $body.append($title);
-                $body.append($message);
-                $body.append($buttons);
-                
-                return $body;
-            }
+    Message.question = function ( message , callback, title, message_confirm ) 
+    {
+        var m = (message_confirm)? message_confirm : 'Yes, do it!';
+        var t = (title)? title : 'Are you sure?';
+        swal({   
+            title: t,   
+            text: message,   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#459c50",   
+            confirmButtonText: message_confirm,   
+            closeOnConfirm: true 
+            }, function(){   
+                eval( callback() );
         });
-
-        dialog.realize();
-        dialog.getModalHeader().hide();
-        dialog.getModalFooter().hide();
-        dialog.getModalBody().css('color', '#fff');
-        dialog.getModalBody().css('background-color' , '#286090');
-        dialog.getModalBody().css('border-color' , '#204d74');
-        dialog.getModalBody().css('border-radius', '20px');
-        dialog.getModalContent().css('border-radius', '20px');
-        dialog.getModalContent().height( '200px');
-        dialog.getModalBody().height( '200px');
-        dialog.open();
     };
 
+    Message.prompt = function ( message ) 
+    {
+        swal({   
+            title: message,   
+            type: "input",   
+            showCancelButton: true,   
+            closeOnConfirm: false,   
+            animation: "slide-from-top",   
+            inputPlaceholder: "..." 
+        }, function(inputValue) {   
+            if (inputValue === false) return false;      
+            if (inputValue === "") {     
+                swal.showInputError("Please, " + message + "!" );     
+                return false;   
+            }      
+            swal("Success!", "", "success"); 
+        });
+    };
+
+    Message.text = function ( message, function_eval ) 
+    {
+        swal({   
+            title: message,   
+            text: "<textarea id='mytextareaalert' col='10' rows='4'></textarea>",   
+            showCancelButton: true,   
+            closeOnConfirm: false,   
+            animation: "slide-from-top",   
+            inputPlaceholder: "..." ,
+            html: true
+        }, function() {
+            var text = $('#mytextareaalert');
+
+            if (text.val() === false) return false;      
+            if (text.val() === "") {
+                $( '#mytextareaalert' ).after( '<div id="myerror" class="sa-error-container show"><div class="icon">!</div><p> Please, '+ message +'!</p></div>' );
+                return false;   
+            }
+            eval( function_eval( text.val() ) );      
+            swal("Success!", text.val() , "success"); 
+        });
+    };
     return Message;
 
  }));

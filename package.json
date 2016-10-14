@@ -16,7 +16,6 @@
     "express-load": "^1.1.15",
     "express-session": "^1.14.0",
     "helmet": "^2.1.1",
-    "html-pdf": "^2.1.0",
     "jsreport": "^1.0.9",
     "method-override": "^2.3.6",
     "mongo-sanitize": "^1.0.0",

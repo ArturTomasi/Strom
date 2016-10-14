@@ -70,7 +70,7 @@ angular.module( 'Strom' ).factory( 'EntityService', [ '$q', '$http', function( $
             
             .error( function (error) 
             {
-              Message.alert( error );
+              Message.error( error );
             } );  
         }
         
@@ -85,7 +85,7 @@ angular.module( 'Strom' ).factory( 'EntityService', [ '$q', '$http', function( $
             
             .error( function (error) 
             {
-                Message.alert( error );
+                Message.error( error );
             } );
         }
     };

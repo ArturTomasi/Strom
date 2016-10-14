@@ -136,19 +136,19 @@ module.exports = function ( app )
             switch ( error.path )
             {
                 case 'name':
-                    msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Nome (' + error.value + ') ' +  error.message;
                 break;
                 
                 case 'email':
-                    msg +=  '<br>' + 'Email (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Email (' + error.value + ') ' +  error.message;
                 break;
                 
                 case 'phone':
-                    msg +=  '<br>' + 'Telefone (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Telefone (' + error.value + ') ' +  error.message;
                 break;
             
                 case 'cnpj':
-                    msg +=  '<br>' + 'CNPJ (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'CNPJ (' + error.value + ') ' +  error.message;
                 break;
             }
         }

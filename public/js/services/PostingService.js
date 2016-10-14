@@ -76,7 +76,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error ( function ( error )
         {
-            Message.alert( error );            
+            Message.error( error );            
         });
 
         return d.promise;
@@ -102,7 +102,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error( function( error ) 
         {
-            Message.alert( error );
+            Message.error( error );
         } );
 
         return d.promise;
@@ -128,7 +128,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error( function( error ) 
         {
-            Message.alert( error );
+            Message.error( error );
         } );
 
         return d.promise;
@@ -154,7 +154,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error( function( error )
         {
-            Message.alert( error );
+            Message.error( error );
         } );
 
         return d.promise;
@@ -180,7 +180,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error( function( error ) 
         {
-            Message.alert( error );
+            Message.error( error );
         } );
 
         return d.promise;
@@ -205,7 +205,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             
             .error( function (error) 
             {
-              Message.alert( error );
+              Message.error( error );
             } );  
         }
         
@@ -220,7 +220,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             
             .error( function (error) 
             {
-                Message.alert( error );
+                Message.error( error );
             } );
         }
     };
@@ -244,7 +244,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
             .error( function (error) 
             {
-                Message.alert( error );
+                Message.error( error );
             } );
         }
     };
@@ -268,7 +268,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             
             .error( function (error) 
             {
-                Message.alert( error );            
+                Message.error( error );            
             } );  
         }
     }
@@ -289,7 +289,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error(function( error ) 
         {
-            Message.alert( error );
+            Message.error( error );
         } );
     }
 

@@ -213,8 +213,13 @@ module.exports = function ( app )
 
         .group( 
         {
-            _id: { date: { $month: "$realDate" }, type : "$type" },
-            realValue : { $sum: "$realValue" }
+            _id: 
+            { 
+                year:  { $year: '$realDate' }, 
+                month: { $month: "$realDate" },
+                type : "$type" 
+            },
+            realValue:{ $sum: "$realValue" }
         } )
 
         .sort( 'type' )
@@ -504,40 +509,40 @@ module.exports = function ( app )
             errors += "As parcelas do lançamento devem ser entre 1 e 12";
 
         if( notFinish && ! posting.estimateDate )
-            errors += "A data estimada não pode estar vazia !<br>";
+            errors += "A data estimada não pode estar vazia !\n";
 
         if( notFinish && ! posting.estimateValue )
-            errors += "O valor estimado está inválido !<br>";
+            errors += "O valor estimado está inválido !\n";
 
         if( ! posting.name )
             errors += "O Nome não pode estar vazio!";
 
         if( ( posting.completionAuto || ! notFinish ) && ! posting.completionType )
-            errors += "O tipo de finalização não pode estar vazio!<br>";
+            errors += "O tipo de finalização não pode estar vazio!\n";
 
         if( posting.realDate && ! posting.completionType )
-            errors += "O tipo de finalização não pode estar vazio<br>";
+            errors += "O tipo de finalização não pode estar vazio\n";
 
         if( notFinish && ! posting.entity )
-            errors += "A empresa do lançamento não pode estar vazio!<br>";
+            errors += "A empresa do lançamento não pode estar vazio!\n";
 
         if( notFinish && ! posting.user )
-            errors += "A responsável do lançamento não de estar vazio!<br>";
+            errors += "A responsável do lançamento não de estar vazio!\n";
 
         if( notFinish && ! posting.category )
-            errors += "A categoria do lançamento não pode estar vazio!<br>";
+            errors += "A categoria do lançamento não pode estar vazio!\n";
 
         if( ! notFinish && ! posting.realValue  )
-            erros += "O valor real não pode estar vazia!<br>";
+            erros += "O valor real não pode estar vazia!\n";
 
         if( ! notFinish && ! posting.realDate )
-            errors += "A data real não pode estar vazia!<br>";
+            errors += "A data real não pode estar vazia!\n";
 
         if( notFinish && posting.realDate && ! posting.realValue )
-            errors += "A valor real não pode ser 0!<br>";
+            errors += "A valor real não pode ser 0!\n";
 
         if( notFinish && posting.realValue && ! posting.realDate )
-            errors += "A data real não pode estar vazia<br>!";
+            errors += "A data real não pode estar vazia\n!";
 
         if ( errors ) return errors;
     };
@@ -654,7 +659,7 @@ module.exports = function ( app )
             switch ( error.path )
             {
                 case 'name':
-                    msg +=  '<br>' + 'Nome (' + error.value + ') ' +  error.message;
+                    msg +=  '\n' + 'Nome (' + error.value + ') ' +  error.message;
                 break;
             }
         }

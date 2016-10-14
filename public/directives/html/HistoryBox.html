@@ -1,0 +1,28 @@
+<ul style="height 100%; overflow: auto;" class="row" >
+	<li class="card" onselect="return false;" data-ng-repeat="history in histories">
+		<div class="col-xs-12">
+	  		<div class="col-xs-1">
+		  		<figure style="zoom: 0.5">
+					<header>
+						{{history.key.getFullYear()}}
+					</header>
+					<section>
+						{{history.key.toLocaleString( 'pt-br', { month: "short" } )}}
+					</section>
+				</figure>
+			</div>
+	  		<div class="col-xs-10">
+	  			<span class="card-revenue">Receitas: &nbsp R$ {{history.Receita.toFixed(2) || 0.00}}</span>
+	  			</p>
+	  			</p>
+	  			<span class="card-cost">Despesas: R$ {{history.Despesa.toFixed(2) || 0.00}}</span>
+	  		</div>
+	  		<div class="col-xs-1">
+				<i class="card-hand" 
+				   data-ng-class="{ 'fa fa-thumbs-up card-hand-revenue' : history.Despesa < history.Receita,
+									'fa fa-thumbs-down card-hand-cost'  : history.Despesa > history.Receita }"
+				   aria-hidden="true"></i>
+	  		</div>  		
+		</div>
+	</li>
+</ul>

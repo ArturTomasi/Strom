@@ -667,9 +667,9 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
 
         if ( $scope.isFinish )
         {
-            if ( ! posting.realDate ) errors += "Preencha uma data para finalizar o lançamento!<br>";
+            if ( ! posting.realDate ) errors += "Preencha uma data para finalizar o lançamento!\n";
 
-            if ( ! posting.realValue || posting.realValue === 0 ) errors += "Preencha um valor maior que zero para finalizar o lançamento!<br>";
+            if ( ! posting.realValue || posting.realValue === 0 ) errors += "Preencha um valor maior que zero para finalizar o lançamento!\n";
 
             if ( ! posting.completionType ) errors += "Preencha um tipo de finalização!";
         }
@@ -678,11 +678,11 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         {
             posting.values.forEach( function( portion, index ) 
             {
-                if ( ! portion.estimateDate ) errors += "Preencha uma data estimada para a parcela " + ( index + 1 ) + "!<br>";
+                if ( ! portion.estimateDate ) errors += "Preencha uma data estimada para a parcela " + ( index + 1 ) + "!\n";
 
-                if ( portion.estimateDate < posting.estimateDate ) errors += "As parcela " + index + 1 + " está com a data anterior a do lançamento original<br>";
+                if ( portion.estimateDate < posting.estimateDate ) errors += "As parcela " + index + 1 + " está com a data anterior a do lançamento original\n";
                 
-                if ( ! portion.estimateValue ) errors += "Preencha um valor estimado para a parcela " + ( index + 1 ) + "!<br>";
+                if ( ! portion.estimateValue ) errors += "Preencha um valor estimado para a parcela " + ( index + 1 ) + "!\n";
             } );
         }
 

@@ -8,7 +8,7 @@ angular.module( 'Strom' ).factory( 'InterceptorService', [ '$rootScope', '$locat
     {
         if ( res.status == 401 )
         {
-            $location.path( '/' );
+            $location.path( '/#/home' );
         }
         
         return $q.reject( res );
