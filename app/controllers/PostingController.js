@@ -50,19 +50,13 @@ module.exports = function ( app )
      */
     controller.getPostingFiltered = function( req, res )
     {
-        console.log( "body" );
-        console.log( JSON.stringify( req.body ) );
-
-
         var query = composeFilter( req.body );
 
         if ( query )
         {
-            console.log( "query" );
-            console.log( JSON.stringify( query ) );
-            Posting
-            .find( query )
-            .sort( 'estimateDate' ).exec( function ( error , postings )
+            Posting.find( query )
+            .sort( 'estimateDate' )
+            .exec( function ( error , postings )
             {
                 if ( error )
                 {

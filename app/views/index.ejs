@@ -38,13 +38,23 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">Strom</a>
                 </div>
-                <div class="nav navbar-nav navbar-right">
-                    <a class="navbar-brand" style="cursor: pointer;" data-ng-click="logout();"><%=currentUser.name %></a>
+                <div class="nav navbar-nav navbar-right dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle navbar-brand" style="cursor: pointer;"><%=currentUser.name %></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a style="cursor: pointer;" data-ng-click="logout();">
+                                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
-        <div ng-include="'partials/Menu/MenuPane.html'"></div>
-        <data-ng-view></data-ng-view>
+        <div class="center-content">
+            <div ng-include="'partials/Menu/MenuPane.html'"></div>
+            <data-ng-view></data-ng-view>
+        </div>
         <%}%>
     </body>
         

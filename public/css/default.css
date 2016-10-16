@@ -60,8 +60,9 @@
   margin-bottom: 5px;
 }
 .panel {
-  height: 100% !important;
-  overflow: auto;
+  height: calc(100% - 100px) !important;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: #ECEFF1;
 }
 .pane-center {
@@ -70,6 +71,9 @@
 }
 .panel-body {
   padding: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 40px) !important;
   background-color: #ECEFF1;
 }
 .panel-footer {
@@ -105,9 +109,6 @@
   color: #607D8B;
   font-weight: bolder;
   font-size: 22px;
-}
-.panel {
-  height: auto;
 }
 .btn:focus {
   outline: none !important;
@@ -394,7 +395,6 @@ ul {
   border-radius: 10px;
 }
 .card-hand {
-  color: #607D8B;
   font-size: 50px;
 }
 .card-hand-cost {
@@ -483,4 +483,11 @@ figure section:after {
   background-image: -o-linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
   background-image: linear-gradient(#b5bdc5 0%, #e5e5e5 100%);
 }
-/* @end */
+.history-list {
+  height: calc(100% - 40px);
+  overflow: auto;
+}
+.center-content {
+  min-height: 440px;
+  overflow-y: auto;
+}

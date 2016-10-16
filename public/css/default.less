@@ -97,8 +97,9 @@
 
 .panel
 {
-    height: 100% !important;
-    overflow: auto;
+    height: calc(~'100% - 100px') !important;
+    overflow-x: auto;
+    overflow-y: hidden;
     background: @back-color;
 }
 
@@ -111,6 +112,9 @@
 .panel-body 
 {
     padding: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(~'100% - 40px') !important;
     background-color: @back-color;
 }
 
@@ -157,11 +161,6 @@
     color: @main-color;
     font-weight: bolder;
     font-size: 22px;
-}
-
-.panel 
-{
-    height: auto;
 }
 
 .btn:focus
@@ -668,4 +667,14 @@ figure
     }
 }
 
-/* @end */
+.history-list
+{
+    height: calc( ~'100% - 40px' );
+    overflow: auto;
+}
+
+.center-content
+{
+    min-height: 440px;
+    overflow-y: auto; 
+}

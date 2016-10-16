@@ -24,7 +24,7 @@ angular.module( 'Strom' ).directive( 'historyBox', [ function ()
 
 				group.map( function( item )
 				{
-					var key = new Date( item._id.year, item._id.month );
+					var key = new Date( item._id.year, item._id.month - 1 );
 
 					var _value = temp[ key ];
 
@@ -41,6 +41,36 @@ angular.module( 'Strom' ).directive( 'historyBox', [ function ()
 				}
 			}
         };
+
+        scope.formatNumber = function( number )
+        {
+        	if ( number )
+        	{
+        		return number.toFixed( 2 );
+        	}
+
+        	return Number( 0 ).toFixed( 2 );
+        }
+
+
+        scope.formatMonth = function( date )
+        {
+        	if ( date )
+        	{
+        		var month = date.toLocaleString( 'pt-br', { month: "short" } );
+
+        		return month.charAt( 0 ).toUpperCase() + month.substring( 1, month.length );
+        	}
+        }
+
+        scope.isUp = function( revenue, cost )
+        {
+        	if ( ! revenue && cost ) return false;
+
+        	if ( ! cost && revenue ) return true;
+
+        	return cost && revenue && cost < revenue;
+        }
 
 	};
 

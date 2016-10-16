@@ -2,29 +2,10 @@
      <ul>
         <li class="items">
             <i  align="center" data-ng-click="show( 0 )" class="fa fa-pencil-square-o"></i>
-            <h3 data-ng-click="show( 0 )">Lançamentos</h3>
-            <p  data-ng-click="show( 0 )">Relatório de Lançamentos.</p>
-            <i  id="posting" class="fa fa-chevron-down" 
-                style="float: right; margin-top: -55px; font-size: 3em !important;"
-                onclick="
-                    if( $('#balance').css('display') === 'none' )
-                    {
-                        $('#balance').slideDown( 250 );
-                        $('#posting').attr( 'class', 'fa fa-chevron-up' );
-                    }
-                    else
-                    {
-                        $('#balance').slideUp( 250 );
-                        $('#posting').attr( 'class', 'fa fa-chevron-down' );
-                    }">
-            </i>
-        </li>
-        <li data-ng-click="printMonthly()" id="balance" class="items sub-items">
-                <i  data-ng-click="printMonthly()" align="center" class="fa fa-balance-scale"></i>
-                <h3>Balanço dos Lançamentos</h3>
-                <p>Balanço dos lançamentos é um relatório para informar o usuario sobre o seu balanço mensal.</p>
-            </li>
-        
+            <h3>Lançamentos</h3>
+            <p>Relatório de Lançamentos.</p>
+       </li>
+
         <li class="items" data-ng-click="show( 1 )">
             <i align="center" class="fa fa-user"></i>
             <h3>Usuários</h3>

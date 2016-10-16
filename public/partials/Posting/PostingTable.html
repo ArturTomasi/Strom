@@ -1,4 +1,4 @@
-<div id="posting-table" class="panel panel-primary">
+<div id="posting-table" style="height: 100% !important" class="panel panel-primary">
     <div class="panel-heading">
         <table style="width: 2000px" class="table table-condensed">
             <thead>
@@ -51,7 +51,7 @@
             </thead>
         </table>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="width: 2000px">
         <table style="width: 2000px" class="table table-condensed">
             <tbody>
                 <tr class="tr" 
@@ -72,5 +72,7 @@
         </table>
         <dir-pagination-controls max-size="10" direction-links="true" boundary-links="true"></dir-pagination-controls>
     </div>
-    <data-ng-include src="'partials/Util/PostingLegendPane.html'"></data-ng-include>
+    <div>
+        <data-ng-include src="'partials/Util/PostingLegendPane.html'"></data-ng-include>
+    </div>
 </div>
