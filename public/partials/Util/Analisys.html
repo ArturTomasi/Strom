@@ -3,7 +3,8 @@
     <div style="height: 100%">
 	    <ul data-ng-model="tabActive" data-ng-init="tabActive = 'costsTab'" class="nav nav-tabs">
 		    <li class="active"><a data-toggle="tab" data-ng-click="refresh( 'costsTab' )">Receita x Despesas</a></li>
-		    <li><a data-toggle="tab" data-ng-click="refresh( 'drilldownTab' )">DrillDown - Categorias</a></li>
+		    <li><a data-toggle="tab" data-ng-click="refresh( 'drilldownTab' )">Situação dos Lançamentos</a></li>
+		    <li><a data-toggle="tab" data-ng-click="refresh( 'categoryTab' )">Resultado Financeiro</a></li>
 		</ul>
 		
 		<div class="tab-content">
@@ -12,6 +13,9 @@
 			</div>
 			<div id="drilldownTab" class="tab-pane active" data-ng-show="tabActive == 'drilldownTab'">
 	 	   		<div id="drilldown" style="height: 100%; padding-bottom: 10px;"></div>
+			</div>
+			<div id="categoryTab" class="tab-pane active" data-ng-show="tabActive == 'categoryTab'">
+	 	   		<div id="categoryDrill" style="height: 100%; padding-bottom: 10px;"></div>
 			</div>
 		</div>
     </div>

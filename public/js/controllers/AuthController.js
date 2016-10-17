@@ -63,8 +63,8 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
       .success( function() 
       {
           Session.clear();
-
-          $location.path( '/' );
+          
+          $location.path( '/home' );
           window.location.reload();
       } )
 

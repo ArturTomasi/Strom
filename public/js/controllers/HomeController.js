@@ -27,7 +27,6 @@ angular.module( "Strom" ).controller('HomeController', [ '$scope', 'PostingServi
         PostingService.getHistory( function( data )
         {
             $scope.groupMonth = data;
-            console.log( data );
         } );
     }
 

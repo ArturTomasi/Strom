@@ -57,7 +57,7 @@
                 <tr class="tr" 
                     data-ng-class="{trselected: postingSelected._id === posting._id }" 
                     data-ng-click="selectPosting(posting)"
-                    dir-paginate="posting in postings | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 25">
+                    dir-paginate="posting in postings | filter : { name: filter } | orderBy: sortKey: reverse | itemsPerPage: 15">
                     <td style="width: 45px"><img data-ng-src="icons/{{getIcon(posting)}}" class="btn-icon"></img></td>
                     <td style="width: 250px">{{posting.name}}</td>
                     <td style="width: 250px">{{posting.estimateDate | date}}</td>
