@@ -205,7 +205,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             
             .error( function (error) 
             {
-              Message.error( error );
+              Message.alert( error );
             } );  
         }
         
@@ -220,7 +220,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             
             .error( function (error) 
             {
-                Message.error( error );
+                Message.alert( error );
             } );
         }
     };
@@ -244,7 +244,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
             .error( function (error) 
             {
-                Message.error( error );
+                Message.alert( error );
             } );
         }
     };
