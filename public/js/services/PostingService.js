@@ -113,11 +113,11 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
      * @param  {Function} callback [description]
      * @return {[type]}            [description]
      */
-    PostingService.getMapMonth = function( callback )
+    PostingService.getMapMonth = function( month, callback )
     {
         var d = $q.defer();
 
-        $http.get( '/mapMonth/' )
+        $http.post( '/mapMonth/',{ month : month } )
 
         .success( function( map )
         {

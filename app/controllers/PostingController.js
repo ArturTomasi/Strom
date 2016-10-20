@@ -126,13 +126,18 @@ module.exports = function ( app )
      */
     controller.getMapMonth = function( req, res )
     {
+        var month = req.body.month;
+       
+        var start =  new Date( moment( month ).startOf( 'month' ) );
+        var end =  new Date( moment( month ).endOf( 'month' ) ) ;
+
         Posting.aggregate()
         .match( 
         { 
             realDate:{ 
                        $exists: true, 
-                       $gte: new Date( moment().startOf( 'month' ) ), 
-                       $lte: new Date( moment().endOf( 'month' ) ) 
+                       $gte: start, 
+                       $lte: end
                      },
             state : { $ne : STATE_DELETED },
             user  : req.user._id

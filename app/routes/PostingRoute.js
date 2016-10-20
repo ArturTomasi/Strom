@@ -22,7 +22,7 @@ module.exports = function( app )
 
     app.get('/postingAgenda', checkAuthenticated, controller.getPostingAgenda );
     
-    app.get('/mapMonth', checkAuthenticated, controller.getMapMonth );
+    app.post('/mapMonth', checkAuthenticated, controller.getMapMonth );
     
     app.get('/progressPosting', checkAuthenticated, controller.getProgress );
     

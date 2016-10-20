@@ -9,12 +9,14 @@
 		
 		<div class="tab-content">
 	        <div id="costsTab" class="tab-pane active" data-ng-show="tabActive == 'costsTab'">
-	        	 <div id="homeChart" style="height: 100%; padding-bottom: 10px;"></div>
+	        	<month-selector model="monthHome" id="monthHome"></month-selector>
+        	 	<div id="homeChart" style="height: 100%; padding-bottom: 10px;"></div>
 			</div>
 			<div id="drilldownTab" class="tab-pane active" data-ng-show="tabActive == 'drilldownTab'">
 	 	   		<div id="drilldown" style="height: 100%; padding-bottom: 10px;"></div>
 			</div>
 			<div id="categoryTab" class="tab-pane active" data-ng-show="tabActive == 'categoryTab'">
+				<month-selector model="monthDrilldown" id="monthDrilldown"></month-selector>
 	 	   		<div id="categoryDrill" style="height: 100%; padding-bottom: 10px;"></div>
 			</div>
 		</div>
