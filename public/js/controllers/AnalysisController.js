@@ -1,24 +1,35 @@
 angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'PostingService', 'CategoryService',
 												                          function ( $q, $scope, PostingService, CategoryService )
 {
+
+function showTab( name )
+{
+		
+		$( '#' + name ).attr( 'class', 'tab-pane active' );
+}
+
+		$( 'li' ).click( function ()
+		{
+				$( '#' + $( this ).attr( "name" ) ).attr( 'class', 'ta' )
+		});
     var sumCosts   = 0,
         sumRevenues = 0,
-        revenues          = 0, 
-        costs             = 0, 
-        postings          = [], 
-        categories        = [], 
+        revenues          = 0,
+        costs             = 0,
+        postings          = [],
+        categories        = [],
         costsCategories   = [],
         finCostsCategories   = [],
         postingCategories = [],
         finRevenueCategories = [],
         revenueCategories = [],
         revenueData       = [],
-        categoriesMonth   = [], 
+        categoriesMonth   = [],
         costData          = [];
 
     $scope.monthHome = new Date( moment().startOf( 'month' ) );
 
-    $scope.$watch( 'monthHome', function( newValue, oldValue ) 
+    $scope.$watch( 'monthHome', function( newValue, oldValue )
     {
         if ( newValue && ( newValue > oldValue || newValue < oldValue ) )
         {
@@ -26,7 +37,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
         }
     } );
 
-    $scope.$watch( 'monthDrilldown', function( newValue, oldValue ) 
+    $scope.$watch( 'monthDrilldown', function( newValue, oldValue )
     {
         if ( !oldValue || ( newValue && ( newValue > oldValue || newValue < oldValue ) ) )
         {
@@ -78,23 +89,23 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
 
             plotOptions: { series: { borderWidth: 0, dataLabels: { enabled: true, format: '{point.name}: R$ {point.y:.2f}' } } },
 
-            tooltip: { headerFormat: '<span style="font-size:11px">{series.name}</span><br>', 
+            tooltip: { headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>R$ {point.y:.2f}' +'</b><br/>' },
 
-            series: [{ 
+            series: [{
                     name: 'Lançamentos', colorByPoint: true,
-                    data: serie 
+                    data: serie
                 } ],
             drilldown: {
             series: drilldown
             },
             credits: [ { enabled: false } ],
-            exporting: 
+            exporting:
             {
                 buttons: { contextButton: { menuItems: null, symbol: null, text: "Download", onclick: function () { this.exportChart(); } } },
                 chartOptions: { plotOptions: { series: { dataLabels: { enabled: true } } } },
                 scale: 3,
-                fallbackToExportServer: false 
+                fallbackToExportServer: false
             }
         } );
     }
@@ -103,7 +114,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
   	function loadChart()
   	{
         Highcharts.setOptions( { lang: { drillUpText: '◁ Voltar para {series.name}' } } );
-     
+
       	var serie = [ { name: 'Despesa', y: costs,    color: 'red',   drilldown: 'cost' },
                       { name: 'Receita', y: revenues, color: 'green', drilldown: 'revenue' } ];
 
@@ -128,23 +139,23 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
 
             plotOptions: { series: { borderWidth: 0, dataLabels: { enabled: true, format: '{point.y:.0f}' } } },
 
-            tooltip: { headerFormat: '<span style="font-size:11px">{series.name}</span><br>', 
+            tooltip: { headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
                        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}' +'</b><br/>' },
 
-            series: [{ 
+            series: [{
                     name: 'Lançamentos', colorByPoint: true,
-                    data: serie 
+                    data: serie
                 } ],
             drilldown: {
             series: drilldown
             },
             credits: [ { enabled: false } ],
-            exporting: 
+            exporting:
             {
                 buttons: { contextButton: { menuItems: null, symbol: null, text: "Download", onclick: function () { this.exportChart(); } } },
                 chartOptions: { plotOptions: { series: { dataLabels: { enabled: true } } } },
                 scale: 3,
-                fallbackToExportServer: false 
+                fallbackToExportServer: false
             }
         } );
   	};
@@ -154,7 +165,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
      * @return {[type]} [description]
      */
     function refreshGraphic()
-    { 
+    {
         var monthName = moment( $scope.monthHome ).locale( 'pt-br' ).format( 'MMMM' ) + " / " + $scope.monthHome.getFullYear();
 
         $( '#homeChart' ).highcharts(
@@ -184,12 +195,12 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
                 name: 'Receitas', type: 'spline', color: '#009933', data: revenueData
             } ],
             credits: [ { enabled: false } ],
-            exporting: 
+            exporting:
             {
                 buttons: { contextButton: { menuItems: null, symbol: null, text: "Download", onclick: function () { this.exportChart(); } } },
                 chartOptions: { plotOptions: { series: { dataLabels: { enabled: true } } } },
                 scale: 3,
-                fallbackToExportServer: false 
+                fallbackToExportServer: false
             }
         } );
     };
@@ -216,7 +227,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
 
                     costData.push( parseFloat( item.sum ) + parseFloat( last.length ? last[0] : 0 ) );
                 }
-                
+
                 if ( item._id.type === 'Receita' )
                 {
                     var last = revenueData.slice( -1 );
@@ -248,8 +259,8 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
 
         categories.forEach( function( category )
         {
-            var registred = 0, 
-                finished  = 0, 
+            var registred = 0,
+                finished  = 0,
                 progress  = 0,
                 cost      = 0,
                 revenue   = 0,
@@ -266,7 +277,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
                         case 2: finished++;  break;
                         case 3: deleted++;   break;
                     }
-                    
+
                     var date = new Date( p.realDate );
 
                     if ( !start || ( start &&  date >= start && date <= end ) )
@@ -277,32 +288,32 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
                         }
                         else
                         {
-                            revenue += p.realValue || 0;   
+                            revenue += p.realValue || 0;
                         }
                     }
 
-                    return true;  
+                    return true;
                 }
-                
+
             } );
 
-            postingCategories.push( { id: category._id, name: category.name, data : 
-            [ 
-              { name: 'Cadastrados',  y: registred , color: '#3364c8' }, 
-              { name: 'Em Andamento', y: progress  , color: '#ded604' }, 
-              { name: 'Excluidos',    y: deleted   , color: '#d82027' }, 
-              { name: 'Finalizados',  y: finished  , color: '#408c1b' } 
+            postingCategories.push( { id: category._id, name: category.name, data :
+            [
+              { name: 'Cadastrados',  y: registred , color: '#3364c8' },
+              { name: 'Em Andamento', y: progress  , color: '#ded604' },
+              { name: 'Excluidos',    y: deleted   , color: '#d82027' },
+              { name: 'Finalizados',  y: finished  , color: '#408c1b' }
             ] } );
 
 
             if ( category.type === 'Despesa' )
             {
                 costsCategories.push( { name: category.name, y: count.length, drilldown: category._id } );
-                
+
                 if ( cost && cost > 0 )
                 {
-                    finCostsCategories.push( { name: category.name, y: cost } );  
-                } 
+                    finCostsCategories.push( { name: category.name, y: cost } );
+                }
             }
 
             else
@@ -311,8 +322,8 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
 
                 if ( revenue && revenue > 0 )
                 {
-                    finRevenueCategories.push( { name: category.name, y: revenue } );  
-                } 
+                    finRevenueCategories.push( { name: category.name, y: revenue } );
+                }
             }
         } );
     }
@@ -339,7 +350,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
             postings.forEach( function( posting )
             {
                 var date = new Date( posting.realDate );
-                
+
                 var inInterval = !start || ( start && date >= start && date <= end );
 
                 if ( posting.type === 'Despesa' )
@@ -365,7 +376,7 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
      */
   	function init()
   	{
-        $q.all( 
+        $q.all(
         [
   		    loadPostings(),
 
@@ -373,11 +384,11 @@ angular.module( 'Strom' ).controller( 'AnalysisController', [ '$q', '$scope', 'P
             {
                 categories = data;
             } ),
-        
+
             loadPostingMonth()
 
-        ] ).then( function() 
-        {        
+        ] ).then( function()
+        {
             loadDataChart();
 
             loadChart();

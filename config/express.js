@@ -13,16 +13,16 @@ module.exports = function()
 	var app = express();
 
 	app.set( 'port', 8080 );
-	
+
 	jsreport( { httpPort: 8081 } ).init();
-	
+
 	app.jsreport = jsreport;
 
 	app.use( express.static( './public' ) );
-	
+
 	app.set( 'view engine', 'ejs' );
 	app.set( 'views', './app/views' );
-	
+
 	app.use( bodyParser.urlencoded( { extended: true, limit: '50mb' } ) );
 	app.use( bodyParser.json( { limit: '50mb' } ) );
 	app.use( methodOverride() );
@@ -48,4 +48,3 @@ module.exports = function()
 
 	return app;
 }
-

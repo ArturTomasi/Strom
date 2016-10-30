@@ -4,7 +4,7 @@ var mongoose = require( 'mongoose' );
 
 var connection;
 
-module.exports = function( uri ) 
+module.exports = function( uri )
 {
     connection =  mongoose.connect( uri, { server: {poolSize: 15} } );
 
@@ -23,7 +23,7 @@ module.exports = function( uri )
           mongoose.connection.close( function ()
           {
               console.log( 'MongoDB Desconnectado !!' );
-              process.exit( 0 ); 
+              process.exit( 0 );
           } );
     } );
 };

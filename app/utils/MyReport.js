@@ -3,9 +3,10 @@
  * @param  {[type]} app [description]
  * @return {[type]}     [description]
  */
-module.exports = function ( app ) 
+module.exports = function ( app )
 {
 	var MyReport = {}, _shortId, _data;
+
 
 	/**
 	 * [setShortId description]
@@ -21,7 +22,7 @@ module.exports = function ( app )
 	 * @param {[type]} data [description]
 	 */
 	MyReport.setData = function( data )
-	{	
+	{
 		_data = data;
 	};
 
@@ -30,23 +31,24 @@ module.exports = function ( app )
 	 * @param  {Function} callback [description]
 	 * @return {[type]}            [description]
 	 */
-	MyReport.generate = function( callback ) 
+	MyReport.generate = function( callback )
 	{
-		app.jsreport.render(
+				app.jsreport.render(
         {
-            template: 
+            template:
             {
                 'shortid': _shortId
             },
-            data: 
+            data:
             {
                 "posting" : _data
             }
         })
         .then( function( out )
         {
-        	var base64 = "data:application/pdf;base64," + out.content.toString( "base64" );
-        	
+						var base64 = "data:"    + out.headers[ 'Content-Type' ] +
+					 						   ";base64," + out.content.toString( "base64" );
+
             eval( callback( base64 ) );
         } );
 	};

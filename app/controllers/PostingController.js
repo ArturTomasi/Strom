@@ -1,5 +1,5 @@
 /* global module */
-module.exports = function ( app ) 
+module.exports = function ( app )
 {
     var Posting = app.models.Posting;
     var sanitize = require( 'mongo-sanitize' );
@@ -7,12 +7,12 @@ module.exports = function ( app )
     var Mail     = require( '../utils/PostingMail.js' );
 
     var moment   = require( 'moment' );
-                
+
     /**
      * @type type
      */
     var controller = {};
-    
+
     var MODE_NEW    = 0;
     var MODE_EDIT   = 1;
     var MODE_FINISH = 2;
@@ -24,7 +24,7 @@ module.exports = function ( app )
 
 
    /**
-    * 
+    *
     * @param {type} req
     * @param {type} res
     * @returns {undefined}
@@ -37,7 +37,7 @@ module.exports = function ( app )
             {
                 res.status( 500 ).json( composeError( error ) );
             }
-            
+
             res.json( postings );
         } );
     };
@@ -62,7 +62,7 @@ module.exports = function ( app )
                 {
                     res.status( 500 ).json( error );
                 }
-                
+
                 res.status(200).json( postings );
             } );
         }
@@ -72,9 +72,9 @@ module.exports = function ( app )
           controller.getPostings( req, res );
         }
     };
-    
+
     /**
-     * 
+     *
      * @param {type} req
      * @param {type} res
      * @returns {undefined}
@@ -102,7 +102,7 @@ module.exports = function ( app )
      */
     controller.getPostingAgenda = function( req, res )
     {
-        Posting.find( 
+        Posting.find(
         {
             $and: [
                     { $or : [ { state: 1 }, { estimateDate : { $gte: moment(), $lte: moment().add( 1, 'month' ) } } ] },
@@ -127,30 +127,30 @@ module.exports = function ( app )
     controller.getMapMonth = function( req, res )
     {
         var month = req.body.month;
-       
+
         var start =  new Date( moment( month ).startOf( 'month' ) );
         var end =  new Date( moment( month ).endOf( 'month' ) ) ;
 
         Posting.aggregate()
-        .match( 
-        { 
-            realDate:{ 
-                       $exists: true, 
-                       $gte: start, 
+        .match(
+        {
+            realDate:{
+                       $exists: true,
+                       $gte: start,
                        $lte: end
                      },
             state : { $ne : STATE_DELETED },
             user  : req.user._id
         } )
 
-        .group( 
-        { 
-            _id:   { type: "$type", date: '$realDate' }, 
+        .group(
+        {
+            _id:   { type: "$type", date: '$realDate' },
             sum :  { $sum: "$realValue" },
-            count: { $sum: 1 } 
+            count: { $sum: 1 }
         } )
         .sort( 'realDate' )
-        .exec( function( error, data ) 
+        .exec( function( error, data )
         {
             if ( error ) res.status( 500 ).json( error );
 
@@ -167,7 +167,7 @@ module.exports = function ( app )
     controller.getProgress = function( req, res )
     {
         Posting.aggregate()
-        
+
         .match(
         {
             state : { $ne : STATE_DELETED },
@@ -187,7 +187,7 @@ module.exports = function ( app )
         .exec( function( error, data )
         {
             if ( error ) res.status( 500 ).json( error );
-            
+
             res.status( 200 ).json( data );
 
         } );
@@ -202,21 +202,21 @@ module.exports = function ( app )
     controller.getHistory = function( req, res )
     {
         Posting.aggregate()
-        
+
         .match(
         {
             realDate: { $exists: true },
-            state : STATE_FINISHED, 
+            state : STATE_FINISHED,
             user  : req.user._id
         } )
 
-        .group( 
+        .group(
         {
-            _id: 
-            { 
-                year:  { $year: '$realDate' }, 
+            _id:
+            {
+                year:  { $year: '$realDate' },
                 month: { $month: "$realDate" },
-                type : "$type" 
+                type : "$type"
             },
             realValue:{ $sum: "$realValue" }
         } )
@@ -232,7 +232,7 @@ module.exports = function ( app )
     };
 
     /**
-     * 
+     *
      * @param {type} req
      * @param {type} res
      * @returns {undefined}
@@ -242,7 +242,7 @@ module.exports = function ( app )
         var posting = req.body;
 
         makeState( posting );
-        
+
         var errors = validate( posting, MODE_NEW );
 
         if ( ! errors )
@@ -266,7 +266,7 @@ module.exports = function ( app )
                         {
                             res.status( 500 ).json( error );
                         }
-                        
+
                         res.status( 200 ).json( portions );
                     } );
                 }
@@ -283,9 +283,9 @@ module.exports = function ( app )
             res.status( 500 ).json( errors );
         }
     };
-    
+
     /**
-     * 
+     *
      * @param {type} req
      * @param {type} res
      * @returns {undefined}
@@ -297,13 +297,13 @@ module.exports = function ( app )
         var posting = req.body;
 
         makeState( posting );
-       
+
         var errors = validate( posting, MODE_EDIT );
 
         if ( ! errors )
         {
-          Posting.findOneAndUpdate( { _id : _id }, 
-                                    posting, 
+          Posting.findOneAndUpdate( { _id : _id },
+                                    posting,
                                     { new : true, runValidators: true, context: 'query' } )
           .exec( function ( error, posting )
           {
@@ -314,15 +314,15 @@ module.exports = function ( app )
 
               if ( posting.portion < posting.portionTotal && posting.state === STATE_FINISHED )
               {
-                 Posting.findOneAndUpdate( { 
+                 Posting.findOneAndUpdate( {
                                               posting : ( posting.portion === 1 ? posting._id : posting.posting ),
                                               state   : STATE_REGISTRED,
                                               portion : { $gt: posting.portion, $lt: posting.portionTotal + 1 }
-                                            }, 
+                                            },
                                             {
                                               state : ( posting.state === STATE_FINISHED ? STATE_PROGRESS : STATE_REGISTRED ),
                                               $unset : { realDate : 1, realValue : 1 }
-                                            }, 
+                                            },
                                             { new : true, runValidators: true, context: 'query' } )
                   .exec( function ( error, posting )
                   {
@@ -335,7 +335,7 @@ module.exports = function ( app )
 
                   } );
               }
-              
+
               new Mail( app ).sendPosting( posting );
 
               res.status( 200 ).json( posting );
@@ -347,9 +347,9 @@ module.exports = function ( app )
           res.status( 500 ).json( errors );
         }
     };
-    
+
     /**
-     * 
+     *
      * @param {type} req
      * @param {type} res
      * @returns {undefined}
@@ -359,9 +359,9 @@ module.exports = function ( app )
         if ( req.params.id )
         {
             var _id = sanitize( req.params.id );
-        
+
             Posting.findOneAndUpdate( { _id : _id },
-                                      { state: STATE_DELETED }, 
+                                      { state: STATE_DELETED },
                                       { new : true, runValidators: true, context: 'query' } )
             .exec( function ( error, posting )
             {
@@ -369,12 +369,12 @@ module.exports = function ( app )
                 {
                     res.status( 500 ).json( composeError( error ) );
                 }
-                
+
                 res.status( 200 ).json( posting );
             } );
         }
     };
-    
+
     /**
      * [printPosting description]
      * @param  {[type]} req [description]
@@ -396,17 +396,51 @@ module.exports = function ( app )
             .exec( function ( error , _postings )
             {
                 if ( error ) res.status( 500 ).json( error );
-                     
+
                 MyReport.setShortId( _postings.length > 1 ? 'SyAWzKXn' : 'SyMXDMQ2' );
                 MyReport.setData( _postings.length > 1 ? _postings : _postings[0] );
-                
+
                 MyReport.generate( function( base64 )
                 {
                     res.status( 200 ).json( base64 );
                 } );
-                
+
             } );
         }
+    };
+
+    /**
+     * [printXLS description]
+     * @param  {[type]} req [description]
+     * @param  {[type]} res [description]
+     * @return {[type]}     [description]
+     */
+    controller.printXLS = function( req, res )
+    {
+      var _query = composeFilter( req.body );
+
+      if ( _query )
+      {
+          Posting.find( _query )
+          .populate( 'user', 'name' )
+          .populate( 'category', 'name' )
+          .populate( 'entity', 'name' )
+          .populate( 'completionType', 'name' )
+          .sort( 'estimateDate' )
+          .exec( function ( error , _postings )
+          {
+              if ( error ) res.status( 500 ).json( error );
+
+              MyReport.setShortId( 'r1nK69Xgx' );
+              MyReport.setData( _postings );
+
+              MyReport.generate( function( base64 )
+              {
+                  res.status( 200 ).json( base64 );
+              } );
+
+          } );
+      }
     };
 
     /**
@@ -441,7 +475,7 @@ module.exports = function ( app )
             var _values   = clone( posting.values );
 
             delete posting.values;
-            
+
             posting.portionTotal = _values.length + 1;
 
             var _postings = [];
@@ -449,18 +483,18 @@ module.exports = function ( app )
             _values.forEach( function ( _portion, _index )
             {
                 var _copy = clone( posting );
-                
+
                 _copy.state = STATE_REGISTRED;
                 _copy.estimateDate = _portion.estimateDate;
                 _copy.estimateValue = _portion.estimateValue;
                 _copy.portion = ( _index + 2 );
                 _copy.postionTotal = posting.portionTotal;
                 _copy.posting = posting._id;
-                
+
                 delete _copy.attachments;
                 delete _copy.realDate;
                 delete _copy.realValue;
-    
+
                 if ( posting.category && posting.category.type )
                           _copy.type =  _copy.category.type;
 
@@ -486,7 +520,7 @@ module.exports = function ( app )
     {
       if ( _id && values )
       {
-          values.forEach( function( value ) 
+          values.forEach( function( value )
           {
               value.posting = _id;
           } );
@@ -569,7 +603,7 @@ module.exports = function ( app )
     function composeFilter( filters )
     {
         var query = {};
- 
+
         if ( Object.keys( filters ).length === 0) return {}; //valid empty conditions
 
         query.$and = [];
@@ -579,14 +613,14 @@ module.exports = function ( app )
             var values = filters[ filter ];
 
             var conditions = {};
-            
+
             conditions.$or = [];
 
-            values.forEach( function( condition ) 
+            values.forEach( function( condition )
             {
               var where;
-                          
-              switch( filter ) 
+
+              switch( filter )
               {
                   case 'name': where = { name : new RegExp( '.*' + condition + '.*' , "i" ) }; break;
                   case 'state': where = { state : condition.id }; break;
@@ -600,11 +634,11 @@ module.exports = function ( app )
                   case 'completionType': where = { completionType : condition }; break;
                   case 'type': where = { type : condition.id }; break;
                   case '_id': where = { _id : condition }; break;
-                  case 'deadline': 
+                  case 'deadline':
                   {
                     if ( ! condition.id )
                     {
-                        where = { $where : function() 
+                        where = { $where : function()
                         {
                             if ( ! this.realDate )
                             {
@@ -617,7 +651,7 @@ module.exports = function ( app )
 
                     else
                     {
-                        where = { $where : function() 
+                        where = { $where : function()
                         {
                             if ( ! this.realDate )
                             {
@@ -629,32 +663,32 @@ module.exports = function ( app )
                     }
                   }
                   break;
-                  
-                  case 'inBudget': where = { $where : 'this.estimateValue' + ( condition.id ? '>' : '<' ) + 'this.realValue' } ; break;                 
+
+                  case 'inBudget': where = { $where : 'this.estimateValue' + ( condition.id ? '>' : '<' ) + 'this.realValue' } ; break;
                 }
-  
+
                 conditions.$or.push( where );
             } );
-          
+
             query.$and.push( conditions );
         };
- 
+
         return query;
     };
 
     /**
-     * 
-     * @param {type} errors 
+     *
+     * @param {type} errors
      * @returns {unresolved}
      */
     function composeError( errors )
     {
         var msg = '';
-        
+
         for ( var e in errors.errors )
         {
             var error =  errors.errors[e];
-            
+
             switch ( error.path )
             {
                 case 'name':
@@ -662,15 +696,14 @@ module.exports = function ( app )
                 break;
             }
         }
-        
+
         return msg;
     };
 
-    clone = function( _original ) 
+    clone = function( _original )
     {
         return JSON.parse( JSON.stringify( _original ) );
     };
-   
+
     return controller;
 };
-

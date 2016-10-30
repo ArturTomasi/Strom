@@ -1,14 +1,14 @@
 angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route', 'PostingService' , 'UserService', 'EntityService' , 'CategoryService' , 'CompletionTypeService', '$filter',
-												  function (  $scope ,  $route,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $filter ) 
+												  function (  $scope ,  $route,  PostingService  ,  UserService ,  EntityService  ,  CategoryService  ,  CompletionTypeService, $filter )
 {
     var Posting  = {
         STATE_REGISTRED : 0,
         STATE_PROGRESS  : 1,
         STATE_FINISHED  : 2,
         STATE_DELETED   : 3
-    }; 
+    };
 
- 	$scope.postingSelected;
+ 		$scope.postingSelected;
     $scope.postings = [];
     $scope.users = [];
     $scope.entities = [];
@@ -16,7 +16,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.categories = [];
     $scope.defaultFilter = {};
     $scope.isFinish = false;
-    
+
     $scope.YesNoOptions =[ { name : 'Sim', value: true },
                            { name:  'Não', value: false } ];
 
@@ -40,7 +40,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     {
         $scope.postingSelected = posting;
     };
-    
+
     /**
      * [getPostingForm description]
      * @param  {[type]} posting [description]
@@ -63,7 +63,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
             _posting.completionAuto = $scope.YesNoOptions[ _posting.completionAuto ? 0 : 1 ];
             _posting.portionTotal   = _posting.portionTotal ? _posting.portionTotal : 1;
         }
-        
+
         else
         {
             _posting.portionTotal = 1;
@@ -73,7 +73,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
 
         return _posting;
     };
-    
+
     /**
      * [storePosting description]
      * @param  {[type]} posting [description]
@@ -83,12 +83,12 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     {
         var errors = validateToStore(posting);
 
-        if ( ! errors ) 
+        if ( ! errors )
         {
             PostingService.storePosting( posting, function( data )
             {
                 $( '#store' ).modal( 'hide' );
-                    
+
                 $scope.selectPosting( data );
                 loadPostings();
             }, $scope.isFinish );
@@ -99,7 +99,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
             Message.alert( errors );
         }
     };
-    
+
     /**
      * [editPosting description]
      * @param  {[type]} $event  [description]
@@ -113,7 +113,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         if ( ! errors )
         {
             $scope.posting = $scope.getPostingForm( posting );
-                   
+
             $( '#store' ).modal();
         }
 
@@ -134,7 +134,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
 
         if ( ! errors )
         {
-            Message.confirm( 'Você deseja realmente excluir o lançamento ' + $scope.postingSelected.name, function () 
+            Message.confirm( 'Você deseja realmente excluir o lançamento ' + $scope.postingSelected.name, function ()
             {
                 PostingService.deletePosting( posting, function( data )
                 {
@@ -161,10 +161,10 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.reversePosting = function( $event, posting)
     {
         var errors = validateReserve( posting );
-       
+
         if ( ! errors )
         {
-            Message.confirm( 'Você deseja realmente extornar o lançamento ' + $scope.postingSelected.name, function () 
+            Message.confirm( 'Você deseja realmente extornar o lançamento ' + $scope.postingSelected.name, function ()
             {
                 if( posting.state == Posting.STATE_FINISHED )
                 {
@@ -179,7 +179,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
                     } );
                 }
 
-            } );    
+            } );
         }
 
         else
@@ -203,7 +203,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         if ( ! errors )
         {
             $scope.posting = $scope.getPostingForm( posting );
-                   
+
             $scope.isFinish = true;
 
             $( '#store' ).modal();
@@ -232,7 +232,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
             $scope.posting = $scope.getPostingForm( posting );
 
             $scope.posting._id = null;
-                  
+
             $( '#store' ).modal();
         }
 
@@ -304,7 +304,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.getUserName = function( id )
     {
         var item = $scope.getUser( id );
-        
+
         if ( item ) return item.name;
 
         return 'n/d';
@@ -317,7 +317,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getUser = function( id )
     {
-        return $scope.users.filter( function ( user ) 
+        return $scope.users.filter( function ( user )
         {
             return user._id === id;
         } )[0];
@@ -330,7 +330,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getUsers = function()
     {
-        return $scope.users.filter( function ( user ) 
+        return $scope.users.filter( function ( user )
         {
             return user.state === 0;
         } );
@@ -344,7 +344,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.getCategoryName = function( id )
     {
         var item = $scope.getCategory( id );
-        
+
         if ( item ) return item.name;
 
         return 'n/d';
@@ -357,7 +357,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getCategory = function( id )
     {
-        return $scope.categories.filter( function ( category ) 
+        return $scope.categories.filter( function ( category )
         {
             return category._id === id;
         } )[0];
@@ -369,7 +369,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getCategories = function()
     {
-        return $scope.categories.filter( function ( category ) 
+        return $scope.categories.filter( function ( category )
         {
             return category.state === 0;
         } );
@@ -383,7 +383,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.getEntityName = function( id )
     {
         var item = $scope.getEntity( id );
-        
+
         if ( item ) return item.name;
 
         return 'n/d';
@@ -396,7 +396,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getEntity = function( id )
     {
-        return $scope.entities.filter( function ( entity ) 
+        return $scope.entities.filter( function ( entity )
         {
             return entity._id === id;
         } )[0];
@@ -408,7 +408,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      */
     $scope.getEntities = function()
     {
-        return $scope.entities.filter( function ( entity ) 
+        return $scope.entities.filter( function ( entity )
         {
             return entity.state === 0;
         } );
@@ -422,7 +422,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     $scope.getCompletionTypeName = function( id )
     {
         var item = $scope.getCompletionType( id );
-        
+
         if ( item ) return item.name;
 
         return 'n/d';
@@ -458,7 +458,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
      * @param  {[type]} posting [description]
      * @return {[type]}         [description]
      */
-    $scope.showCompletionType = function ( posting ) 
+    $scope.showCompletionType = function ( posting )
     {
         if( posting )
         {
@@ -497,6 +497,23 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         } );
     };
 
+		$scope.printXLS = function()
+		{
+				PostingService.printXLS( $scope.defaultFilter, function( pdf )
+				{
+						var element = document.createElement('a');
+						element.setAttribute('href', pdf );
+						element.setAttribute('download', "Strom-lancamentos.xlsx" );
+
+						element.style.display = 'none';
+						document.body.appendChild(element);
+
+						element.click();
+
+						document.body.removeChild(element);
+				} );
+		}
+
     /**
      * [createPortions description]
      * @param  {[type]} posting [description]
@@ -507,15 +524,15 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         if ( posting && posting.portionTotal >  1 )
         {
             if ( ! posting.values ) posting.values = [];
-            
-           
-            for ( var i =  posting.portionTotal - 1; i < posting.values.length ; i++ ) 
+
+
+            for ( var i =  posting.portionTotal - 1; i < posting.values.length ; i++ )
             {
                 posting.values.pop();
-            }          
+            }
 
 
-            for ( var i = 0; i < posting.portionTotal - 1; i++ ) 
+            for ( var i = 0; i < posting.portionTotal - 1; i++ )
             {
                 if ( ! posting.values[ i ] )
                 {
@@ -534,7 +551,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
             return posting.values;
         }
     };
-    
+
     /**
      * [hasPermission description]
      * @return {Boolean} [description]
@@ -593,7 +610,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         if( posting.state === Posting.STATE_FINISHED )
             return "Lançamento está finalizado,\n não é possivel finaliza-lo duas vezes !";
 
-        if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )  
+        if( posting.state !== Posting.STATE_PROGRESS && posting.portionTotal > 1 )
             return "Lançamento não está correte,\n não é possivel finaliza-lo antes das outras parcelas!";
 
         if( ! $scope.hasPermission() || ! Session.get( 'ActiveUser' )._id === posting.user )
@@ -676,19 +693,19 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
 
         if ( ! posting._id && posting.portionTotal > 1 )
         {
-            posting.values.forEach( function( portion, index ) 
+            posting.values.forEach( function( portion, index )
             {
                 if ( ! portion.estimateDate ) errors += "Preencha uma data estimada para a parcela " + ( index + 1 ) + "!\n";
 
                 if ( portion.estimateDate < posting.estimateDate ) errors += "As parcela " + index + 1 + " está com a data anterior a do lançamento original\n";
-                
+
                 if ( ! portion.estimateValue ) errors += "Preencha um valor estimado para a parcela " + ( index + 1 ) + "!\n";
             } );
         }
 
         return errors;
     };
-    
+
 
     /**
      * [loadPostings description]
@@ -712,7 +729,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
             } );
         }
     };
-    
+
     /**
      * [loadUsers description]
      * @return {[type]} [description]
@@ -747,7 +764,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         {
             $scope.entities = data;
         } );
-    };    
+    };
 
     /**
      * [loadCompletionTypes description]
@@ -759,7 +776,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
         {
             $scope.completionTypes = data;
         } );
-    };    
+    };
 
     /**
      * [init description]

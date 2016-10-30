@@ -26,7 +26,7 @@
 </button>
 
 <inspector data-ng-model="postingSelected"></inspector>
- 
+
 <button data-ng-show="isVisible('entrie')" data-ng-disabled="!postingSelected" data-ng-click="copyPosting( $event, postingSelected )" type="button" class="btn btn-strom btn-block" data-toggle="modal">
     <img src="icons/copy.png" class="btn-icon"></img>
     Copiar
@@ -43,6 +43,11 @@
 <button data-ng-click="print()" data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block">
     <img src="icons/pdf.png" class="btn-icon"></img>
     Imprimir
+</button>
+
+<button data-ng-click="printXLS()" data-ng-show="isVisible('report')" type="button" class="btn btn-strom btn-block">
+    <img src="icons/xls.png" class="btn-icon"></img>
+    XLS
 </button>
 
 <button data-ng-disabled="!postingSelected" type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#postingMail">

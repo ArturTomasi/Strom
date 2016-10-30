@@ -8,14 +8,14 @@ angular.module( 'Strom' ).factory( 'InterceptorService', [ '$rootScope', '$locat
     {
         if ( res.status == 401 )
         {
-            $location.path( '/#/home' );
+            $location.path( '/home' );
         }
-        
+
         return $q.reject( res );
     };
 
     Interceptor.request = function( req )
-    {   
+    {
         if ( req.preload )
         {
             $( '#preload' ).show();
@@ -30,6 +30,6 @@ angular.module( 'Strom' ).factory( 'InterceptorService', [ '$rootScope', '$locat
 
         return res;
     };
-    
+
     return Interceptor;
 } ] );

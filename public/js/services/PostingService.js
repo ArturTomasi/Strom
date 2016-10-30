@@ -1,6 +1,6 @@
 angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function ( $q, $http )
 {
-	var PostingService = {};	
+	var PostingService = {};
 
 	/**
 	 * [getPostings description]
@@ -12,24 +12,24 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
         var d = $q.defer();
 
         $http.get( '/postings' )
-        
+
         .success( function( postings )
         {
-            eval( callback( postings ) );  
+            eval( callback( postings ) );
 
             d.resolve( postings );
         } )
-        
-        .error( function (error) 
+
+        .error( function (error)
         {
             Message.error( error );
         } );
 
         return d.promise;
     };
-    
+
     /**
-     * 
+     *
      * @param {type} id
      * @param {type} callback
      * @returns {undefined}
@@ -39,15 +39,15 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
         var d = $q.defer();
 
         $http.get( '/postings/' + id )
-        
+
         .success( function( posting )
         {
-            eval( callback( posting ) );  
-            
+            eval( callback( posting ) );
+
             d.resolve( posting );
         } )
-        
-        .error( function (error) 
+
+        .error( function (error)
         {
             Message.error( error );
         } );
@@ -67,7 +67,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         $http.post( '/postingfiltered/', filters )
 
-        .success( function ( postings ) 
+        .success( function ( postings )
         {
             eval( callback( postings ) );
 
@@ -76,12 +76,12 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
 
         .error ( function ( error )
         {
-            Message.error( error );            
+            Message.error( error );
         });
 
         return d.promise;
     };
-    
+
     /**
      * [getPostingAgenda description]
      * @param  {Function} callback [description]
@@ -100,7 +100,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             d.resolve( postings );
         } )
 
-        .error( function( error ) 
+        .error( function( error )
         {
             Message.error( error );
         } );
@@ -126,7 +126,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             d.resolve( map );
         } )
 
-        .error( function( error ) 
+        .error( function( error )
         {
             Message.error( error );
         } );
@@ -178,7 +178,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             d.resolve( data );
         } )
 
-        .error( function( error ) 
+        .error( function( error )
         {
             Message.error( error );
         } );
@@ -187,7 +187,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
     }
 
     /**
-     * 
+     *
      * @param {type} posting
      * @param {type} callback
      * @returns {undefined}
@@ -197,36 +197,36 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
         if ( ! posting._id )
         {
             $http.post( '/postings/' , posting )
-            
+
             .success( function( posting )
             {
                 eval( callback( posting ) );
             } )
-            
-            .error( function (error) 
+
+            .error( function (error)
             {
               Message.alert( error );
-            } );  
+            } );
         }
-        
+
         else
         {
             $http.put( '/postings/' , posting )
-            
+
             .success( function( posting )
             {
                 eval( callback( posting ) );
             } )
-            
-            .error( function (error) 
+
+            .error( function (error)
             {
                 Message.alert( error );
             } );
         }
     };
-    
+
     /**
-     * 
+     *
      * @param {type} posting
      * @param {type} callback
      * @returns {undefined}
@@ -242,13 +242,13 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
                 eval( callback( posting ) );
             } )
 
-            .error( function (error) 
+            .error( function (error)
             {
                 Message.alert( error );
             } );
         }
     };
-	
+
     /**
      * [print description]
      * @param  {[type]}   filter   [description]
@@ -259,19 +259,43 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
     {
         if ( filter )
         {
-            $http.post( '/printPostings/' , filter, { preload: true } )
-            
+            $http.post( '/printPostings/' , filter, { preload: true, xls: true } )
+
             .success( function( pdf )
             {
                 eval( callback( pdf ) );
             } )
-            
-            .error( function (error) 
+
+            .error( function (error)
             {
-                Message.error( error );            
-            } );  
+                Message.error( error );
+            } );
         }
     }
+
+		/**
+		 * [printXLS description]
+		 * @param  {[type]}   filter   [description]
+		 * @param  {Function} callback [description]
+		 * @return {[type]}            [description]
+		 */
+		PostingService.printXLS = function( filter, callback )
+		{
+				if ( filter )
+				{
+						$http.post( '/printXLS/' , filter, { preload: true } )
+
+						.success( function( pdf )
+						{
+								eval( callback( pdf ) );
+						} )
+
+						.error( function (error)
+						{
+								Message.error( error );
+						} );
+				}
+		}
 
     /**
      * [sendMail description]
@@ -287,7 +311,7 @@ angular.module( 'Strom' ).factory( 'PostingService', [ '$q', '$http', function (
             eval( callback() );
         } )
 
-        .error(function( error ) 
+        .error(function( error )
         {
             Message.error( error );
         } );
