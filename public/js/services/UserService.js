@@ -1,11 +1,11 @@
 /* global angular, Message */
 
-angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q, $http ) 
+angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q, $http )
 {
     var UserService = {};
-    
+
     /**
-     * 
+     *
      * @param {type} callback
      * @returns {undefined}
      */
@@ -14,24 +14,24 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q,
         var d = $q.defer();
 
         $http.get( '/users' )
-        
+
         .success( function( users )
         {
             d.resolve( users );
 
-            eval( callback( users ) );  
+            eval( callback( users ) );
         } )
-        
-        .error( function (error) 
+
+        .error( function (error)
         {
             Message.error( error );
         } );
 
         return d.promise;
     };
-    
+
     /**
-     * 
+     *
      * @param {type} id
      * @param {type} callback
      * @returns {undefined}
@@ -39,20 +39,20 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q,
     UserService.getUser = function( id, callback )
     {
         $http.get( '/users/' + id )
-        
+
         .success( function( user )
         {
-            eval( callback( user ) );  
+            eval( callback( user ) );
         } )
-        
-        .error( function (error) 
+
+        .error( function (error)
         {
             Message.error( error );
         } );
     };
-    
+
     /**
-     * 
+     *
      * @param {type} user
      * @param {type} callback
      * @returns {undefined}
@@ -62,36 +62,36 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q,
         if ( ! user._id )
         {
             $http.post( '/users/' , user )
-            
+
             .success( function( data )
             {
                 eval( callback( data ) );
             } )
-            
-            .error( function (error) 
+
+            .error( function (error)
             {
               Message.error( error );
-            } );  
+            } );
         }
-        
+
         else
         {
             $http.put( '/users/' , user )
-            
+
             .success( function( data )
             {
                 eval( callback( data ) );
             } )
-            
-            .error( function (error) 
+
+            .error( function (error)
             {
                 Message.error( error );
             } );
         }
     };
-    
+
     /**
-     * 
+     *
      * @param {type} user
      * @param {type} callback
      * @returns {undefined}
@@ -107,14 +107,43 @@ angular.module( 'Strom' ).factory( 'UserService', [ '$q', '$http', function( $q,
                 eval( callback( user ) );
             } )
 
-            .error( function (error) 
+            .error( function (error)
             {
                 Message.error( error );
             } );
         }
     };
-    
+
+    UserService.saveAnnotation = function( text, callback )
+    {
+        $http.post( '/annotation/', { annotation: text } )
+
+        .success( function( annotation )
+        {
+            eval( callback( annotation ) );
+        } )
+
+        .error( function (error)
+        {
+            Message.error( error );
+        } );
+    };
+
+
+    UserService.getAnnotation = function( callback )
+    {
+        $http.get( '/annotation/' )
+
+        .success( function( annotation )
+        {
+            eval( callback( annotation ) );
+        } )
+
+        .error( function (error)
+        {
+            Message.error( error );
+        } );
+    };
+
     return UserService;
 } ] );
-    
-

@@ -1,28 +1,28 @@
-angular.module("Strom").controller("AuthController", ['$scope', '$http', '$location', function($scope, $http, $location) {
-  
+angular.module("Strom").controller("AuthController", ['$scope', '$http', '$location', 'UserService', function($scope, $http, $location, UserService ) {
+
   /**
    * [login description]
    * @param  {[type]} user [description]
    * @return {[type]}      [description]
    */
-  $scope.login = function( user ) 
+  $scope.login = function( user )
   {
       if ( user && user.username && user.password )
       {
           $http.post( '/login/', user )
 
-          .success( function( user ) 
+          .success( function( user )
           {
               Session.put( 'ActiveUser', user );
 
               $location.path( '/home' );
-              window.location.reload();
 
+              window.location.reload();
           } )
 
-          .error( function( error ) 
+          .error( function( error )
           {
-            effectError();
+              effectError();
           } );
       }
 
@@ -39,15 +39,15 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
   function effectError()
   {
     delete $scope.user;
-              
+
     $( '#inputLogin' ).focus();
-    
+
     $( '#login' ).effect( "bounce", "swith", function()
     {
         $( '#error-login' ).show( 'fade' );
 
         setTimeout( function() {
-            $( '#error-login' ).hide( 'fade' );            
+            $( '#error-login' ).hide( 'fade' );
         }, 3000 );
     } );
   };
@@ -58,20 +58,50 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
    */
   $scope.logout = function()
   {
+      $location.path( '/home' );
+
+      window.location.reload();
+
       $http.post( '/logout/', {} )
 
-      .success( function() 
+      .success( function()
       {
           Session.clear();
-          
-          $location.path( '/home' );
-          window.location.reload();
       } )
 
-      .error( function( error ) 
+      .error( function( error )
       {
           Message.error( "Ocorreu um erro inesperado!", error );
       } );
   };
+
+  $scope.showAnnotation = function()
+  {
+      var _annotation = $( '#annotationDiv' );
+
+      UserService.getAnnotation( function( annotation )
+      {
+          _annotation.children( 'textarea' ).val( annotation );
+
+          _annotation.show();
+      } );
+  };
+
+  function init()
+  {
+      var _annotation = $( '#annotationDiv' );
+
+      _annotation.draggable();
+
+      _annotation.children( 'button' ).on( 'click', function()
+      {
+          _annotation.hide( function()
+          {
+              UserService.saveAnnotation(  _annotation.children( 'textarea' ).val(), function(){} );
+          });
+      } );
+  }
+
+  init();
 
 } ] );

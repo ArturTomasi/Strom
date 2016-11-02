@@ -14,9 +14,18 @@
         <!-- endbuild -->
     </head>
     <body data-ng-controller="AuthController">
+
+        <!--roots components-->
         <div id="preload" class="preload">
             <div class="fa fa-refresh fa-pulse fa-3x fa-fw preload-center"></div>
         </div>
+
+        <div class="annottaions-position" id="annotationDiv">
+            <span>Anotações</span>
+            <button type="button" class="close">&times;</button>
+            <textarea></textarea>
+        </div>
+
         <%if( ! currentUser ) { %>
         <div id="login" class="container login-center" style="width: 500px; margin: auto">
             <form class="form-signin">
@@ -48,6 +57,12 @@
                                 Logout
                             </a>
                         </li>
+                        <li>
+                            <a style="cursor: pointer;" data-ng-click="showAnnotation()">
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                Anotações
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +73,7 @@
         </div>
         <%}%>
     </body>
-        
+
         <!-- build:js js/index.min.js -->
         <script type="text/javascript" src="/vendor/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="/vendor/jquery-ui/jquery-ui.min.js"></script>
@@ -71,12 +86,12 @@
         <script type="text/javascript" src="/vendor/angular-route/angular-route.min.js"></script>
         <script type="text/javascript" src="/vendor/angular-resource/angular-resource.min.js"></script>
         <script type="text/javascript" src="/vendor/angularUtils-pagination/dirPagination.js"></script>
-        <script type="text/javascript" src="/vendor/sweetalert/dist/sweetalert.min.js"></script> 
+        <script type="text/javascript" src="/vendor/sweetalert/dist/sweetalert.min.js"></script>
         <script type="text/javascript" src="/vendor/moment/min/moment-with-locales.js"></script>
         <script type="text/javascript" src="/vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
         <script type="text/javascript" src="/vendor/ng-file-upload/ng-file-upload.min.js"></script>
         <script type="text/javascript" src="/vendor/jquery-ui-month-picker/demo/MonthPicker.min.js"></script>
-        
+
         <script type="text/javascript" src="/js/Message.js"></script>
         <script type="text/javascript" src="/js/Session.js"></script>
         <script type="text/javascript" src="/js/application.js"></script>
@@ -88,28 +103,28 @@
         <script type="text/javascript" src="/js/controllers/CategoryController.js"></script>
         <script type="text/javascript" src="/js/services/CategoryService.js"></script>
         <script type="text/javascript" src="/partials/Category/CategoryViews.js"></script>
-        
+
         <script type="text/javascript" src="/js/controllers/UserController.js"></script>
         <script type="text/javascript" src="/js/services/UserService.js"></script>
         <script type="text/javascript" src="/partials/User/UserViews.js"></script>
-            
+
         <script type="text/javascript" src="/js/controllers/CompletionTypeController.js"></script>
         <script type="text/javascript" src="/js/services/CompletionTypeService.js"></script>
         <script type="text/javascript" src="/partials/CompletionType/CompletionTypeViews.js"></script>
-        
+
         <script type="text/javascript" src="/js/controllers/EntityController.js"></script>
         <script type="text/javascript" src="/js/services/EntityService.js"></script>
         <script type="text/javascript" src="/partials/Entity/EntityViews.js"></script>
-        
+
         <script type="text/javascript" src="/js/controllers/PostingController.js"></script>
         <script type="text/javascript" src="/js/services/PostingService.js"></script>
         <script type="text/javascript" src="/partials/Posting/PostingViews.js"></script>
-        
+
         <script type="text/javascript" src="js/controllers/AnalysisController.js"></script>
         <script type="text/javascript" src="js/controllers/HomeController.js"></script>
 
         <script type="text/javascript" src="/js/services/InterceptorService.js"></script>
-        
+
         <script type="text/javascript" src="/directives/PhoneFilter.js"></script>
         <script type="text/javascript" src="/directives/CnpjFilter.js"></script>
         <script type="text/javascript" src="/directives/StateSelector.js"></script>
