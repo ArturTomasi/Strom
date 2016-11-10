@@ -1,0 +1,21 @@
+{
+    "shortid": "SyMXDMQ2",
+    "recipe": "phantom-pdf",
+    "engine": "handlebars",
+    "modificationDate": {
+        "$$date": 1478734685026
+    },
+    "_id": "i4kFbxX6v1TeB0uO",
+    "data": {
+        "shortid": "HJgAIQQ2"
+    },
+    "resources": {
+        "items": [
+            {
+                "shortid": "HJgAIQQ2",
+                "entitySet": "data"
+            }
+        ]
+    },
+    "scripts": []
+}

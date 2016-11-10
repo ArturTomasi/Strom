@@ -1,0 +1,142 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body
+        {
+            background-colo: white;
+        }
+        hr{
+            page-break-before: always;
+        }
+        h3 {
+            color: #607D8B;
+        }
+        th {
+            color: #607D8B;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 20 0px;
+            max-width: 250px;
+            min-width: 250px;
+            width: 250px !important;
+            text-align: left;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            vertical-align: middle;
+            border-bottom: 1px solid #607D8B;
+        }
+        
+        tr:last-child {
+            border: none;
+        }
+        
+        tr {
+            border-top: 1px solid #607D8B;
+            border-bottom: 1px solid #607D8B;
+            color: #607D8B;
+            font-size: 16px;
+            font-weight: normal;
+            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        }
+        
+        td {
+            padding: 10 0px;
+            text-align: left;
+            vertical-align: middle;
+            font-weight: 300;
+            font-size: 12px;
+            max-width: 250px;
+            min-width: 250px;
+            width: 250px !important;
+        }
+        
+        td:last-child {
+            border-right: 0px;
+        }
+        
+        th.text-left {
+            text-align: left;
+        }
+        
+        th.text-center {
+            text-align: center;
+        }
+        
+        th.text-right {
+            text-align: right;
+        }
+        
+        td.text-left {
+            text-align: left;
+        }
+        
+        td.text-center {
+            text-align: center;
+        }
+        
+        td.text-right {
+            text-align: right;
+        }
+        
+        .sum{
+            width: 80px !important;
+            max-width: 80px !important;
+            min-width: 80px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="min-width: 45px !important; max-width: 45px !important">#</th>
+                        <th>Nome</th>
+                        <th style="min-width: 110px !important;">Data Estimada</th>
+                        <th style="min-width: 100px !important;">Data Real</th>
+                        <th style="min-width: 150px !important;">Valor Real</th>
+                        <th style="min-width: 150px !important;">Valor Estimado</th>
+                        <th>Responsável</th>
+                        <th>Entidade</th>
+                        <th>Categoria</th>
+                    </tr>
+                </thead>
+            </table>
+            <table>
+                <tbody>
+                    {{#each posting}}
+                    <tr>
+                        <td style="min-width: 45px !important; max-width: 45px !important">
+                            <img style="width: 14px; !important" src="http://localhost:8080/icons/{{formatState state}}">
+                        </td>
+                        <td>{{name}}</td>
+                        <td style="min-width: 110px !important;">{{formatDate estimateDate}}</td>
+                        <td style="min-width: 100px !important;">{{formatDate realDate}}</td>
+                        <td style="min-width: 150px !important;">{{formatValue realValue}}</td>
+                        <td style="min-width: 150px !important;">{{formatValue estimateValue}}</td>
+                        <td>{{formatRef user}}</td>
+                        <td>{{formatRef entity}}</td>
+                        <td>{{formatRef category}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <h3>Total de Lançamentos</h3>
+        <table>
+            <tr>
+                <td class="sum">Total Estimado: </td>
+                <td class="sum">{{sumEstimated posting}}</td>
+            </tr>
+            <tr>
+                <td class="sum">Total Realizado: </td>
+                <td class="sum">{{sumRealized posting}}</td>
+            </tr>
+        </table>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{{xlsxRemove "xl/worksheets/sheet1.xml" "worksheet.sheetData[0].row" 1}}
+
+{{#each posting}}
+{{#xlsxAdd "xl/worksheets/sheet1.xml" "worksheet.sheetData[0].row"}}
+    <row>
+        <c t="inlineStr"><is><t>{{formatState state}}</t></is></c>
+        <c t="inlineStr"><is><t>{{name}}</t></is></c>
+        <c t="inlineStr"><is><t>{{formatDate estimateDate}}</t></is></c>
+        <c t="inlineStr"><is><t>{{formatDate realDate}}</t></is></c>
+        <c><v>{{ realValue}}</v></c>
+        <c><v>{{estimateValue}}</v></c>
+        <c t="inlineStr"><is><t>{{formatRef user}}</t></is></c>
+        <c t="inlineStr"><is><t>{{formatRef entity}}</t></is></c>
+        <c t="inlineStr"><is><t>{{formatRef category}}</t></is></c>
+    </row>
+{{/xlsxAdd}}
+{{/each}}
+
+{{{xlsxPrint}}}

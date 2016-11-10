@@ -5,5 +5,4 @@ node_modules/
 public/vendor/
 dist/
 logs/
-data/
 *.ini

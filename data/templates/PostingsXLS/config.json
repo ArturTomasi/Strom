@@ -1,0 +1,23 @@
+{
+    "shortid": "r1nK69Xgx",
+    "recipe": "xlsx",
+    "engine": "handlebars",
+    "modificationDate": {
+        "$$date": 1478734685030
+    },
+    "_id": "hg0Ky7SFj5HVnze9",
+    "data": {
+        "shortid": "SJ5edY73"
+    },
+    "resources": {
+        "items": [
+            {
+                "shortid": "SJ5edY73",
+                "entitySet": "data"
+            }
+        ]
+    },
+    "xlsxTemplate": {
+        "shortid": "BkLQapLll"
+    }
+}
