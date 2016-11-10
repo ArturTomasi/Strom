@@ -1,21 +1,21 @@
 /* global angular */
 
 ( function(){
-	
+
     'use strict';
-    
-    angular.module( 'Strom' , [ 'ngRoute', 
+
+    angular.module( 'Strom' , [ 'ngRoute',
                                 'ngResource',
                                 'angularUtils.directives.dirPagination',
                                 'ngFileUpload' ] );
-    
-    angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider ) 
+
+    angular.module( 'Strom').config( [ '$routeProvider', '$httpProvider' , function ( $routeProvider, $httpProvider )
     {
         $httpProvider.interceptors.push( 'InterceptorService' );
-        
+
         $routeProvider
-        
-        .when('/home', 
+
+        .when('/home',
         {
             templateUrl: '/partials/Util/Home.html',
             controller: 'HomeController'
@@ -27,79 +27,98 @@
             controller: 'AnalysisController'
         } )
 
-        .when('/user', 
+        .when('/user',
         {
             templateUrl: '/partials/User/User.html',
             controller: 'UserController'
         } )
-        
-        .when('/category', 
+
+        .when('/category',
         {
             templateUrl: '/partials/Category/Category.html',
             controller: 'CategoryController'
         } )
-        
-        .when('/entity', 
+
+        .when('/entity',
         {
             templateUrl: '/partials/Entity/Entity.html',
             controller: 'EntityController'
         } )
-        
-        .when('/completionType', 
+
+        .when('/completionType',
         {
             templateUrl: '/partials/CompletionType/CompletionType.html',
             controller: 'CompletionTypeController'
         } )
 
-        .when('/posting', 
+        .when('/posting',
         {
             templateUrl: '/partials/Posting/Posting.html',
             controller: 'PostingController'
         } )
-        
-        .when('/reports', 
+
+        .when('/reports',
         {
             templateUrl: '/partials/Lists/ReportList.html',
             controller: 'ReportController'
         } )
-        
-        .when('/entries', 
+
+        .when('/entries',
         {
             templateUrl: '/partials/Lists/EntrieList.html',
             controller: 'EntriesController'
         } )
 
-        .when('/reportPosting', 
+        .when('/reportPosting',
         {
             templateUrl: '/partials/Reports/ReportPosting.html',
             controller: 'PostingController',
             report: true
         } )
 
-        .when('/reportUser', 
+        .when('/reportUser',
         {
             templateUrl: '/partials/Reports/ReportUser.html',
             controller: 'UserController'
         } )
 
-        .when('/reportEntity', 
+        .when('/reportEntity',
         {
             templateUrl: '/partials/Reports/ReportEntity.html',
             controller: 'EntityController'
-        } ) 
+        } )
 
-        .when('/reportCompletionType', 
+        .when('/reportCompletionType',
         {
             templateUrl: '/partials/Reports/ReportCompletionType.html',
             controller: 'CompletionTypeController'
-        } )     
-        
-        .when('/reportCategory', 
+        } )
+
+        .when('/reportCategory',
         {
             templateUrl: '/partials/Reports/ReportCategory.html',
             controller: 'CategoryController'
         } );
-        
+
         $routeProvider.otherwise( { redirectTo: '/home' } );
-    } ] );
-})();
+
+    } ] )
+
+		.run( [ '$rootScope', '$http', function ( $rootScope, $http )
+		{
+				$rootScope.$on( "$routeChangeStart" , function( event, next, curr )
+				{
+						if( next.originalPath === '/home' && ! Session.get( 'ActiveUser' ) )
+						{
+								$http.get( '/active-user' ).
+
+                success( function( user )
+                {
+                    Session.put( "ActiveUser", user );
+                } );
+						}
+				} );
+
+		} ] );
+
+} ) ();

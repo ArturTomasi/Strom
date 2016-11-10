@@ -5,11 +5,11 @@ angular.module( "Strom" ).controller('HomeController', [ '$scope', 'PostingServi
     $scope.percentRevenue;
     $scope.groupRevenue;
     $scope.groupMonth;
-    
+
     adjustData = function( data )
     {
-        $scope.groupCost    = data[1];
-        $scope.groupRevenue = data[0];
+        $scope.groupCost    = data[1] || 0;
+        $scope.groupRevenue = data[0] || 0;
 
         var sum = $scope.groupCost.realValue + $scope.groupRevenue.realValue;
 

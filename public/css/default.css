@@ -373,7 +373,7 @@ ul {
   border: 1px solid;
   resize: none;
   color: #607D8B;
-  height: 90%;
+  height: calc(100% - 20px);
   width: 100%;
   padding: 10px;
 }
@@ -544,4 +544,11 @@ figure section:after {
 .center-content {
   min-height: 440px;
   overflow-y: auto;
+}
+.facebook {
+  background-color: #607D8B;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
 }

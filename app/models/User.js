@@ -16,6 +16,7 @@ module.exports = function ()
         role:       { type: String, required: [true, 'não pode estar vazio'], enum: [ 'Administrador', 'Operador' ] },
         phone:      { type: String, minlength: [10, 'não está válido' ], maxlength: [11, 'não está válido' ] },
         annotation: { type: String },
+        picture:    { type: String },
         createAt:   { type: Date,   default: Date.now }
     } );
 

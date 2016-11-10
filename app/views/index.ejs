@@ -11,6 +11,7 @@
         <!-- build:css css/index.min.css -->
         <link rel="stylesheet"  type="text/css" href="/css/datepicker.css">
         <link rel="stylesheet"  type="text/css" href="/css/default.css">
+        <link rel="stylesheet"  type="text/css" href="/css/calculator.css">
         <!-- endbuild -->
     </head>
     <body data-ng-controller="AuthController">
@@ -25,6 +26,8 @@
             <button type="button" class="close">&times;</button>
             <textarea></textarea>
         </div>
+
+        <div ng-include="'partials/Util/Calculator.html'"></div>
 
         <%if( ! currentUser ) { %>
         <div id="login" class="container login-center" style="width: 500px; margin: auto">
@@ -41,6 +44,12 @@
                 ERRO: Login ou senha incorretos
             </div>
         </div>
+        <div class="facebook">
+          <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+        		<span class="fa fa-facebook" style=" color:white;" ></span>
+            <span style=" color:white; font-size:15px;"> Facebook </span>
+      		</a>
+        </div>
 
         <%} else { %>
         <nav class="navbar navbar-default">
@@ -49,19 +58,33 @@
                     <a class="navbar-brand" href="#">Strom</a>
                 </div>
                 <div class="nav navbar-nav navbar-right dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle navbar-brand" style="cursor: pointer;"><%=currentUser.name %></a>
+                    <a data-toggle="dropdown" class="dropdown-toggle navbar-brand" style="cursor: pointer;">
+                      &nbsp;
+                    <% if ( currentUser.picture ) { %>
+                        <img style="border-radius:15px; float: left;" height="30px" width="30px" src="<%=currentUser.picture%>"/>
+                    <% } else { %>
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    <% } %>
+                        <%=currentUser.name %>
+                    </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a style="cursor: pointer;" data-ng-click="logout();">
-                                <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                Logout
-                            </a>
+                          <a style="cursor: pointer;" data-ng-click="showAnnotation()">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            Anotações
+                          </a>
                         </li>
                         <li>
-                            <a style="cursor: pointer;" data-ng-click="showAnnotation()">
-                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                Anotações
-                            </a>
+                          <a style="cursor: pointer;" data-ng-click="showCalculator()">
+                            <i class="fa fa-calculator" aria-hidden="true"></i>
+                            Calculadora
+                          </a>
+                        </li>
+                        <li>
+                          <a style="cursor: pointer;" data-ng-click="logout();">
+                              <i class="fa fa-sign-out" aria-hidden="true"></i>
+                              Logout
+                          </a>
                         </li>
                     </ul>
                 </div>
@@ -147,5 +170,6 @@
         <script type="text/javascript" src="/directives/Inspect.js"></script>
         <script type="text/javascript" src="/directives/HistoryBox.js"></script>
         <script type="text/javascript" src="/directives/MonthSelector.js"></script>
+        <script type="text/javascript" src="/directives/calculator.js"></script>
     <!-- endbuild -->
 </html>

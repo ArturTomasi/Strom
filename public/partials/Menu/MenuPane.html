@@ -1,4 +1,4 @@
-<div class="content col-xs-2 col-sm-2 col-md-2 col-lg-2">
+<div data-ng-cotroller="AuthController" class="content col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
 	<a data-ng-href="/#/home" class="btn btn-strom btn-block">
 		<img src="icons/home.png" class="menu-icon"></img>
@@ -16,9 +16,9 @@
 		<img src="icons/helpFin.png" class="menu-icon"></img>
 		ANÁLISES
 	</a>
-	<a data-ng-href="/#/entries" class="btn btn-strom btn-block">
+	<a data-ng-show="! isOperator()" data-ng-href="/#/entries" class="btn btn-strom btn-block">
 		<img src="icons/entries.png" class="menu-icon"></img>
 		CADASTROS
 	</a>
- 
+
 </div>

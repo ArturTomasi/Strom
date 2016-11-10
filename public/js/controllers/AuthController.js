@@ -46,7 +46,8 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
     {
         $( '#error-login' ).show( 'fade' );
 
-        setTimeout( function() {
+        setTimeout( function()
+        {
             $( '#error-login' ).hide( 'fade' );
         }, 3000 );
     } );
@@ -87,11 +88,27 @@ angular.module("Strom").controller("AuthController", ['$scope', '$http', '$locat
       } );
   };
 
+  $scope.showCalculator = function()
+  {
+      $( '.calculator' ).show();
+  };
+
+  $scope.isOperator = function()
+  {
+      if ( ! Session.get( 'ActiveUser' ) ) return true;
+
+      if ( Session.get( 'ActiveUser').role === 'Operador' ) return true;
+
+      return false;
+  }
+
   function init()
   {
       var _annotation = $( '#annotationDiv' );
 
       _annotation.draggable();
+
+      _annotation.resizable();
 
       _annotation.children( 'button' ).on( 'click', function()
       {

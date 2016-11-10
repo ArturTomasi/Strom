@@ -31,7 +31,7 @@ module.exports = function ( app )
     */
     controller.getPostings = function( req, res )
     {
-        Posting.find().sort( 'estimateDate').exec( function ( error , postings )
+        Posting.find( { user: req.user } ).sort( 'estimateDate').exec( function ( error , postings )
         {
             if ( error )
             {
@@ -105,7 +105,8 @@ module.exports = function ( app )
         Posting.find(
         {
             $and: [
-                    { $or : [ { state: 1 }, { estimateDate : { $gte: moment(), $lte: moment().add( 1, 'month' ) } } ] },
+                    { $or : [ { state: { $ne : STATE_DELETED } } ] },
+                    { $or : [ { state: STATE_PROGRESS }, { estimateDate : { $gte: moment(), $lte: moment().add( 1, 'month' ) } } ] },
                     { $or : [ { user:  req.user } ] }
                   ]
         } )
