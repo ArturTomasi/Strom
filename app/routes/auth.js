@@ -34,9 +34,12 @@ module.exports = function ( app )
     {
       var _user = {};
 
-      _user.name = user.name;
-      _user.role = user.role;
-      
+      _user.login  = user.login;
+      _user.email  = user.email;
+      _user._id    = user._id;
+      _user.name   = user.name;
+      _user.role   = user.role;
+
       return _user;
     }
 };

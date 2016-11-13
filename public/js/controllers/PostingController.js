@@ -227,7 +227,7 @@ angular.module( 'Strom' ).controller( 'PostingController', [ '$scope', '$route',
     {
         var errors = validatePermission( $scope.postingSelected );
 
-        if ( errors )
+        if ( ! errors )
         {
             $scope.posting = $scope.getPostingForm( posting );
 
