@@ -13,14 +13,14 @@
 	                <h3 class="modal-title">Adicionar Filtro</h3>
 	            </div>
 	            <div style="height: 350px;" class="modal-body">
-	               
+
 	               <div class="col-sm-12">
-	               
+
    	               		<ul class="col-sm-10">
-						
+
 	               			<li data-ng-click="selectItem( filter )"
 	               				data-ng-repeat="filter in filters track by $index">
-	               				
+
 	               				<input style="float: left;" type="checkbox" name="selected" data-ng-model="filter.selected">
 
 	               				<div ng-if="filter.type === 'input'" class="form-group row">
@@ -49,30 +49,30 @@
 				        		</div>
 
 			        		    <div ng-if="filter.type === 'date'" class="form-group row">
-	                                <mydate label="{{filter.label}}" 
-	                                        name="filter.name" 
-	                                        mask="DD/MM/YYYY" 
+	                                <mydate label="{{filter.label}}"
+	                                        name="filter.name"
+	                                        mask="DD/MM/YYYY"
 	                                        model="filter.value.from"
 	                                        required="true">
 	                                </mydate>
 
-	                                <mydate label="Até" 
-	                                        name="untilDate" 
-	                                        mask="DD/MM/YYYY" 
+	                                <mydate label="Até"
+	                                        name="untilDate"
+	                                        mask="DD/MM/YYYY"
 	                                        model="filter.value.until">
 	                                </mydate>
 	                            </div>
 
-	                            <item-selector model="filter.value" 
-	                                           items="filter.items" 
-	                                           size="10" 
-	                                           name="{{filter.name + $index }}" 
+	                            <item-selector model="filter.value"
+	                                           items="filter.items"
+	                                           size="10"
+	                                           name="{{filter.name + $index }}"
 	                                           title="{{filter.label}}"
-	                                           ng-if="filter.type === 'list'">  
+	                                           ng-if="filter.type === 'list'">
                             	</item-selector>
 
 	               			</li>
-	               		</ul>	
+	               		</ul>
 
 	               		<div class="col-sm-2">
 		               		<button type="button" class="btn btn-strom btn-block" data-toggle="modal" data-target="#newFilter">
@@ -83,14 +83,14 @@
 							    <img src="icons/delete.png" class="btn-icon"></img>
 							    Excluir
 							</button>
-	              		</div>	
+	              		</div>
 	               </div>
 	            </div>
     	        <div class="modal-footer">
 		            <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                    <button type="button" ng-click="validFilter()" class="btn btn-success">Salvar</button>                
-                </div>	
-	        </div>  
+                    <button type="button" ng-click="validFilter()" class="btn btn-success">Salvar</button>
+                </div>
+	        </div>
 	    </div>
 	</div>
 
@@ -99,20 +99,20 @@
 		    <div style="height: 90%" class="modal-content">
 		        <div class="modal-header">
 		        	<button type="button" class="close" data-ng-click="close()">&times;</button>
-		            <h3 class="modal-title">Campos para Fitros</h3>
+		            <h3 class="modal-title">Campos para Filtros</h3>
 		        </div>
 		        <div class="modal-body">
 	    			<input data-ng-model="search" type="search" class="form-control"/>
 		            <ul class="item-selector-list list-group">
-		            	<li class="tr list-group-item" 
-		            		data-ng-class="{trselected: model === item }" 
-	                       	data-ng-click="addItem( item )" 
+		            	<li class="tr list-group-item"
+		            		data-ng-class="{trselected: model === item }"
+	                       	data-ng-click="addItem( item )"
 	                        data-ng-repeat="item in items | filter: { name: search } | orderBy: item track by $index">
 		            		{{item.label || item}}
 		            	</li>
 		            </ul>
 		        </div>
-		    </div>  
+		    </div>
 		</div>
 	</div>
 
