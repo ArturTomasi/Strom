@@ -313,11 +313,11 @@ module.exports = function ( app )
                   res.status( 500 ).json( composeError( error ) );
               }
 
-              if ( posting.portion < posting.portionTotal && posting.state === STATE_FINISHED )
+              if ( posting.portion < posting.portionTotal )
               {
                  Posting.findOneAndUpdate( {
                                               posting : ( posting.portion === 1 ? posting._id : posting.posting ),
-                                              state   : STATE_REGISTRED,
+                                              state   : ( posting.state === STATE_FINISHED ? STATE_REGISTRED : STATE_PROGRESS ),
                                               portion : { $gt: posting.portion, $lt: posting.portionTotal + 1 }
                                             },
                                             {
